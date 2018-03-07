@@ -17,3 +17,5 @@ Imports:
     tidyr,
     rstudioapi
 RoxygenNote: 6.0.1
+URL: https://github.com/gadenbuie/regexhelp
+BugReports: https://github.com/gadenbuie/regexhelp/issues
