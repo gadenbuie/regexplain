@@ -1,0 +1,19 @@
+Package: regexhelp
+Title: Rstudio addin to help you with your regexes (in progress)
+Version: 0.0.0.9000
+Date: 2018-03-07
+Authors@R: person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre"))
+Description: Test and view regexes.
+Depends: 
+    R (>= 3.4.3),
+    dplyr
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    purrr,
+    rmarkdown,
+    utils,
+    tidyr,
+    rstudioapi
+RoxygenNote: 6.0.1

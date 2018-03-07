@@ -1,0 +1,102 @@
+#' @export
+run_regex <- function(
+  text,
+  pattern,
+  ignore.case = FALSE,
+  perl = FALSE,
+  fixed = FALSE,
+  useBytes = FALSE,
+  invert = FALSE
+) {
+  m <- regexec(pattern, text, ignore.case, perl, fixed, useBytes)
+  x <- purrr::map(purrr::set_names(m, text), function(mi) list('idx' = purrr::map2(mi, attr(mi, "match.length"), ~ if(.x[1] != -1) c(.x, .x + .y - 1L))))
+  y <- purrr::map(purrr::set_names(text), ~ list(text = .))
+  z <- purrr::map(purrr::set_names(regmatches(text, m), text), ~ list(m = .))
+  x <- utils::modifyList(y, x, TRUE)
+  utils::modifyList(z, x, TRUE)
+}
+
+wrap_span <- function(x, escape = FALSE) {
+  if (is.null(x$idx[[1]])) return(x$text)
+  text <- x$text
+  idx <- x$idx
+  len_idx <- length(idx)
+  inserts <- data.frame(
+    i = 1:len_idx - 1,
+    start = purrr::map_int(idx, ~ .[1]),
+    end = purrr::map_int(idx, ~ .[2]) + 1
+  ) %>%
+    mutate(
+      class = sprintf("group g%02d", i),
+      pad = 0
+    )
+  for (j in seq_len(nrow(inserts))) {
+    if (inserts$i[j] == 0) next
+    overlap <- filter(
+      inserts,
+      i != 0,
+      start <= !!inserts$start[j] & end > !!inserts$end[j])
+    inserts[j, 'pad'] <- inserts$pad[j] + nrow(overlap)
+  }
+  inserts <- inserts %>%
+    tidyr::gather(type, loc, start:end) %>%
+    mutate(
+      class = ifelse(pad > 0, sprintf("%s pad%02d", class, pad), class),
+      insert = ifelse(type == 'start', sprintf('<span class="%s">', class), "</span>")
+    ) %>%
+    group_by(loc, type) %>%
+    summarize(insert = paste(insert, collapse = ''))
+  idx_split <- c(0 - (inserts$loc[1] == 0), inserts$loc)
+  if (!(nchar(text) + 1) %in% idx_split) idx_split <- c(idx_split, nchar(text) + 1)
+  text_split <- c()
+  for (k in seq_along(idx_split[-1])) {
+    text_split <- c(text_split, substr(text, idx_split[k], idx_split[k+1] - 1))
+  }
+  out <- c()
+  for (j in seq_along(text_split)) {
+    out <- c(
+      out,
+      ifelse(escape, escape_html(text_split[j]), text_split[j]),
+      if (!is.na(inserts$insert[j])) inserts$insert[j]
+    )
+  }
+  paste(out, collapse = '')
+}
+
+#' View grouped regex results
+#'
+#' @param text Text to search
+#' @param pattern Regex pattern to look for
+#' @param render Render results to an HTML doc and open in RStudio viewer?
+#' @param escape Escape HTML-related characters in `text`?
+#' @param knitr Print into knitr doc? If `TRUE`, marks text as `asis_output` and
+#'   sets `render = FALSE` and `escape = TRUE`.
+#' @param ... Passed to [run_regex]
+#' @export
+view_regex <- function(text, pattern, ..., render = TRUE, escape = render, knitr = FALSE) {
+  if (knitr) {
+    render <- FALSE
+    escape <- TRUE
+  }
+  res <- run_regex(text, pattern, ...)
+  res <- purrr::map_chr(res, wrap_span, escape = escape)
+  res <- paste("<p class='results'>", res, "</p>")
+  if (knitr) return(knitr::asis_output(res))
+  if (!render) return(res)
+  head <- c(
+    "---", "pagetitle: View Regex", "---",
+    "<h5>Regex</h5>",
+    "<p><pre>", escape_html(pattern), "</pre></p>",
+    "<h5>Results</h5>"
+  )
+  res <- c(head, res)
+  tmp <- tempfile(fileext = ".Rmd")
+  cat(res, file = tmp, sep = "\n")
+  tmp_html <- suppressWarnings(
+    rmarkdown::render(
+      tmp,
+      output_format = rmarkdown::html_document(css = system.file('style.css', package='regexhelp')),
+      quiet = TRUE
+  ))
+  rstudioapi::viewer(tmp_html)
+}

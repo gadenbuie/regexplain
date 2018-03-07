@@ -1,0 +1,87 @@
+.results {
+  font-family: "Monaco", "Inconsolata", monospace;
+  padding-top: 5px;
+}
+
+.group {
+  border-bottom: 2px solid;
+  padding: 0px;
+}
+
+.g00 {
+  padding: 1px;
+  background-color: #f0f0f0;
+  border: 1px solid #b0b0b0;
+  border-left: 1px solid #b0b0b0;
+  border-right: 1px solid #b0b0b0;
+  border-top: 1px solid #b0b0b0;
+}
+
+.g01 {
+  border-color: green;
+  color: green;
+}
+
+.g02 {
+  border-color: blue;
+  color: blue;
+}
+
+.g03 {
+  border-color: red;
+  color: red;
+}
+
+.g04 {
+  border-color: orange;
+  color: orange;
+}
+
+.g05 {
+  border-color: purple;
+  color: purple;
+}
+
+.g06 {
+  border-color: DeepPink;
+  color: DeepPink;
+}
+
+.g07 {
+  border-color: Tomato;
+  color: Tomato;
+}
+
+.g08 {
+  border-color: DarkSeaGreen;
+  color: DarkSeaGreen;
+}
+
+.g09 {
+  border-color: DeepSkyBlue;
+  color: DeepSkyBlue;
+}
+
+.g10 {
+  border-color: Sienna;
+  color: Sienna;
+}
+
+.pad01 {
+  padding-bottom: 3px;
+}
+.pad02 {
+  padding-bottom: 6px;
+}
+.pad03 {
+  padding-bottom: 9px;
+}
+.pad04 {
+  padding-bottom: 12px;
+}
+.pad05 {
+  padding-bottom: 15px;
+}
+.pad06 {
+  padding-bottom: 18px;
+}
