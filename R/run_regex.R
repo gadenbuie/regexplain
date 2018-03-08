@@ -46,8 +46,15 @@ wrap_result <- function(x, escape = FALSE) {
     ) %>%
     group_by(loc, type) %>%
     summarize(insert = paste(insert, collapse = ''))
+
+  # inserts now gives html (span open and close) to insert and loc
+  # first split text at inserts$loc locations,
+  # then recombine by zipping with inserts$insert text
+  # start at 0, unless there's a hit on first character
+  # end at nchar(text) + 1 because window is idx[k] to idx[k+1]-1
   idx_split <- c(0 - (inserts$loc[1] == 0), inserts$loc)
-  if (!(nchar(text) + 1) %in% idx_split) idx_split <- c(idx_split, nchar(text) + 1)
+  if (!(nchar(text) + 1) %in% idx_split)
+    idx_split <- c(idx_split, nchar(text) + 1)
   text_split <- c()
   for (k in seq_along(idx_split[-1])) {
     text_split <- c(text_split, substr(text, idx_split[k], idx_split[k+1] - 1))
