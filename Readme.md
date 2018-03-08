@@ -25,6 +25,14 @@ view_regex(text, pattern)
 
 ![Example `view_regex(text, pattern)`.](docs/view-regex.png)
 
+``` r
+t_nested <- "anestedgroupwithingroupexample"
+r_nested <- "(a(nested)(group(within(group))(example)))"
+view_regex(t_nested, r_nested)
+```
+
+![Example of nested groups](docs/view-nested.png)
+
 ## Planned (ish)
 
 1.  An Rstudio addin gadget that allows you to interactively enter the

@@ -33,9 +33,9 @@ wrap_result <- function(x, escape = FALSE) {
   for (j in seq_len(nrow(inserts))) {
     if (inserts$i[j] == 0) next
     overlap <- filter(
-      inserts,
+      inserts[1:(j-1), ],
       i != 0,
-      start <= !!inserts$start[j] & end > !!inserts$end[j])
+      start <= !!inserts$start[j] & end >= !!inserts$end[j])
     inserts[j, 'pad'] <- inserts$pad[j] + nrow(overlap)
   }
   inserts <- inserts %>%
