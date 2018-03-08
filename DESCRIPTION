@@ -1,6 +1,6 @@
-Package: regexhelp
+Package: regexplain
 Title: Rstudio addin to help you with your regexes (in progress)
-Version: 0.0.0.9000
+Version: 0.0.1.9000
 Date: 2018-03-07
 Authors@R: person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre"))
 Description: Test and view regexes.
@@ -17,5 +17,5 @@ Imports:
     tidyr,
     rstudioapi
 RoxygenNote: 6.0.1
-URL: https://github.com/gadenbuie/regexhelp
-BugReports: https://github.com/gadenbuie/regexhelp/issues
+URL: https://github.com/gadenbuie/regexplain
+BugReports: https://github.com/gadenbuie/regexplain/issues

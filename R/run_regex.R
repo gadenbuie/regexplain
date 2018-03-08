@@ -16,7 +16,7 @@ run_regex <- function(
   utils::modifyList(z, x, TRUE)
 }
 
-wrap_span <- function(x, escape = FALSE) {
+wrap_result <- function(x, escape = FALSE) {
   if (is.null(x$idx[[1]])) return(x$text)
   text <- x$text
   idx <- x$idx
@@ -63,6 +63,23 @@ wrap_span <- function(x, escape = FALSE) {
   paste(out, collapse = '')
 }
 
+wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
+  stopifnot(length(pattern) == 1)
+  if(escape) pattern <- escape_html(pattern)
+  r_open_parens <- "(?<![\\\\])\\("
+  x <- strsplit(pattern, r_open_parens, perl = TRUE)[[1]]
+  first <- x[1]
+  x <- x[-1]
+  x <- paste0(
+    '<span class="g', sprintf("%02d", seq_along(x)), '">(',
+    x,
+    collapse = ""
+  )
+  x <- gsub("(?<![\\\\])\\)", ")</span>", x, perl = TRUE)
+  if (exact) x <- gsub("\\\\", "\\\\\\\\", x)
+  paste0(first, x)
+}
+
 #' View grouped regex results
 #'
 #' @param text Text to search
@@ -71,22 +88,34 @@ wrap_span <- function(x, escape = FALSE) {
 #' @param escape Escape HTML-related characters in `text`?
 #' @param knitr Print into knitr doc? If `TRUE`, marks text as `asis_output` and
 #'   sets `render = FALSE` and `escape = TRUE`.
+#' @param exact Should regex be displayed as entered by the user into R console
+#'   or source (default)? When `TRUE`, regex is displayed with the double `\\`
+#'   required for escaping backslashes in R. When `FALSE`, regex is displayed
+#'   as interpreted by the regex engine (i.e. double `\\` as a single `\`).
 #' @param ... Passed to [run_regex]
 #' @export
-view_regex <- function(text, pattern, ..., render = TRUE, escape = render, knitr = FALSE) {
+view_regex <- function(
+  text,
+  pattern,
+  ...,
+  render = TRUE,
+  escape = render,
+  knitr = FALSE,
+  exact = escape
+) {
   if (knitr) {
     render <- FALSE
     escape <- TRUE
   }
   res <- run_regex(text, pattern, ...)
-  res <- purrr::map_chr(res, wrap_span, escape = escape)
+  res <- purrr::map_chr(res, wrap_result, escape = escape)
   res <- paste("<p class='results'>", res, "</p>")
   if (knitr) return(knitr::asis_output(res))
   if (!render) return(res)
   head <- c(
     "---", "pagetitle: View Regex", "---",
     "<h5>Regex</h5>",
-    "<p><pre>", escape_html(pattern), "</pre></p>",
+    "<p><pre style = 'font-size: 1em;'>", wrap_regex(pattern, escape, exact), "</pre></p>",
     "<h5>Results</h5>"
   )
   res <- c(head, res)

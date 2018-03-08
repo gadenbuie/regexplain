@@ -5,7 +5,7 @@
 \title{View grouped regex results}
 \usage{
 view_regex(text, pattern, ..., render = TRUE, escape = render,
-  knitr = FALSE)
+  knitr = FALSE, exact = escape)
 }
 \arguments{
 \item{text}{Text to search}
@@ -20,6 +20,11 @@ view_regex(text, pattern, ..., render = TRUE, escape = render,
 
 \item{knitr}{Print into knitr doc? If `TRUE`, marks text as `asis_output` and
 sets `render = FALSE` and `escape = TRUE`.}
+
+\item{exact}{Should regex be displayed as entered by the user into R console
+or source (default)? When `TRUE`, regex is displayed with the double `\\`
+required for escaping backslashes in R. When `FALSE`, regex is displayed
+as interpreted by the regex engine (i.e. double `\\` as a single `\`).}
 }
 \description{
 View grouped regex results
