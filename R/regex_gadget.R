@@ -51,7 +51,13 @@ regex_gadget <- function(text = NULL) {
         "Text", icon = icon('file-text-o'),
         miniContentPanel(
           fillCol(
-            textAreaInputAlt('text', label = "Text", value = paste(text, collapse = "\n"), resize = "both", width = "100%", height="90%")
+            textAreaInputAlt('text',
+                             label = "Text to search or parse",
+                             value = paste(text, collapse = "\n"),
+                             resize = "both",
+                             width = "100%",
+                             height="90%",
+                             placeholder = "Paste, enter, or edit your sample text here.")
           )
         )
       ),
