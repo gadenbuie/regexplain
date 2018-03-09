@@ -1,8 +1,43 @@
+#' regexplain_addin
+#'
+#' @keywords internal
+regexplain_addin <- function() {
+  # Get the document context.
+  context <- rstudioapi::getActiveDocumentContext()
+
+  # Get context text
+  ctx_text <- context$selection[[1]]$text
+
+  # If it is one line and evaluates to something, use that
+  # Otherwise treat as text
+  obj <- tryCatch({
+    if (grepl("\n", ctx_text)) {
+      ctx_text
+    } else {
+      x <- eval(parse(text = ctx_text))
+      x <- as.character(x)
+      if (length(x) == 1 && grepl("\n", x))
+        x <- strsplit(x, "\n")[[1]]
+      if (length(x) > 10) {
+        message(ctx_text, " gave ", length(x), " lines, limiting to first 10 unique lines.")
+        x <- unique(x)
+        x[1:min(length(x), 10)]
+      } else x
+    }
+  },
+  error = function(e) {as.character(ctx_text)})
+
+  regex_gadget(obj)
+
+}
+
+#' regexplain gadget
+#'
 #' @import miniUI
 #' @import shiny
+#' @export
 regex_gadget <- function(text = NULL) {
-  library("shiny")
-  library("miniUI")
+  stopifnot(requireNamespace("miniUI"), requireNamespace("shiny"))
 
   ui <- miniPage(
     shiny::includeCSS(system.file("style.css", package = "regexplain")),
@@ -16,20 +51,42 @@ regex_gadget <- function(text = NULL) {
         "Text", icon = icon('file-text-o'),
         miniContentPanel(
           fillCol(
-            flex = c(3, 1),
-            textAreaInputAlt('text', label = "Text", value = paste(text, collapse = "\n"), resize = "both", width = "100%", height="90%"),
-            inputPanel(
-              checkboxInput('text_break_newline', "Break Lines", TRUE)
-            )
+            textAreaInputAlt('text', label = "Text", value = paste(text, collapse = "\n"), resize = "both", width = "100%", height="90%")
           )
         )
       ),
       miniTabPanel(
         "Regex", icon = icon('terminal'),
         miniContentPanel(
-          textInputCode('pattern', 'Regex', width = "100%",
-                    placeholder = "Enter regex, double backslash not required"),
-          htmlOutput('result')
+          fillCol(
+            flex = c(1, 3),
+            fillRow(
+              flex = c(2, 1),
+              textInputCode('pattern', 'Regex', width = "90%",
+                            placeholder = "Enter regex, single \\ okay"),
+              checkboxGroupInput(
+                'regex_options',
+                label = "",
+                inline = TRUE,
+                width = "90%",
+                choices = c("Break Lines" = "text_break_lines",
+                            "Ignore Case" = "ignore.case",
+                            "Perl Style" = "perl",
+                            "Fixed" = "fixed",
+                            "Use Bytes" = "useBytes"
+                            # , "Invert" = "invert"
+                ),
+                selected = c('text_break_lines')
+              )
+            ),
+            htmlOutput('result')
+          )
+        )
+      ),
+      miniTabPanel(
+        "Output", icon = icon("table"),
+        miniContentPanel(
+          tags$p("Test output of regex on text here.")
         )
       ),
       miniTabPanel(
@@ -43,7 +100,7 @@ regex_gadget <- function(text = NULL) {
 
   server <- function(input, output, session) {
     rtext <- reactive({
-      x <- if (input$text_break_newline) {
+      x <- if ('text_break_lines' %in% input$regex_options) {
         strsplit(input$text, "\n")[[1]]
       } else input$text
       x
@@ -52,19 +109,28 @@ regex_gadget <- function(text = NULL) {
     output$result <- renderUI({
       if (is.null(rtext())) return(NULL)
       if (input$pattern == "") {
-        return(toHTML(paste('<p class="results">', rtext(), "</p>", collapse = "")))
+        return(toHTML(paste('<p class="results">', escape_html(rtext()), "</p>", collapse = "")))
       }
       tryCatch({
         toHTML(
           paste(
-            view_regex(rtext(), sanitize_text_input(input$pattern), render = FALSE),
+            view_regex(
+              rtext(),
+              sanitize_text_input(input$pattern),
+              ignore.case = 'ignore.case' %in% input$regex_options,
+              perl = 'perl' %in% input$regex_options,
+              fixed = 'fixed' %in% input$regex_options,
+              useBytes = 'useBytes' %in% input$regex_options,
+              # invert = 'invert' %in% input$regex_options,
+              render = FALSE,
+              escape = TRUE),
             collapse = ""
           )
         )
       },
       error = function(e) {
         toHTML(paste0("<pre class='alert alert-danger' style='padding: 4px; margin-top: 1px; margin-bottom: 4px;'>", paste(e$message, collapse = "<br>"), "</pre>"),
-                paste('<p class="results">', rtext(), "</p>", collapse = ""))
+                paste('<p class="results">', escape_html(rtext()), "</p>", collapse = ""))
       })
     })
 
@@ -95,76 +161,7 @@ sanitize_text_input <- function(x) {
 toHTML <- function(...) {
   x <- paste(..., collapse = "")
   x <- gsub("\n", "\\\\n", x)
+  x <- gsub("\t", "\\\\t", x)
+  x <- gsub("\r", "\\\\r", x)
   HTML(x)
-}
-
-
-# ---- Modified Shiny Inputs ----
-
-#' Modified Text Area Input
-#'
-#' @inheritParams shiny textAreaInput
-textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = NULL,
-                          cols = NULL, rows = NULL, placeholder = NULL, resize = NULL,
-                          is_code = TRUE) {
-  `%AND%` <- shiny:::`%AND%`
-
-  value <- shiny::restoreInput(id = inputId, default = value)
-
-  if (!is.null(resize)) {
-    resize <- match.arg(resize, c("both", "none", "vertical", "horizontal"))
-  }
-
-  style <- paste(
-    if (!is.null(width))  paste0("width: ",  shiny::validateCssUnit(width),  ";"),
-    if (!is.null(height)) paste0("height: ", shiny::validateCssUnit(height), ";"),
-    if (!is.null(resize)) paste0("resize: ", resize, ";"),
-    if (is_code) 'font-family: "Monaco", "Inconsolata", monospace;'
-  )
-
-  parent_style <- paste(
-    if (!is.null(width) && grepl("%", width)) paste0("width: ", width, ";"),
-    if (!is.null(height) && grepl("%", height)) paste0("height: ", height, ";")
-  )
-
-  # Workaround for tag attribute=character(0) bug:
-  #   https://github.com/rstudio/htmltools/issues/65
-  if (length(style) == 0) style <- NULL
-
-  shiny::div(class = "form-group shiny-input-container",
-      label %AND% shiny::tags$label(label, `for` = inputId),
-      style = if (!parent_style %in% c(" ", "", "  ")) parent_style,
-      shiny::tags$textarea(
-        id = inputId,
-        class = "form-control",
-        placeholder = placeholder,
-        style = style,
-        rows = rows,
-        cols = cols,
-        autocomplete = "off",
-        autocorrect = "off",
-        autocapitalize = "off",
-        spellcheck = "false",
-        value
-      )
-  )
-}
-
-#' Modified Text Input
-#'
-#' @inheritParams shiny textInput
-textInputCode <- function(inputId, label, value = "", width = NULL,
-                      placeholder = NULL) {
-  `%AND%` <- shiny:::`%AND%`
-  value <- shiny::restoreInput(id = inputId, default = value)
-
-  shiny::div(class = "form-group shiny-input-container",
-      style = if (!is.null(width)) paste0("width: ", shiny::validateCssUnit(width), ";"),
-      label %AND% shiny::tags$label(label, `for` = inputId),
-      shiny::tags$input(id = inputId, type="text", class="form-control", value=value,
-                        style = 'font-family: "Monaco", "Inconsolata", monospace;',
-                        autocomplete = "off", autocorrect = "off",
-                        autocapitalize = "off", spellcheck = "false",
-                        placeholder = placeholder)
-  )
 }

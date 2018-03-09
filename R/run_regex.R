@@ -9,15 +9,14 @@ run_regex <- function(
   invert = FALSE
 ) {
   m <- regexec(pattern, text, ignore.case, perl, fixed, useBytes)
-  x <- purrr::map(purrr::set_names(m, text), function(mi) list('idx' = purrr::map2(mi, attr(mi, "match.length"), ~ if(.x[1] != -1) c(.x, .x + .y - 1L))))
-  y <- purrr::map(purrr::set_names(text), ~ list(text = .))
-  z <- purrr::map(purrr::set_names(regmatches(text, m), text), ~ list(m = .))
-  x <- utils::modifyList(y, x, TRUE)
-  utils::modifyList(z, x, TRUE)
+  x <- purrr::map(m, function(mi) list('idx' = purrr::map2(mi, attr(mi, "match.length"), ~ if(.x[1] != -1) c(.x, .x + .y - 1L))))
+  y <- purrr::map(text, ~ list(text = .))
+  z <- purrr::map(regmatches(text, m), ~ list(m = .))
+  purrr::map(seq_along(x), ~ list(text = y[[.]][[1]], idx = x[[.]][[1]], m = z[[.]][[1]]))
 }
 
 wrap_result <- function(x, escape = FALSE) {
-  if (is.null(x$idx[[1]])) return(x$text)
+  if (is.null(x$idx[[1]])) return(if (escape) escape_html(x$text) else x$text)
   text <- x$text
   idx <- x$idx
   len_idx <- length(idx)
@@ -77,12 +76,14 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
   x <- strsplit(pattern, r_open_parens, perl = TRUE)[[1]]
   first <- x[1]
   x <- x[-1]
-  x <- paste0(
-    '<span class="g', sprintf("%02d", seq_along(x)), '">(',
-    x,
-    collapse = ""
-  )
-  x <- gsub("(?<![\\\\])\\)", ")</span>", x, perl = TRUE)
+  if (length(x)) {
+    x <- paste0(
+      '<span class="g', sprintf("%02d", seq_along(x)), '">(',
+      x,
+      collapse = ""
+    )
+    x <- gsub("(?<![\\\\])\\)", ")</span>", x, perl = TRUE)
+  }
   if (exact) x <- escape_backslash(x)
   paste0(first, x)
 }

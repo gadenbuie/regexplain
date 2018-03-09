@@ -1,0 +1,4 @@
+Name: regexplain
+Description: Regex with selected text
+Binding: regexplain_addin
+Interactive: false

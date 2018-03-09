@@ -3,6 +3,7 @@ escape_html <- function(x) {
   x = gsub("<", "&lt;", x)
   x = gsub(">", "&gt;", x)
   x = gsub("\"", "&quot;", x)
+  x = gsub(" ", "&nbsp;", x)
   x
 }
 

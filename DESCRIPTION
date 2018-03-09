@@ -2,12 +2,16 @@ Package: regexplain
 Title: Rstudio addin to help you with your regexes (in progress)
 Version: 0.0.1.9000
 Date: 2018-03-07
-Authors@R: person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre"))
+Authors@R: c(
+    person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre"),
+    person("Winston", "Chang", role = c("ctb"), comment = "Author of textInput and textAreaInput fragments from shiny"),
+    person(family = "RStudio", role = "cph", comment = "Copyright holder of included shiny fragments")
+    )
 Description: Test and view regexes.
 Depends: 
     R (>= 3.4.3),
     dplyr
-License: MIT + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: 
@@ -21,3 +25,5 @@ Imports:
 RoxygenNote: 6.0.1
 URL: https://github.com/gadenbuie/regexplain
 BugReports: https://github.com/gadenbuie/regexplain/issues
+Suggests: 
+    testthat
