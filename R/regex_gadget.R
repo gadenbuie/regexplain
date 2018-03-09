@@ -27,7 +27,7 @@ regexplain_addin <- function() {
   },
   error = function(e) {as.character(ctx_text)})
 
-  regex_gadget(obj)
+  regex_gadget(if (length(obj) && obj != "") obj)
 
 }
 
