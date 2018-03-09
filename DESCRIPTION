@@ -15,7 +15,9 @@ Imports:
     rmarkdown,
     utils,
     tidyr,
-    rstudioapi
+    rstudioapi,
+    shiny,
+    miniUI
 RoxygenNote: 6.0.1
 URL: https://github.com/gadenbuie/regexplain
 BugReports: https://github.com/gadenbuie/regexplain/issues
