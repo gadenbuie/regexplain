@@ -43,7 +43,7 @@ regex_gadget <- function(text = NULL) {
     shiny::includeCSS(system.file("style.css", package = "regexplain")),
     gadgetTitleBar(
       "regexplain",
-      right = miniTitleBarButton("done", "To Console", TRUE)
+      right = miniTitleBarButton("done", "Send Regex To Console", TRUE)
     ),
     miniTabstripPanel(
       selected = if (is.null(text)) "Text" else "Regex",
