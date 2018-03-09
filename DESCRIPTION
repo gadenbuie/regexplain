@@ -3,7 +3,7 @@ Title: Rstudio addin to help you with your regexes (in progress)
 Version: 0.0.1.9000
 Date: 2018-03-07
 Authors@R: c(
-    person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre"),
+    person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre")),
     person("Winston", "Chang", role = c("ctb"), comment = "Author of textInput and textAreaInput fragments from shiny"),
     person(family = "RStudio", role = "cph", comment = "Copyright holder of included shiny fragments")
     )

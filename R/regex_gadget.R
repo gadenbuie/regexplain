@@ -60,8 +60,8 @@ regex_gadget <- function(text = NULL) {
         miniContentPanel(
           fillCol(
             flex = c(1, 3),
-            fillRow(
-              flex = c(2, 1),
+            fillCol(
+              flex = c(1, 1),
               textInputCode('pattern', 'Regex', width = "90%",
                             placeholder = "Enter regex, single \\ okay"),
               checkboxGroupInput(
@@ -79,14 +79,26 @@ regex_gadget <- function(text = NULL) {
                 selected = c('text_break_lines')
               )
             ),
-            htmlOutput('result')
+            tags$div(
+              class = "gadget-result",
+              htmlOutput('result')
+            )
           )
         )
       ),
       miniTabPanel(
         "Output", icon = icon("table"),
         miniContentPanel(
-          tags$p("Test output of regex on text here.")
+          fillCol(
+            flex = c(1, 3),
+            inputPanel(
+              width = "100%;",
+              selectInput('regexFn', label = 'Apply Function',
+                          choices = regexFn_choices)
+            ),
+            verbatimTextOutput('output_result',
+                               placeholder = TRUE)
+          )
         )
       ),
       miniTabPanel(
@@ -134,6 +146,29 @@ regex_gadget <- function(text = NULL) {
       })
     })
 
+    output$output_result <- renderPrint({
+      req(input$regexFn)
+      regexPkg <- get_pkg_namespace(input$regexFn)
+      regexFn <- getFromNamespace(input$regexFn, regexPkg)
+      x <- if (regexPkg == "base") {
+        regexFn(input$pattern, rtext())
+      } else if (regexPkg == "stringr") {
+        regexFn(rtext(), input$pattern)
+      } else {
+        "Um. Not sure how I got here."
+      }
+
+      # if (inherits(x, 'logical') || inherits(x, 'character')) {
+      #   if (length(x) < 25) print(x) else print(head(x, 25))
+      # } else if (inherits(x, 'matrix') | inherits(x, "data.frame")) {
+      #   if (nrow(x) < 15) { print(x)
+      #   } else glimpse(x)
+      # } else {
+      #   str(x, max.level = 3)
+      # }
+      print(x)
+    })
+
     observeEvent(input$done, {
       # browser()
       if (input$pattern != "") {
@@ -164,4 +199,31 @@ toHTML <- function(...) {
   x <- gsub("\t", "\\\\t", x)
   x <- gsub("\r", "\\\\r", x)
   HTML(x)
+}
+
+regexFn_choices <- list(
+  "Choose a function" = "",
+  base = c(
+    "grep",
+    "grepl",
+    "regexpr",
+    "gregexpr",
+    "regexec"
+  ),
+  stringr = c(
+    "str_detect",
+    "str_locate",
+    "str_locate_all",
+    "str_extract",
+    "str_extract_all",
+    "str_match",
+    "str_match_all",
+    "str_split"
+  )
+)
+
+get_pkg_namespace <- function(fn) {
+  x <- names(purrr::keep(regexFn_choices, ~ (fn %in% .)))
+  if (length(x) > 1) warning(fn, " matches multiple functions in regexFn_choices, please review.")
+  x
 }

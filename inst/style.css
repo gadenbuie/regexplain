@@ -3,6 +3,12 @@
   padding-top: 5px;
 }
 
+.gadget-result {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 8px;
+}
+
 .group {
   border-bottom: 2px solid;
   padding: 0px;
