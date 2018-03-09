@@ -83,7 +83,7 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
     collapse = ""
   )
   x <- gsub("(?<![\\\\])\\)", ")</span>", x, perl = TRUE)
-  if (exact) x <- gsub("\\\\", "\\\\\\\\", x)
+  if (exact) x <- escape_backslash(x)
   paste0(first, x)
 }
 
@@ -117,6 +117,7 @@ view_regex <- function(
   res <- run_regex(text, pattern, ...)
   res <- purrr::map_chr(res, wrap_result, escape = escape)
   res <- paste("<p class='results'>", res, "</p>")
+  if (!nchar(pattern)) res <- paste("<p class='results'>", text, "</p>")
   if (knitr) return(knitr::asis_output(res))
   if (!render) return(res)
   head <- c(
