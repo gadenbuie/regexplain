@@ -37,7 +37,11 @@ option.}
 \code{"both"}, \code{"none"}, \code{"vertical"}, and \code{"horizontal"}.
 The default, \code{NULL}, will use the client browser's default setting for
 resizing textareas.}
+
+\item{is_code}{Should the text input be considered verbatim code input?}
 }
 \description{
-Modified Text Area Input
+Standard [shiny::textAreaInput()] with additional `is_code` parameter, added
+code font style for the input text and with `autocomplete`, `autocorrect`,
+`autocapitalize` and `spellcheck` set to `off` or `false`.
 }

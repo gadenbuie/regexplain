@@ -5,11 +5,16 @@
 
 #' Modified Text Area Input
 #'
+#' Standard [shiny::textAreaInput()] with additional `is_code` parameter, added
+#' code font style for the input text and with `autocomplete`, `autocorrect`,
+#' `autocapitalize` and `spellcheck` set to `off` or `false`.
+#'
 #' @inheritParams shiny::textAreaInput
+#' @param is_code Should the text input be considered verbatim code input?
 textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = NULL,
                              cols = NULL, rows = NULL, placeholder = NULL, resize = NULL,
                              is_code = TRUE) {
-  `%AND%` <- shiny:::`%AND%`
+  `%AND%` <- getFromNamespace("%AND%", "shiny")
 
   value <- shiny::restoreInput(id = inputId, default = value)
 
@@ -54,10 +59,15 @@ textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = 
 
 #' Modified Text Input
 #'
+#' Standard [shiny::textInput()] with additional `width` parameter, added code
+#' font style for the input text and with `autocomplete`, `autocorrect`,
+#' `autocapitalize` and `spellcheck` set to `off` or `false`.
+#'
 #' @inheritParams shiny::textInput
+#' @param width Width of `shiny-input-container` div.
 textInputCode <- function(inputId, label, value = "", width = NULL,
                           placeholder = NULL) {
-  `%AND%` <- shiny:::`%AND%`
+  `%AND%` <- getFromNamespace("%AND%", "shiny")
   value <- shiny::restoreInput(id = inputId, default = value)
 
   shiny::div(class = "form-group shiny-input-container",
