@@ -30,3 +30,16 @@ regexplain_addin <- function() {
   regex_gadget(if (length(obj) && obj != "") obj)
 
 }
+
+#' regexplain file loader
+#'
+#' @keywords internal
+regexplain_file <- function() {
+  fname <- file.choose()
+  x <- readLines(fname)
+  if (length(x) > 100) {
+    message("There were ", format(length(x), big.mark = ","), " lines in ", fname, "\nUsing only first 100.")
+    x <- x[1:100]
+  }
+  regex_gadget(x, "Regex")
+}
