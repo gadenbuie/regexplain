@@ -35,8 +35,12 @@ regexplain_addin <- function() {
 #'
 #' @import miniUI
 #' @import shiny
+#' @param text Text to explore in gadget (editable using interface)
+#' @param start_page Open gadget to this tab, one of `"Text"`, `"Regex"`,
+#'   `"Output"`, or `"Help"`
 #' @export
-regex_gadget <- function(text = NULL) {
+regex_gadget <- function(text = NULL,
+                         start_page = if (is.null(text)) "Text" else "Regex") {
   stopifnot(requireNamespace("miniUI"), requireNamespace("shiny"))
 
   ui <- miniPage(
@@ -47,7 +51,7 @@ regex_gadget <- function(text = NULL) {
       right = miniTitleBarButton("done", "Send Regex To Console", TRUE)
     ),
     miniTabstripPanel(
-      selected = if (is.null(text)) "Text" else "Regex",
+      selected = match.arg(start_page, c("Text", "Regex", "Output", "Help")),
       miniTabPanel(
         "Text", icon = icon('file-text-o'),
         miniContentPanel(
