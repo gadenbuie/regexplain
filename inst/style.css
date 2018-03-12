@@ -1,5 +1,6 @@
 .results {
   font-family: "Monaco", "Inconsolata", monospace;
+  color: #888888;
 }
 
 .gadget-result {
@@ -11,6 +12,7 @@
 
 .group {
   border-bottom: 2px solid;
+  color: black;
   padding: 0px;
 }
 
