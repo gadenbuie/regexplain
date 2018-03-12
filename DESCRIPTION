@@ -1,6 +1,6 @@
 Package: regexplain
 Title: Rstudio addin to help you with your regexes (in progress)
-Version: 0.1.0
+Version: 0.1.1
 Date: 2018-03-07
 Authors@R: c(
     person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre")),

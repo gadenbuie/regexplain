@@ -1,7 +1,7 @@
 regexplain
 ================
 
-[![packageversion](https://img.shields.io/badge/Package%20version-0.1.0-orange.svg?style=flat-square)](commits/master)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.1.1-orange.svg?style=flat-square)](commits/master)
 ![](https://img.shields.io/badge/lifecycle-needs_testers-yellow.svg)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
