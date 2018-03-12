@@ -16,6 +16,7 @@ Imports:
     purrr,
     dplyr,
     rmarkdown,
+    knitr,
     utils,
     tidyr,
     rstudioapi,

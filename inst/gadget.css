@@ -1,0 +1,43 @@
+th,
+td {
+  padding: 10px 13px;
+  text-align: left;
+  border-bottom: 1px solid #E1E1E1; }
+th:first-child,
+td:first-child {
+  padding-left: 0; }
+th:last-child,
+td:last-child {
+padding-right: 0; }
+
+#help-sidebar {
+  padding-top: 5px;
+  padding-left: 10px;
+}
+#help-sidebar ul {
+  list-style-type: none;
+  font-size: 1.1em;
+}
+#help-sidebar li {
+  list-style: none;
+}
+#help-sidebar .header li {
+  padding: 3px;
+}
+#help-sidebar a {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  text-align: left;
+  padding: 3px;
+}
+#help-sidebar .subgroup {
+  padding-left: 0px;
+}
+#help-sidebar .subgroup a {
+  padding-left: 15px;
+}
+#help-sidebar a:hover {
+  background-color: #eee;
+  text-decoration: none;
+}
