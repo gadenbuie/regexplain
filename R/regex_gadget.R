@@ -163,32 +163,54 @@ regex_gadget <- function(text = NULL,
       x
     })
 
+    pattern <- reactive({
+      sanitize_text_input(input$pattern)
+    })
+
+    alert_result <- function(msg, type = "danger") {
+      msg <- gsub("\n", "<br>", msg)
+      msg <- gsub("\t", "&nbsp;&nbsp;", msg)
+      paste0("<pre class='alert alert-", type, "' ",
+             "style='padding: 4px; margin-top: 1px; margin-bottom: 4px;'>",
+             paste(msg, collapse = "<br>"),
+             "</pre>")
+    }
+
     output$result <- renderUI({
       if (is.null(rtext())) return(NULL)
-      if (input$pattern == "") {
+      if (pattern() == "") {
         return(toHTML(paste('<p class="results">', escape_html(rtext()), "</p>", collapse = "")))
       }
+      res <- NULL
+      error_message <- NULL
+      warning_message <- NULL
       tryCatch({
-        toHTML(
-          paste(
-            view_regex(
-              rtext(),
-              sanitize_text_input(input$pattern),
-              ignore.case = 'ignore.case' %in% input$regex_options,
-              perl = 'perl' %in% input$regex_options,
-              fixed = 'fixed' %in% input$regex_options,
-              useBytes = 'useBytes' %in% input$regex_options,
-              # invert = 'invert' %in% input$regex_options,
-              render = FALSE,
-              escape = TRUE),
-            collapse = ""
-          )
+        res <- paste(
+          view_regex(
+            rtext(),
+            pattern(),
+            ignore.case = 'ignore.case' %in% input$regex_options,
+            perl = 'perl' %in% input$regex_options,
+            fixed = 'fixed' %in% input$regex_options,
+            useBytes = 'useBytes' %in% input$regex_options,
+            # invert = 'invert' %in% input$regex_options,
+            render = FALSE,
+            escape = TRUE),
+          collapse = ""
         )
       },
       error = function(e) {
-        toHTML(paste0("<pre class='alert alert-danger' style='padding: 4px; margin-top: 1px; margin-bottom: 4px;'>", paste(e$message, collapse = "<br>"), "</pre>"),
-                paste('<p class="results">', escape_html(rtext()), "</p>", collapse = ""))
+        error_message <<- alert_result(e$message, "danger")
+      },
+      warning = function(w) {
+        warning_message <<- alert_result(w$message, "warning")
       })
+
+      if (is.null(res)) res <- toHTML(
+        paste('<p class="results">', escape_html(rtext()), "</p>", collapse = "")
+      )
+
+      toHTML(paste(error_message, warning_message, res))
     })
 
     output$output_result <- renderPrint({
@@ -196,9 +218,9 @@ regex_gadget <- function(text = NULL,
       regexPkg <- get_pkg_namespace(input$regexFn)
       regexFn <- getFromNamespace(input$regexFn, regexPkg)
       x <- if (regexPkg == "base") {
-        regexFn(input$pattern, rtext())
+        regexFn(pattern(), rtext())
       } else if (regexPkg == "stringr") {
-        regexFn(rtext(), input$pattern)
+        regexFn(rtext(), pattern())
       } else {
         "Um. Not sure how I got here."
       }
@@ -298,8 +320,8 @@ regex_gadget <- function(text = NULL,
 
     observeEvent(input$done, {
       # browser()
-      if (input$pattern != "") {
-        pattern <- paste0('regex <- "', escape_backslash(sanitize_text_input(input$pattern)), '"')
+      if (pattern() != "") {
+        pattern <- paste0('regex <- "', escape_backslash(pattern()), '"')
         rstudioapi::sendToConsole(pattern, FALSE)
       }
       stopApp()
@@ -315,8 +337,14 @@ regex_gadget <- function(text = NULL,
 }
 
 sanitize_text_input <- function(x) {
-  x <- gsub("(“|”)", '"', x)
-  x <- gsub("‘|’", "'", x)
+  if (grepl("\\u|\\x|\\N|\\a|\\o", x)) {
+    try({
+      y <- stringi::stri_unescape_unicode(x)
+    }, silent = TRUE)
+    if (!is.na(y)) x <- y
+  }
+  # x <- gsub("\u201C|\u201D", '"', x)
+  # x <- gsub("\u2018|\u2019", "'", x)
   x
 }
 
