@@ -1,4 +1,9 @@
-Name: regexplain
+Name: Regexplain Selection
 Description: Regex with selected text
 Binding: regexplain_addin
+Interactive: false
+
+Name: Regex Cheetsheet
+Description: Regex Cheatsheet Quickreference
+Binding: regexplain_cheatsheet
 Interactive: false

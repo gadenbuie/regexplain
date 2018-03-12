@@ -1,36 +1,3 @@
-#' regexplain_addin
-#'
-#' @keywords internal
-regexplain_addin <- function() {
-  # Get the document context.
-  context <- rstudioapi::getActiveDocumentContext()
-
-  # Get context text
-  ctx_text <- context$selection[[1]]$text
-
-  # If it is one line and evaluates to something, use that
-  # Otherwise treat as text
-  obj <- tryCatch({
-    if (grepl("\n", ctx_text)) {
-      ctx_text[1:min(length(ctx_text), 100)]
-    } else {
-      x <- eval(parse(text = ctx_text))
-      x <- as.character(x)
-      if (length(x) == 1 && grepl("\n", x))
-        x <- strsplit(x, "\n")[[1]]
-      if (length(x) > 10) {
-        message(ctx_text, " gave ", length(x), " lines, limiting to first 10 unique lines.")
-        x <- unique(x)
-        x[1:min(length(x), 10)]
-      } else x
-    }
-  },
-  error = function(e) {as.character(ctx_text[1:min(length(ctx_text), 100)])})
-
-  regex_gadget(if (length(obj) && obj != "") obj)
-
-}
-
 #' regexplain gadget
 #'
 #' @import miniUI
@@ -119,38 +86,7 @@ regex_gadget <- function(text = NULL,
       ),
       miniTabPanel(
         "Help", icon = icon("support"),
-        miniContentPanel(
-          fillRow(
-            flex = c(1, 4),
-            tagList(
-              # selectInput("help_category", "Category", c("", unique(cheatsheet$category))),
-              # uiOutput("help_group"),
-              tags$ul(
-                id = "help-sidebar",
-                tags$li("Character Classes", class = "header"),
-                tags$ul(
-                  class = "subgroup",
-                  tags$li(actionLink("help_cat_character_classes_regular", "Regular")),
-                  tags$li(actionLink("help_cat_character_classes_prebuilt", "Pre-Built"))
-                ),
-                tags$li(actionLink("help_cat_anchors", "Anchors")),
-                tags$li("Escaped Characters", class = "header"),
-                tags$ul(
-                  class = "subgroup",
-                  tags$li(actionLink("help_cat_escaped_general", "General")),
-                  tags$li(actionLink("help_cat_escaped_hex", "Hex")),
-                  tags$li(actionLink("help_cat_escaped_control", "Control Characters"))
-                ),
-                tags$li(actionLink("help_cat_groups", "Groups")),
-                tags$li(actionLink("help_cat_quantifiers", "Quantifiers"))
-              )
-            ),
-            tags$div(
-              style = "width: 100%; padding-left: 10px;",
-              uiOutput('help_text_selected')
-            )
-          )
-        )
+        help_ui("help")
       )
     )
   )
@@ -224,99 +160,11 @@ regex_gadget <- function(text = NULL,
       } else {
         "Um. Not sure how I got here."
       }
-
-      # if (inherits(x, 'logical') || inherits(x, 'character')) {
-      #   if (length(x) < 25) print(x) else print(head(x, 25))
-      # } else if (inherits(x, 'matrix') | inherits(x, "data.frame")) {
-      #   if (nrow(x) < 15) { print(x)
-      #   } else glimpse(x)
-      # } else {
-      #   str(x, max.level = 3)
-      # }
       print(x)
     })
 
-    # output$help_group <- renderUI({
-    #   req(input$help_category)
-    #   groups <- unique(cheatsheet[cheatsheet$category == input$help_category, ]$group)
-    #   if (is.na(groups[1])) {
-    #     NULL
-    #   } else {
-    #     selectInput("help_group", "Group", groups)
-    #   }
-    # })
-
     # ---- Help Section ---- #
-    help_text <- reactiveVal("<p>Select a category from the left sidebar.</p>")
-
-    output$help_text_selected <- renderUI({
-      HTML(help_text())
-    })
-
-    make_html_table <- function(x) {
-      select(x, .data$regexp, .data$text) %>%
-        knitr::kable(
-          col.names = c("Regexp", "Text"),
-          escape = FALSE,
-          format = "html")
-    }
-
-    observeEvent(input$help_cat_character_classes_regular, {
-      cheatsheet %>%
-        filter(category == "character classes", group == "regular") %>%
-        make_html_table %>%
-        help_text
-    })
-
-    observeEvent(input$help_cat_character_classes_prebuilt, {
-      cheatsheet %>%
-        filter(category == "character classes", group == "pre-built") %>%
-        make_html_table %>%
-        help_text
-    })
-
-    observeEvent(input$help_cat_anchors, {
-      cheatsheet %>%
-        filter(category == "anchors") %>%
-        make_html_table %>%
-        help_text
-    })
-
-    observeEvent(input$help_cat_escaped_general, {
-      cheatsheet %>%
-        filter(category == "escaped characters", group == "general") %>%
-        make_html_table %>%
-        help_text
-    })
-
-    observeEvent(input$help_cat_escaped_hex, {
-      cheatsheet %>%
-        filter(category == "escaped characters", group == "hex") %>%
-        make_html_table %>%
-        help_text
-    })
-
-    observeEvent(input$help_cat_escaped_control, {
-      cheatsheet %>%
-        filter(category == "escaped characters", group == "control characters") %>%
-        make_html_table %>%
-        help_text
-    })
-
-    observeEvent(input$help_cat_groups, {
-      cheatsheet %>%
-        filter(category == "groups") %>%
-        make_html_table %>%
-        help_text
-    })
-
-    observeEvent(input$help_cat_quantifiers, {
-      cheatsheet %>%
-        filter(category == "quantifiers") %>%
-        make_html_table %>%
-        help_text
-    })
-
+    help_text <- callModule(help_server, "help")
 
     observeEvent(input$done, {
       # browser()
@@ -382,3 +230,4 @@ get_pkg_namespace <- function(fn) {
   if (length(x) > 1) warning(fn, " matches multiple functions in regexFn_choices, please review.")
   x
 }
+
