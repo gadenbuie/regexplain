@@ -12,7 +12,7 @@ regexplain_addin <- function() {
   # Otherwise treat as text
   obj <- tryCatch({
     if (grepl("\n", ctx_text)) {
-      ctx_text
+      ctx_text[1:min(length(ctx_text), 100)]
     } else {
       x <- eval(parse(text = ctx_text))
       x <- as.character(x)
@@ -25,7 +25,7 @@ regexplain_addin <- function() {
       } else x
     }
   },
-  error = function(e) {as.character(ctx_text)})
+  error = function(e) {as.character(ctx_text[1:min(length(ctx_text), 100)])})
 
   regex_gadget(if (length(obj) && obj != "") obj)
 
