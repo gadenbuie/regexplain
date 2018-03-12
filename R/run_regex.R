@@ -39,25 +39,25 @@ wrap_result <- function(x, escape = FALSE) {
     end = purrr::map_int(idx, ~ .[2]) + 1
   ) %>%
     mutate(
-      class = sprintf("group g%02d", i),
+      class = sprintf("group g%02d", .data$i),
       pad = 0
     )
   for (j in seq_len(nrow(inserts))) {
     if (inserts$i[j] == 0) next
     overlap <- filter(
       inserts[1:(j-1), ],
-      i != 0,
-      start <= !!inserts$start[j] & end >= !!inserts$end[j])
+      .data$i != 0,
+      .data$start <= !!inserts$start[j] & .data$end >= !!inserts$end[j])
     inserts[j, 'pad'] <- inserts$pad[j] + nrow(overlap)
   }
   inserts <- inserts %>%
     tidyr::gather(type, loc, start:end) %>%
     mutate(
-      class = ifelse(pad > 0, sprintf("%s pad%02d", class, pad), class),
-      insert = ifelse(type == 'start', sprintf('<span class="%s">', class), "</span>")
+      class = ifelse(.data$pad > 0, sprintf("%s pad%02d", .data$class, .data$pad), .data$class),
+      insert = ifelse(.data$type == 'start', sprintf('<span class="%s">', .data$class), "</span>")
     ) %>%
-    group_by(loc, type) %>%
-    summarize(insert = paste(insert, collapse = ''))
+    group_by(.data$loc, .data$type) %>%
+    summarize(insert = paste(.data$insert, collapse = ''))
 
   # inserts now gives html (span open and close) to insert and loc
   # first split text at inserts$loc locations,

@@ -64,6 +64,7 @@ help_ui <- function(id) {
   )
 }
 
+#' @importFrom rlang .data
 help_server <- function(input, output, session) {
   help_text <- reactiveVal("<p>Select a category from the left sidebar.</p>")
 
@@ -81,57 +82,57 @@ help_server <- function(input, output, session) {
 
   observeEvent(input$help_cat_character_classes_regular, {
     cheatsheet %>%
-      filter(category == "character classes", group == "regular") %>%
-      make_html_table %>%
-      help_text
+      filter(.data$category == "character classes", .data$group == "regular") %>%
+      make_html_table() %>%
+      help_text()
   })
 
   observeEvent(input$help_cat_character_classes_prebuilt, {
     cheatsheet %>%
-      filter(category == "character classes", group == "pre-built") %>%
-      make_html_table %>%
-      help_text
+      filter(.data$category == "character classes", .data$group == "pre-built") %>%
+      make_html_table() %>%
+      help_text()
   })
 
   observeEvent(input$help_cat_anchors, {
     cheatsheet %>%
-      filter(category == "anchors") %>%
-      make_html_table %>%
-      help_text
+      filter(.data$category == "anchors") %>%
+      make_html_table() %>%
+      help_text()
   })
 
   observeEvent(input$help_cat_escaped_general, {
     cheatsheet %>%
-      filter(category == "escaped characters", group == "general") %>%
-      make_html_table %>%
-      help_text
+      filter(.data$category == "escaped characters", .data$group == "general") %>%
+      make_html_table() %>%
+      help_text()
   })
 
   observeEvent(input$help_cat_escaped_hex, {
     cheatsheet %>%
-      filter(category == "escaped characters", group == "hex") %>%
-      make_html_table %>%
-      help_text
+      filter(.data$category == "escaped characters", .data$group == "hex") %>%
+      make_html_table() %>%
+      help_text()
   })
 
   observeEvent(input$help_cat_escaped_control, {
     cheatsheet %>%
-      filter(category == "escaped characters", group == "control characters") %>%
-      make_html_table %>%
-      help_text
+      filter(.data$category == "escaped characters", .data$group == "control characters") %>%
+      make_html_table() %>%
+      help_text()
   })
 
   observeEvent(input$help_cat_groups, {
     cheatsheet %>%
-      filter(category == "groups") %>%
-      make_html_table %>%
-      help_text
+      filter(.data$category == "groups") %>%
+      make_html_table() %>%
+      help_text()
   })
 
   observeEvent(input$help_cat_quantifiers, {
     cheatsheet %>%
-      filter(category == "quantifiers") %>%
-      make_html_table %>%
-      help_text
+      filter(.data$category == "quantifiers") %>%
+      make_html_table() %>%
+      help_text()
   })
 }

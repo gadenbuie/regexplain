@@ -15,6 +15,7 @@ LazyData: true
 Imports: 
     stringr,
     stringi,
+    rlang,
     purrr,
     dplyr,
     rmarkdown,
