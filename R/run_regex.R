@@ -1,3 +1,8 @@
+#' Extract matched groups from regexp
+#'
+#' @param text Text to search
+#' @param pattern regexp
+#' @inheritParams base::regexec
 #' @export
 run_regex <- function(
   text,
@@ -8,10 +13,18 @@ run_regex <- function(
   useBytes = FALSE,
   invert = FALSE
 ) {
+  # Use regex to get matches by group, gives start index and length
   m <- regexec(pattern, text, ignore.case, perl, fixed, useBytes)
-  x <- purrr::map(m, function(mi) list('idx' = purrr::map2(mi, attr(mi, "match.length"), ~ if(.x[1] != -1) c(.x, .x + .y - 1L))))
+  # Convert to start/end index
+  x <- purrr::map(m, function(mi) {
+    list(
+      'idx' = purrr::map2(mi, attr(mi, "match.length"),
+                          ~ if(.x[1] != -1) c(.x, .x + .y - 1L)))
+  })
+  # Store text and original regexc result with same hierarchy
   y <- purrr::map(text, ~ list(text = .))
   z <- purrr::map(regmatches(text, m), ~ list(m = .))
+  # Zip text, indexes and regexc match object lists
   purrr::map(seq_along(x), ~ list(text = y[[.]][[1]], idx = x[[.]][[1]], m = z[[.]][[1]]))
 }
 

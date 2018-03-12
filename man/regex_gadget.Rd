@@ -4,7 +4,14 @@
 \alias{regex_gadget}
 \title{regexplain gadget}
 \usage{
-regex_gadget(text = NULL)
+regex_gadget(text = NULL, start_page = if (is.null(text)) "Text" else
+  "Regex")
+}
+\arguments{
+\item{text}{Text to explore in gadget (editable using interface)}
+
+\item{start_page}{Open gadget to this tab, one of `"Text"`, `"Regex"`,
+`"Output"`, or `"Help"`}
 }
 \description{
 regexplain gadget
