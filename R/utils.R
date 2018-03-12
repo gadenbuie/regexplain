@@ -1,3 +1,7 @@
+#' @importFrom dplyr "%>%" mutate filter group_by summarize
+#' @importFrom utils getFromNamespace
+NULL
+
 escape_html <- function(x) {
   x = gsub("&", "&amp;", x)
   x = gsub("<", "&lt;", x)

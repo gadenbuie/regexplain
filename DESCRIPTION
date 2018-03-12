@@ -8,14 +8,13 @@ Authors@R: c(
     person(family = "RStudio", role = "cph", comment = "Copyright holder of included shiny fragments")
     )
 Description: Test and view regexes.
-Depends: 
-    R (>= 3.4.3),
-    dplyr
+Depends: R (>= 3.4.3)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: 
     purrr,
+    dplyr,
     rmarkdown,
     utils,
     tidyr,
