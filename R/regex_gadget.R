@@ -68,7 +68,7 @@ regex_gadget <- function(text = NULL) {
             flex = c(1, 3),
             fillCol(
               flex = c(1, 1),
-              textInputCode('pattern', 'Regex', width = "90%",
+              textInputCode('pattern', 'Regex', width = "100%",
                             placeholder = "Enter regex, single \\ okay"),
               checkboxGroupInput(
                 'regex_options',
@@ -87,6 +87,7 @@ regex_gadget <- function(text = NULL) {
             ),
             tags$div(
               class = "gadget-result",
+              style = "overflow-y: scroll; height: 100%;",
               htmlOutput('result')
             )
           )
@@ -102,8 +103,12 @@ regex_gadget <- function(text = NULL) {
               selectInput('regexFn', label = 'Apply Function',
                           choices = regexFn_choices)
             ),
-            verbatimTextOutput('output_result',
-                               placeholder = TRUE)
+            # verbatimTextOutput('output_result', placeholder = TRUE)
+            tags$pre(
+              id = "output_result",
+              class = "shiny-text-output",
+              style = "overflow-y: scroll; height: 100%;"
+            )
           )
         )
       ),
