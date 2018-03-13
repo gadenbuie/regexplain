@@ -26,7 +26,8 @@ devtools::install_github("gadenbuie/regexplain")
 
 ## Status
 
-Mostly working, but there [may be issues or future changes](#issues).
+Mostly working, but there [may be issues or future
+changes](#known-issues-and-future-work).
 
 I would love your help testing this, feel free to send me your feedback
 on Twitter at [@grrrck](https://twitter.com/grrrck) or through the
@@ -106,9 +107,6 @@ file an issue](https://github.com/gadenbuie/regexplain).
 
 #### Things I know are wonky
 
-  - Things get weird when regular text is surrounded by capture groups,
-    i.e. `"(\w+) not grouped (\w+)"`.
-
   - `view_regex()` colorizes non-capture groups. I forgot about them
     when building that feature, I’ll get back to it.
 
@@ -129,9 +127,28 @@ file an issue](https://github.com/gadenbuie/regexplain).
 
 #### Planned improvements
 
+  - Make better use of the opening view of **Help** tab to explain the
+    gadget. Also add one or more additional tabs with an overview of
+    regular expressions, with links to R4DS and
+    `vignette('regular-expressions', package = 'stringr')`. Maybe also a
+    **Try This** feature that sets the `text` and `pattern` with regex
+    challenges (possibly borrowed from R4DS).
+
+  - Add a global search option to the **Regex** tab. Groups would be
+    lost, but I can still highlight global matches.
+
+  - Add “flavors” menu to **Regex** tab. Automatically sets options to
+    common flavors. Mainly for clarity when switching between “base”"
+    style and “tidyverse/stringr” defaults.
+
+  - Add replacement functions somewhere. Maybe to **Output** tab with
+    `g?sub` and `str_replace(_all)?` as options with an additional
+    “replacement” field that appears when those are selected. Or
+    possibly as a “flavor” (see above) in the **Regex** tab.
+
   - I may add `stringi` functions to the list of available functions in
     the **Output** tab.
 
   - I would like to add the regex/function options for the functions in
-    the **Output** tab, similar to the options present in the **Regex**
-    tab.
+    the **Output** tab, i similar to the options present in the
+    **Regex** tab.
