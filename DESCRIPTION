@@ -1,13 +1,16 @@
 Package: regexplain
-Title: Rstudio addin to help you with your regexes (in progress)
-Version: 0.1.1
+Title: Rstudio Addin to Explain, Test and Build Regular Expressions
+Version: 0.1.1.9000
 Date: 2018-03-07
 Authors@R: c(
     person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre")),
     person("Winston", "Chang", role = c("ctb"), comment = "Author of textInput and textAreaInput fragments from shiny"),
     person(family = "RStudio", role = "cph", comment = "Copyright holder of included shiny fragments")
     )
-Description: Test and view regexes.
+Description: A set of RStudio Addins to help interactively test and build 
+    regular expressions. Provides a Shiny gadget interface for interactively
+    constructing the regexp and viewing the results from common string-searching
+    functions. Also provides a helpful reference sheet as an RStudio addin.
 Depends: R (>= 3.4.3)
 License: GPL-3
 Encoding: UTF-8
@@ -26,6 +29,7 @@ Imports:
     shiny,
     miniUI
 RoxygenNote: 6.0.1
+Roxygen: list(markdown = TRUE)
 URL: https://github.com/gadenbuie/regexplain
 BugReports: https://github.com/gadenbuie/regexplain/issues
 Suggests: 

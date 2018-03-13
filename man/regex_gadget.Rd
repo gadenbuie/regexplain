@@ -10,8 +10,8 @@ regex_gadget(text = NULL, start_page = if (is.null(text)) "Text" else
 \arguments{
 \item{text}{Text to explore in gadget (editable using interface)}
 
-\item{start_page}{Open gadget to this tab, one of `"Text"`, `"Regex"`,
-`"Output"`, or `"Help"`}
+\item{start_page}{Open gadget to this tab, one of \code{"Text"}, \code{"Regex"},
+\code{"Output"}, or \code{"Help"}}
 }
 \description{
 regexplain gadget

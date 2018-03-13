@@ -12,19 +12,19 @@ view_regex(text, pattern, ..., render = TRUE, escape = render,
 
 \item{pattern}{Regex pattern to look for}
 
-\item{...}{Passed to [run_regex]}
+\item{...}{Passed to \link{run_regex}}
 
 \item{render}{Render results to an HTML doc and open in RStudio viewer?}
 
-\item{escape}{Escape HTML-related characters in `text`?}
+\item{escape}{Escape HTML-related characters in \code{text}?}
 
-\item{knitr}{Print into knitr doc? If `TRUE`, marks text as `asis_output` and
-sets `render = FALSE` and `escape = TRUE`.}
+\item{knitr}{Print into knitr doc? If \code{TRUE}, marks text as \code{asis_output} and
+sets \code{render = FALSE} and \code{escape = TRUE}.}
 
 \item{exact}{Should regex be displayed as entered by the user into R console
-or source (default)? When `TRUE`, regex is displayed with the double `\\`
-required for escaping backslashes in R. When `FALSE`, regex is displayed
-as interpreted by the regex engine (i.e. double `\\` as a single `\`).}
+or source (default)? When \code{TRUE}, regex is displayed with the double \code{\\\\}
+required for escaping backslashes in R. When \code{FALSE}, regex is displayed
+as interpreted by the regex engine (i.e. double \code{\\\\} as a single \code{\\}).}
 }
 \description{
 View grouped regex results

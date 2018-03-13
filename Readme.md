@@ -1,13 +1,13 @@
 regexplain
 ================
 
-[![packageversion](https://img.shields.io/badge/Package%20version-0.1.1-orange.svg?style=flat-square)](commits/master)
+[![packageversion](https://img.shields.io/badge/v-0.1.1.9000-orange.svg)](commits/master)
 ![](https://img.shields.io/badge/lifecycle-needs_testers-yellow.svg)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/regexplain)](https://cran.r-project.org/package=regexplain)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--12-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--13-yellowgreen.svg)](/commits/master)
 
 <!-- Links -->
 

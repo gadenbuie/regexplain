@@ -110,9 +110,9 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
 #' @param knitr Print into knitr doc? If `TRUE`, marks text as `asis_output` and
 #'   sets `render = FALSE` and `escape = TRUE`.
 #' @param exact Should regex be displayed as entered by the user into R console
-#'   or source (default)? When `TRUE`, regex is displayed with the double `\\`
+#'   or source (default)? When `TRUE`, regex is displayed with the double `\\\\`
 #'   required for escaping backslashes in R. When `FALSE`, regex is displayed
-#'   as interpreted by the regex engine (i.e. double `\\` as a single `\`).
+#'   as interpreted by the regex engine (i.e. double `\\\\` as a single `\\`).
 #' @param ... Passed to [run_regex]
 #' @export
 view_regex <- function(

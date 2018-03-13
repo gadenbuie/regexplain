@@ -41,7 +41,7 @@ resizing textareas.}
 \item{is_code}{Should the text input be considered verbatim code input?}
 }
 \description{
-Standard [shiny::textAreaInput()] with additional `is_code` parameter, added
-code font style for the input text and with `autocomplete`, `autocorrect`,
-`autocapitalize` and `spellcheck` set to `off` or `false`.
+Standard \code{\link[shiny:textAreaInput]{shiny::textAreaInput()}} with additional \code{is_code} parameter, added
+code font style for the input text and with \code{autocomplete}, \code{autocorrect},
+\code{autocapitalize} and \code{spellcheck} set to \code{off} or \code{false}.
 }
