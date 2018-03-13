@@ -169,7 +169,7 @@ regex_gadget <- function(text = NULL,
     observeEvent(input$done, {
       # browser()
       if (pattern() != "") {
-        pattern <- paste0('regex <- "', escape_backslash(pattern()), '"')
+        pattern <- paste0('pattern <- "', escape_backslash(pattern()), '"')
         rstudioapi::sendToConsole(pattern, FALSE)
       }
       stopApp()

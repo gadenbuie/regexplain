@@ -29,6 +29,8 @@ regexplain_cheatsheet <- function() {
   runGadget(ui, server, viewer = viewer)
 }
 
+# ---- Help - Shiny Module ----
+
 help_ui <- function(id) {
   ns <- NS(id)
 

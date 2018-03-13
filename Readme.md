@@ -58,7 +58,7 @@ When you’re done, click on the **Send Regex to Console** to send your
 regex expression to… the console\!
 
 ``` r
-> regex <- "(is|were|was) ([[:alpha:]]+) ([[:alpha:]]+)"
+> pattern <- "(is|were|was) ([[:alpha:]]+) ([[:alpha:]]+)"
 ```
 
 ### Additional Addins
