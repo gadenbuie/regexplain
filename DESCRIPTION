@@ -1,6 +1,6 @@
 Package: regexplain
 Title: Rstudio Addin to Explain, Test and Build Regular Expressions
-Version: 0.1.1.9000
+Version: 0.1.2.9000
 Date: 2018-03-07
 Authors@R: c(
     person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre")),

@@ -19,7 +19,7 @@ run_regex <- function(
   x <- purrr::map(m, function(mi) {
     list(
       'idx' = purrr::map2(mi, attr(mi, "match.length"),
-                          ~ if(.x[1] != -1) c(.x, .x + .y - 1L)))
+                          ~ if(.x[1] != -1) c(.x, .x + .y)))
   })
   # Store text and original regexc result with same hierarchy
   y <- purrr::map(text, ~ list(text = .))
@@ -36,14 +36,18 @@ wrap_result <- function(x, escape = FALSE) {
   inserts <- data.frame(
     i = 1:len_idx - 1,
     start = purrr::map_int(idx, ~ .[1]),
-    end = purrr::map_int(idx, ~ .[2]) + 1
+    end = purrr::map_int(idx, ~ .[2])
   ) %>%
     mutate(
+      # unmatched groups have start/end of zero
+      start = ifelse(.data$start == 0, NA, .data$start),
+      end = ifelse(.data$end == 0, NA, .data$end),
       class = sprintf("group g%02d", .data$i),
       pad = 0
     )
   for (j in seq_len(nrow(inserts))) {
     if (inserts$i[j] == 0) next
+    if (is.na(inserts$start[j]) || is.na(inserts$end[j])) next
     overlap <- filter(
       inserts[1:(j-1), ],
       .data$i != 0,
@@ -52,6 +56,7 @@ wrap_result <- function(x, escape = FALSE) {
   }
   inserts <- inserts %>%
     tidyr::gather(type, loc, start:end) %>%
+    filter(!is.na(.data$loc)) %>%
     mutate(
       class = ifelse(.data$pad > 0, sprintf("%s pad%02d", .data$class, .data$pad), .data$class),
       insert = ifelse(.data$type == 'start', sprintf('<span class="%s">', .data$class), "</span>")
