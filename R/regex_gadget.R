@@ -11,8 +11,8 @@ regex_gadget <- function(text = NULL,
   stopifnot(requireNamespace("miniUI"), requireNamespace("shiny"))
 
   ui <- miniPage(
-    shiny::includeCSS(system.file("style.css", package = "regexplain")),
-    shiny::includeCSS(system.file("gadget.css", package = "regexplain")),
+    shiny::includeCSS(system.file("styles", "style.css", package = "regexplain")),
+    shiny::includeCSS(system.file("styles", "gadget.css", package = "regexplain")),
     gadgetTitleBar(
       "regexplain",
       right = miniTitleBarButton("done", "Send Regex To Console", TRUE)

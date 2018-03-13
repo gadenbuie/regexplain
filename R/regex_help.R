@@ -7,7 +7,7 @@ regexplain_cheatsheet <- function() {
   stopifnot(requireNamespace("miniUI"), requireNamespace("shiny"))
 
   ui <- miniPage(
-    shiny::includeCSS(system.file("gadget.css", package = "regexplain")),
+    shiny::includeCSS(system.file("styles", "gadget.css", package = "regexplain")),
     gadgetTitleBar(
       "Regex Cheatsheet Quick Reference",
       right = miniTitleBarButton("done", "OK", TRUE)

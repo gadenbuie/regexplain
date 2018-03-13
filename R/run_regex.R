@@ -162,8 +162,8 @@ view_regex <- function(
   tmp_html <- suppressWarnings(
     rmarkdown::render(
       tmp,
-      output_format = rmarkdown::html_document(css = c(system.file('style.css', package='regexplain'),
-                                                       system.file('skeleton.css', package='regexplain')),
+      output_format = rmarkdown::html_document(css = c(system.file("styles", 'style.css', package='regexplain'),
+                                                       system.file("styles", 'skeleton.css', package='regexplain')),
                                                theme = NULL),
       quiet = TRUE
   ))
