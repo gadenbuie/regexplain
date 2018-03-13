@@ -152,9 +152,9 @@ view_regex <- function(
   if (!render) return(res)
   head <- c(
     "---", "pagetitle: View Regex", "---",
-    "<h5 style = 'font-size: 1.1em'>Regex</h5>",
-    "<p><pre style = 'font-size: 1.25em;'>", wrap_regex(pattern, escape, exact), "</pre></p>",
-    "<h5 style = 'font-size: 1.1em'>Results</h5>"
+    "<h5>Regex</h5>",
+    "<p><pre>", wrap_regex(pattern, escape, exact), "</pre></p>",
+    "<h5>Results</h5>"
   )
   res <- c(head, res)
   tmp <- tempfile(fileext = ".Rmd")
@@ -162,7 +162,9 @@ view_regex <- function(
   tmp_html <- suppressWarnings(
     rmarkdown::render(
       tmp,
-      output_format = rmarkdown::html_document(css = system.file('style.css', package='regexhelp'), theme = NULL),
+      output_format = rmarkdown::html_document(css = c(system.file('style.css', package='regexplain'),
+                                                       system.file('skeleton.css', package='regexplain')),
+                                               theme = NULL),
       quiet = TRUE
   ))
   rstudioapi::viewer(tmp_html)
