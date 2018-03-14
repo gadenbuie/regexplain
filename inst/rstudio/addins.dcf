@@ -8,7 +8,7 @@ Description: Choose a file for which to build a regexp
 Binding: regexplain_file
 Interactive: true
 
-Name: Regexplain Cheetsheet
-Description: Regex Cheatsheet Quickreference
+Name: Regexplain Cheatsheet
+Description: Regex Cheatsheet Quick Reference
 Binding: regexplain_cheatsheet
 Interactive: false
