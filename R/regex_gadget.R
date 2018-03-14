@@ -279,9 +279,14 @@ regex_gadget <- function(text = NULL,
 
     # ---- Server - Tab - Exit ----
     observeEvent(input$done, {
-      # browser()
       if (pattern() != "") {
         pattern <- paste0('pattern <- "', escape_backslash(pattern()), '"')
+        if ("regexFn_replacement" %in% names(input) && replacement() != "") {
+          pattern <- paste0(
+            pattern, "\n",
+            'replacement <- "', escape_backslash(replacement()), '"'
+          )
+        }
         rstudioapi::sendToConsole(pattern, FALSE)
       }
       stopApp()
