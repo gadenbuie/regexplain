@@ -10,6 +10,7 @@ regex_gadget <- function(text = NULL,
                          start_page = if (is.null(text)) "Text" else "Regex") {
   stopifnot(requireNamespace("miniUI"), requireNamespace("shiny"))
 
+  # ---- UI ----
   ui <- miniPage(
     shiny::includeCSS(system.file("styles", "style.css", package = "regexplain")),
     shiny::includeCSS(system.file("styles", "gadget.css", package = "regexplain")),
@@ -19,6 +20,7 @@ regex_gadget <- function(text = NULL,
     ),
     miniTabstripPanel(
       selected = match.arg(start_page, c("Text", "Regex", "Output", "Help")),
+      # --- UI - Tab - Text ----
       miniTabPanel(
         "Text", icon = icon('file-text-o'),
         miniContentPanel(
@@ -33,6 +35,7 @@ regex_gadget <- function(text = NULL,
           )
         )
       ),
+      # ---- UI - Tab - Regex ----
       miniTabPanel(
         "Regex", icon = icon('terminal'),
         miniContentPanel(
@@ -65,6 +68,7 @@ regex_gadget <- function(text = NULL,
           )
         )
       ),
+      # ---- UI - Tab - Output ----
       miniTabPanel(
         "Output", icon = icon("table"),
         miniContentPanel(
@@ -85,6 +89,7 @@ regex_gadget <- function(text = NULL,
           )
         )
       ),
+      # ---- UI - Tab - Help ----
       miniTabPanel(
         "Help", icon = icon("support"),
         help_ui("help")
@@ -92,7 +97,9 @@ regex_gadget <- function(text = NULL,
     )
   )
 
+  # ---- Server ----
   server <- function(input, output, session) {
+    # ---- Server - Global ----
     rtext <- reactive({
       x <- if ('text_break_lines' %in% input$regex_options) {
         strsplit(input$text, "\n")[[1]]
@@ -113,6 +120,7 @@ regex_gadget <- function(text = NULL,
              "</pre>")
     }
 
+    # ---- Server - Tab - Regex ----
     output$result <- renderUI({
       if (is.null(rtext())) return(NULL)
       if (pattern() == "") {
@@ -151,6 +159,7 @@ regex_gadget <- function(text = NULL,
       toHTML(paste(error_message, warning_message, res))
     })
 
+    # ---- Server - Tab - Output ----
     regexFn_replacement_val <- NULL
 
     output$output_sub <- renderUI({
@@ -196,9 +205,10 @@ regex_gadget <- function(text = NULL,
       print(x)
     })
 
-    # ---- Help Section ---- #
+    # ---- Server - Tab - Help ----
     help_text <- callModule(help_server, "help")
 
+    # ---- Server - Tab - Exit ----
     observeEvent(input$done, {
       # browser()
       if (pattern() != "") {
@@ -216,6 +226,8 @@ regex_gadget <- function(text = NULL,
   viewer <- shiny::paneViewer(700)
   runGadget(ui, server, viewer = viewer)
 }
+
+# ---- Gadget Helper Functions and Variables ----
 
 sanitize_text_input <- function(x) {
   if (is.null(x) || !nchar(x)) return(x)
