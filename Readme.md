@@ -50,8 +50,8 @@ The addin will open an interface with 4 panes where you can
   - edit the **text** you’ve imported
   - build up a **regex** expression and interactively see it applied to
     your text
-  - test the **output** of common string matching functions from `base`
-    and `stringr`
+  - test the **output** of common string matching and replacement
+    functions from `base` and `stringr`
   - and refer to a **help**ful cheatsheet
 
 ![The panes of regexplain](docs/regexplain-gadget-tabs.png)
