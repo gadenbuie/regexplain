@@ -381,15 +381,15 @@ check_version <- function(
   ok_to_check <- getOption("regexplain.no.check.version", TRUE)
   if (!ok_to_check) return(NULL)
   if (!requireNamespace('jsonlite', quietly = TRUE)) return(NULL)
-  gh_tags <- NULL
-  try({
-    gh_tags <- jsonlite::fromJSON(
-      paste0("https://api.github.com/repos/", gh_user, "/", gh_repo, "/git/refs/tags"),
-      simplifyDataFrame = TRUE
-    )
+  get_json <- purrr::possibly(jsonlite::fromJSON, NULL)
+  gh_tags <- get_json(
+    paste0("https://api.github.com/repos/", gh_user, "/", gh_repo, "/git/refs/tags"),
+    simplifyDataFrame = TRUE
+  )
+  if (!is.null(gh_tags)) {
     gh_tags$tag <- sub("refs/tags/", "", gh_tags$ref, fixed = TRUE)
     gh_tags$version <- sub("^v\\.?", "", gh_tags$tag)
-  })
+  }
   if (!is.null(gh_tags) && any(gh_tags$version > this_version)) {
     max_version <- max(gh_tags$version)
     max_tag <- gh_tags$tag[gh_tags$version == max_version]
