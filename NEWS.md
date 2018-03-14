@@ -4,6 +4,8 @@
 
 * Options from **Regex** tab are extended to **Output** tab as well. Colored
   options according to group where they are applied.
+* Added a mechanism to announce package updates while this package is on GitHub.
+  Only checked once per R session on the first launch of the gadget.
 
 ### 0.1.4
 

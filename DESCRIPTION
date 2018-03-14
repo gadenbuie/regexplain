@@ -27,7 +27,8 @@ Imports:
     tidyr,
     rstudioapi,
     shiny,
-    miniUI
+    miniUI,
+    jsonlite
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/gadenbuie/regexplain

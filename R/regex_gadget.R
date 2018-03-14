@@ -10,6 +10,8 @@ regex_gadget <- function(text = NULL,
                          start_page = if (is.null(text)) "Text" else "Regex") {
   stopifnot(requireNamespace("miniUI"), requireNamespace("shiny"))
 
+  update_available <- check_version()
+
   # ---- UI ----
   ui <- miniPage(
     shiny::includeCSS(system.file("styles", "style.css", package = "regexplain")),
@@ -116,6 +118,33 @@ regex_gadget <- function(text = NULL,
 
   # ---- Server ----
   server <- function(input, output, session) {
+    if (!is.null(update_available)) {
+      showModal(
+        modalDialog(
+          title = "Update Available \U1F389",
+          easyClose = TRUE,
+          footer = modalButton("OK"),
+          tagList(
+            tags$p(
+              "Version", update_available$version, "is",
+              tags$a(href = update_available$link,
+                     "available on GitHub.")
+            ),
+            if ("devtools" %in% installed.packages()) tags$p(
+              "The fastest way to update is with devtools:",
+              tags$pre(
+                "devtools::update_packages(\"gadenbuie/regexplain\")"
+              )
+            ),
+            tags$p(
+              class = 'help-block',
+              "This message won't be shown again during this R session."
+            )
+          )
+        )
+      )
+    }
+
     # ---- Server - Global ----
     rtext <- reactive({
       x <- if ('text_break_lines' %in% input$regex_options) {
@@ -326,3 +355,42 @@ get_pkg_namespace <- function(fn) {
   x
 }
 
+#' Check if an updated version is available
+#'
+#' I included this because it can be difficult to tell if your RStudio Addins
+#' are up to date. I may add new features that you want but you won't hear about
+#' the updates. This function checks if an update is available, using GitHub
+#' tags. If an update is available, a modal dialog is shown when you start
+#' the regexplain gadget. This only happens once per R session, though, so feel
+#' free to ignore the message.
+#'
+#' @param gh_user GitHub user account
+#' @param gh_repo GitHub repo name
+#' @param this_version The currently installed version of the package
+#' @keywords internal
+check_version <- function(
+  gh_user = "gadenbuie",
+  gh_repo = "regexplain",
+  this_version = packageVersion('regexplain')
+) {
+  ok_to_check <- getOption("regexplain.no.check.version", TRUE)
+  if (!ok_to_check) return(NULL)
+  if (!requireNamespace('jsonlite', quietly = TRUE)) return(NULL)
+  gh_tags <- jsonlite::fromJSON(
+    paste0("https://api.github.com/repos/", gh_user, "/", gh_repo, "/git/refs/tags"),
+    simplifyDataFrame = TRUE
+  )
+  gh_tags$tag <- sub("refs/tags/", "", gh_tags$ref, fixed = TRUE)
+  gh_tags$version <- sub("^v\\.?", "", gh_tags$tag)
+  if (any(gh_tags$version > this_version)) {
+    max_version <- max(gh_tags$version)
+    max_tag <- gh_tags$tag[gh_tags$version == max_version]
+    options(regexplain.no.check.version = FALSE)
+    return(
+      list(
+        version = max_version,
+        link = paste("https://github.com", gh_user, gh_repo, "releases/tag", max_tag, sep = "/")
+      )
+    )
+  } else return(NULL)
+}
