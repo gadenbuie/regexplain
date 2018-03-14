@@ -105,11 +105,6 @@ with this addin are entirely my fault and have nothing to do with the
 fine packages this addin is built on. If you do find an issue, [please
 file an issue](https://github.com/gadenbuie/regexplain).
 
-#### Things I know are wonky
-
-  - `view_regex()` colorizes non-capture groups. I forgot about them
-    when building that feature, I’ll get back to it.
-
 #### Notes
 
   - I’ve set up this app so that most escape sequences don’t need to be

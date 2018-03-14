@@ -90,16 +90,12 @@ view_regex(t_nested, r_nested)
 ![Example of nested groups](docs/view-nested.png)
 
 
-## Known Issues and Future Work {#issues}
+## Known Issues and Future Work
 
 Regular expressions are nothing if not a collection of corner cases.
 Trying to pass regular expressions through Shiny and HTML inputs is a bit of a labrynth.
 For now, assume any issues or oddities you experience with this addin are entirely my fault and have nothing to do with the fine packages this addin is built on.
 If you do find an issue, [please file an issue](https://github.com/gadenbuie/regexplain).
-
-#### Things I know are wonky
-
-- `view_regex()` colorizes non-capture groups. I forgot about them when building that feature, I'll get back to it.
 
 #### Notes
 
