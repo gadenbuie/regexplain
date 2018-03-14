@@ -106,3 +106,17 @@
   padding-bottom: 25px;
   margin-bottom: 25px;
 }
+
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form {
+  margin-bottom: 1rem; }
+
+body {
+  line-height: 18px;}
