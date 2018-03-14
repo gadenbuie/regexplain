@@ -73,7 +73,8 @@ regex_gadget <- function(text = NULL,
             inputPanel(
               width = "100%;",
               selectInput('regexFn', label = 'Apply Function',
-                          choices = regexFn_choices)
+                          choices = regexFn_choices),
+              uiOutput("output_sub")
             ),
             # verbatimTextOutput('output_result', placeholder = TRUE)
             tags$pre(
@@ -150,14 +151,45 @@ regex_gadget <- function(text = NULL,
       toHTML(paste(error_message, warning_message, res))
     })
 
+    regexFn_replacement_val <- NULL
+
+    output$output_sub <- renderUI({
+      req(input$regexFn)
+      if (!input$regexFn %in% regexFn_substitute) return(NULL)
+      textInputCode('regexFn_replacement', 'Subsitution',
+                    value = regexFn_replacement_val,
+                    placeholder = "Replacement Text")
+    })
+
+    replacement <- reactive({
+      req(input$regexFn)
+      if (!input$regexFn %in% regexFn_substitute) {
+        NULL
+      } else {
+        regexFn_replacement_val <<- input$regexFn_replacement
+        sanitize_text_input(input$regexFn_replacement)
+      }
+    })
+
     output$output_result <- renderPrint({
       req(input$regexFn)
       regexPkg <- get_pkg_namespace(input$regexFn)
       regexFn <- getFromNamespace(input$regexFn, regexPkg)
+      req_sub_arg <- input$regexFn %in% regexFn_substitute
       x <- if (regexPkg == "base") {
-        regexFn(pattern(), rtext())
+        if (req_sub_arg) {
+          req(replacement())
+          regexFn(pattern(), replacement(), rtext())
+        } else {
+          regexFn(pattern(), rtext())
+        }
       } else if (regexPkg == "stringr") {
-        regexFn(rtext(), pattern())
+        if (req_sub_arg) {
+          req(replacement())
+          regexFn(rtext(), pattern(), replacement())
+        } else {
+          regexFn(rtext(), pattern())
+        }
       } else {
         "Um. Not sure how I got here."
       }
@@ -186,6 +218,7 @@ regex_gadget <- function(text = NULL,
 }
 
 sanitize_text_input <- function(x) {
+  if (is.null(x) || !nchar(x)) return(x)
   if (grepl("\\u|\\x|\\N|\\a|\\o", x)) {
     try({
       y <- stringi::stri_unescape_unicode(x)
@@ -210,6 +243,8 @@ regexFn_choices <- list(
   base = c(
     "grep",
     "grepl",
+    "sub",  #<<
+    "gsub", #<<
     "regexpr",
     "gregexpr",
     "regexec"
@@ -222,8 +257,15 @@ regexFn_choices <- list(
     "str_extract_all",
     "str_match",
     "str_match_all",
+    "str_replace",     #<<
+    "str_replace_all", #<<
     "str_split"
   )
+)
+
+regexFn_substitute <- c(
+  paste0(c("", "g"), "sub"),
+  paste0("str_replace", c("", "_all"))
 )
 
 get_pkg_namespace <- function(fn) {
