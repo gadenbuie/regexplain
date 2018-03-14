@@ -47,16 +47,28 @@ regex_gadget <- function(text = NULL,
                             placeholder = "Enter regex, single \\ okay"),
               checkboxGroupInput(
                 'regex_options',
-                label = "",
+                label = HTML(
+                  '<div style="font-size: 1.25rem;">',
+                  'Option Groups: ',
+                  '<span style="color: #337ab7;">regexplain</span>,',
+                  '<span style="color: #5cb85c;">all</span>, ',
+                  '<span style="color: #f0ad4e;">base only</span>',
+                  '</div>'
+                ),
                 inline = TRUE,
                 width = "90%",
-                choices = c("Break Lines" = "text_break_lines",
-                            "Ignore Case" = "ignore.case",
-                            "Perl Style" = "perl",
-                            "Fixed" = "fixed",
-                            "Use Bytes" = "useBytes"
-                            # , "Invert" = "invert"
-                ),
+                choiceValues = list(
+                  "text_break_lines",
+                  "ignore.case",
+                  "fixed",
+                  "perl",
+                  "useBytes"),
+                choiceNames = list(
+                  HTML('<span style="color: #337ab7;">Break Lines</span>'),
+                  HTML('<span style="color: #5cb85c;">Ignore Case</span>'),
+                  HTML('<span style="color: #5cb85c;">Fixed/Literal</span>'),
+                  HTML('<span style="color: #f0ad4e;">Perl Style</span>'),
+                  HTML('<span style="color: #f0ad4e;">Use Bytes</span>')),
                 selected = c('text_break_lines')
               )
             ),
@@ -75,9 +87,14 @@ regex_gadget <- function(text = NULL,
           fillCol(
             flex = c(1, 3),
             inputPanel(
-              width = "100%;",
-              selectInput('regexFn', label = 'Apply Function',
-                          choices = regexFn_choices),
+              tags$div(
+                width = "100%;",
+                selectInput('regexFn', label = 'Apply Function',
+                            choices = regexFn_choices),
+                tags$span(class = "help-block",
+                          style = "font-size:1.25rem; margin-top:-10px; margin-bottom:0px; margin-left:4px;",
+                          "Adjust options in Regex tab")
+              ),
               uiOutput("output_sub")
             ),
             # verbatimTextOutput('output_result', placeholder = TRUE)
@@ -188,16 +205,39 @@ regex_gadget <- function(text = NULL,
       x <- if (regexPkg == "base") {
         if (req_sub_arg) {
           req(replacement())
-          regexFn(pattern(), replacement(), rtext())
+          regexFn(pattern(), replacement(), rtext(),
+                  ignore.case = 'ignore.case' %in% input$regex_options,
+                  perl = 'perl' %in% input$regex_options,
+                  fixed = 'fixed' %in% input$regex_options,
+                  useBytes = 'useBytes' %in% input$regex_options)
         } else {
-          regexFn(pattern(), rtext())
+          regexFn(pattern(), rtext(),
+                  ignore.case = 'ignore.case' %in% input$regex_options,
+                  perl = 'perl' %in% input$regex_options,
+                  fixed = 'fixed' %in% input$regex_options,
+                  useBytes = 'useBytes' %in% input$regex_options)
         }
       } else if (regexPkg == "stringr") {
         if (req_sub_arg) {
           req(replacement())
-          regexFn(rtext(), pattern(), replacement())
+          regexFn(
+            rtext(),
+            stringr::regex(
+              pattern(),
+              ignore_case = 'ignore.case' %in% input$regex_options,
+              literal = 'fixed' %in% input$regex_options
+            ),
+            replacement()
+          )
         } else {
-          regexFn(rtext(), pattern())
+          regexFn(
+            rtext(),
+            stringr::regex(
+              pattern(),
+              ignore_case = 'ignore.case' %in% input$regex_options,
+              literal = 'fixed' %in% input$regex_options
+            )
+          )
         }
       } else {
         "Um. Not sure how I got here."
@@ -223,7 +263,7 @@ regex_gadget <- function(text = NULL,
     })
   }
 
-  viewer <- shiny::paneViewer(700)
+  viewer <- shiny::paneViewer(minHeight = 1000)
   runGadget(ui, server, viewer = viewer)
 }
 
