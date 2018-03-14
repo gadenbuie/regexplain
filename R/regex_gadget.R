@@ -131,7 +131,8 @@ regex_gadget <- function(text = NULL,
             useBytes = 'useBytes' %in% input$regex_options,
             # invert = 'invert' %in% input$regex_options,
             render = FALSE,
-            escape = TRUE),
+            escape = TRUE,
+            exact  = FALSE),
           collapse = ""
         )
       },
