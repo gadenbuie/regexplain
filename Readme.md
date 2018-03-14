@@ -8,7 +8,7 @@ regexplain
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/regexplain)](https://cran.r-project.org/package=regexplain)
-<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--13-yellowgreen.svg)](/commits/master) -->
+<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--14-yellowgreen.svg)](/commits/master) -->
 
 <!-- Links -->
 
@@ -74,7 +74,7 @@ pane without blocking your current R session.
 
 regexplain also provides the function `view_regex()` that you can use as
 a `stringr::str_view()` replacement. In addition to highlighting matched
-portions of the text, `view_regex()` also colorizes groups and attemps
+portions of the text, `view_regex()` also colorizes groups and attempts
 to colorize the regex expression itself as well.
 
 ``` r
@@ -100,10 +100,10 @@ view_regex(t_nested, r_nested)
 
 Regular expressions are nothing if not a collection of corner cases.
 Trying to pass regular expressions through Shiny and HTML inputs is a
-bit of a labrynth. For now, assume any issues or oddities you experience
-with this addin are entirely my fault and have nothing to do with the
-fine packages this addin is built on. If you do find an issue, [please
-file an issue](https://github.com/gadenbuie/regexplain).
+bit of a labyrinth. For now, assume any issues or oddities you
+experience with this addin are entirely my fault and have nothing to do
+with the fine packages this addin is built on. If you do find an issue,
+[please file an issue](https://github.com/gadenbuie/regexplain).
 
 #### Notes
 
