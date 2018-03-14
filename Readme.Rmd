@@ -124,12 +124,12 @@ If you do find an issue, [please file an issue](https://github.com/gadenbuie/reg
 - Add "flavors" menu to **Regex** tab. Automatically sets options to common flavors.
   Mainly for clarity when switching between "base"" style and "tidyverse/stringr" defaults.
   
-- Add replacement functions somewhere. Maybe to **Output** tab with `g?sub` and 
+- **Done in v0.1.5!** Add replacement functions somewhere. Maybe to **Output** tab with `g?sub` and 
   `str_replace(_all)?` as options with an additional "replacement" field that 
   appears when those are selected. Or possibly as a "flavor" (see above) in the
   **Regex** tab.
 
 - I may add `stringi` functions to the list of available functions in the **Output** tab.
 
-- I would like to add the regex/function options for the functions in the **Output** tab, i
+- **Done in v0.1.5!** I would like to add the regex/function options for the functions in the **Output** tab, i
   similar to the options present in the **Regex** tab.
