@@ -28,7 +28,12 @@ run_regex <- function(
   purrr::map(seq_along(x), ~ list(text = y[[.]][[1]], idx = x[[.]][[1]], m = z[[.]][[1]]))
 }
 
-wrap_result <- function(x, escape = FALSE) {
+#' Wrap matches in HTML span tags to colorize via CSS
+#'
+#' @param x Individual list item in list returned by [run_regex()]
+#' @inheritParams view_regex
+#' @keywords internal
+wrap_result <- function(x, escape = FALSE, exact = FALSE) {
   if (is.null(x$idx[[1]])) return(if (escape) escape_html(x$text) else x$text)
   text <- x$text
   idx <- x$idx
@@ -84,26 +89,68 @@ wrap_result <- function(x, escape = FALSE) {
       if (!is.na(inserts$insert[j])) inserts$insert[j]
     )
   }
+  if (exact) out <- escape_backslash(out)
   paste(out, collapse = '')
 }
 
+#' Wraps capture groups in regex pattern in span tags to colorize with CSS
+#'
+#' @inheritParams view_regex
+#' @keywords internal
 wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
   stopifnot(length(pattern) == 1)
-  if(escape) pattern <- escape_html(pattern)
-  r_open_parens <- "(?<![\\\\])\\("
-  x <- strsplit(pattern, r_open_parens, perl = TRUE)[[1]]
-  first <- x[1]
-  x <- x[-1]
-  if (length(x)) {
-    x <- paste0(
-      '<span class="g', sprintf("%02d", seq_along(x)), '">(',
-      x,
-      collapse = ""
-    )
-    x <- gsub("(?<![\\\\])\\)", ")</span>", x, perl = TRUE)
+  if (escape) pattern <- escape_html(pattern)
+  # 1. walk characters in pattern
+  # 2. if current is open parens
+  #    1. walk backwards, counting number of "\\" until first non-"\\" char
+  #    2. If odd, then not an opening group
+  #    3. Look forward, if followed by "?" then not a capturing group
+  #    4. If capturing group then add opening "<span...>(" to out and
+  #       add TRUE for valid capture group to parens stack
+  #    5. If non-capturing group, add "(" to out and FALSE for non-valid to paren stack
+  # 3. if close parens, add closing "</span>" to out
+  out <- c()
+  paren_stack <- c()
+  group <- 0
+  pattern_chars <- strsplit(pattern, "")[[1]]
+  for (i in seq_along(pattern_chars)) {
+    is_capture_group <- FALSE
+    if (pattern_chars[i] == "(") {
+      backslash_count <- 0
+      if (i != 1) {
+        j <- i-1
+        while (pattern_chars[j] == "\\" && j > 0) {
+          backslash_count <- backslash_count + 1
+          j <- j - 1
+        }
+      }
+      if (backslash_count %% 2 == 0) {
+        if (i != length(pattern_chars) && pattern_chars[i + 1] != "?") {
+          is_capture_group <- TRUE
+        }
+      }
+      if (is_capture_group) {
+        group <- group + 1
+        paren_stack <- c(TRUE, paren_stack) #push
+        out <- c(out, paste0('<span class="g', sprintf("%02d", group), '">('))
+      } else {
+        paren_stack <- c(FALSE, paren_stack) #push
+        out <- c(out, "(")
+      }
+    } else if (pattern_chars[i] == ")") {
+      closes_capture_group <- paren_stack[1]
+      paren_stack <- paren_stack[-1] #pop
+      if (closes_capture_group) {
+        out <- c(out, ")</span>")
+      } else {
+        out <- c(out, ")")
+      }
+    } else {
+      out <- c(out, pattern_chars[i])
+    }
   }
-  if (exact) x <- escape_backslash(x)
-  paste0(first, x)
+  if (exact) out <- escape_backslash(out)
+  paste(out, collapse = "")
 }
 
 #' View grouped regex results
@@ -114,11 +161,12 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
 #' @param escape Escape HTML-related characters in `text`?
 #' @param knitr Print into knitr doc? If `TRUE`, marks text as `asis_output` and
 #'   sets `render = FALSE` and `escape = TRUE`.
-#' @param exact Should regex be displayed as entered by the user into R console
-#'   or source (default)? When `TRUE`, regex is displayed with the double `\\\\`
-#'   required for escaping backslashes in R. When `FALSE`, regex is displayed
-#'   as interpreted by the regex engine (i.e. double `\\\\` as a single `\\`).
-#' @param ... Passed to [run_regex]
+#' @param exact Should the regex pattern be displayed as entered by the user
+#'   into R console or source (default)? When `TRUE`, regex is displayed with
+#'   the double `\\\\` required for escaping backslashes in R. When `FALSE`,
+#'   regex is displayed as interpreted by the regex engine (i.e. double `\\\\`
+#'   as a single `\\`).
+#' @param ... Passed to [run_regex()]
 #' @export
 view_regex <- function(
   text,
@@ -134,7 +182,7 @@ view_regex <- function(
     escape <- TRUE
   }
   res <- run_regex(text, pattern, ...)
-  res <- purrr::map_chr(res, wrap_result, escape = escape)
+  res <- purrr::map_chr(res, wrap_result, escape = escape, exact = exact)
   res <- purrr::map_chr(res, function(resi) {
     result_pad <- ""
     if (grepl("pad\\d{2}", resi)) {
