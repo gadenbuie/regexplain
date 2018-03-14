@@ -212,7 +212,8 @@ view_regex <- function(
       tmp,
       output_format = rmarkdown::html_document(css = c(system.file("styles", 'skeleton.css', package='regexplain'),
                                                        system.file("styles", 'style.css', package='regexplain')),
-                                               theme = NULL),
+                                               theme = NULL,
+                                               md_extensions = "-autolink_bare_uris"),
       quiet = TRUE
   ))
   rstudioapi::viewer(tmp_html)
