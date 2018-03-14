@@ -68,7 +68,7 @@ There are two more addins.
 ## View regex results without the interactivity
 
 regexplain also provides the function `view_regex()` that you can use as a `stringr::str_view()` replacement.
-In addition to highlighting matched portions of the text, `view_regex()` also colorizes groups and attemps to colorize the regex expression itself as well.
+In addition to highlighting matched portions of the text, `view_regex()` also colorizes groups and attempts to colorize the regex expression itself as well.
 
 ```r
 text <- c("breakfast=eggs;lunch=pizza",
@@ -93,7 +93,7 @@ view_regex(t_nested, r_nested)
 ## Known Issues and Future Work
 
 Regular expressions are nothing if not a collection of corner cases.
-Trying to pass regular expressions through Shiny and HTML inputs is a bit of a labrynth.
+Trying to pass regular expressions through Shiny and HTML inputs is a bit of a labyrinth.
 For now, assume any issues or oddities you experience with this addin are entirely my fault and have nothing to do with the fine packages this addin is built on.
 If you do find an issue, [please file an issue](https://github.com/gadenbuie/regexplain).
 
