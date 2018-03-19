@@ -5,12 +5,12 @@
 \title{regexplain gadget}
 \usage{
 regex_gadget(text = NULL, start_page = if (is.null(text)) "Text" else
-  "Regex")
+  "RegEx")
 }
 \arguments{
 \item{text}{Text to explore in gadget (editable using interface)}
 
-\item{start_page}{Open gadget to this tab, one of \code{"Text"}, \code{"Regex"},
+\item{start_page}{Open gadget to this tab, one of \code{"Text"}, \code{"RegEx"},
 \code{"Output"}, or \code{"Help"}}
 }
 \description{

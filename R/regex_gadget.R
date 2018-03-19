@@ -3,11 +3,11 @@
 #' @import miniUI
 #' @import shiny
 #' @param text Text to explore in gadget (editable using interface)
-#' @param start_page Open gadget to this tab, one of `"Text"`, `"Regex"`,
+#' @param start_page Open gadget to this tab, one of `"Text"`, `"RegEx"`,
 #'   `"Output"`, or `"Help"`
 #' @export
 regex_gadget <- function(text = NULL,
-                         start_page = if (is.null(text)) "Text" else "Regex") {
+                         start_page = if (is.null(text)) "Text" else "RegEx") {
   stopifnot(requireNamespace("miniUI"), requireNamespace("shiny"))
 
   update_available <- check_version()
@@ -18,10 +18,10 @@ regex_gadget <- function(text = NULL,
     shiny::includeCSS(system.file("styles", "gadget.css", package = "regexplain")),
     gadgetTitleBar(
       "regexplain",
-      right = miniTitleBarButton("done", "Send Regex To Console", TRUE)
+      right = miniTitleBarButton("done", "Send RegEx To Console", TRUE)
     ),
     miniTabstripPanel(
-      selected = match.arg(start_page, c("Text", "Regex", "Output", "Help")),
+      selected = match.arg(start_page, c("Text", "RegEx", "Output", "Help")),
       # --- UI - Tab - Text ----
       miniTabPanel(
         "Text", icon = icon('file-text-o'),
@@ -39,14 +39,14 @@ regex_gadget <- function(text = NULL,
       ),
       # ---- UI - Tab - Regex ----
       miniTabPanel(
-        "Regex", icon = icon('terminal'),
+        "RegEx", icon = icon('terminal'),
         miniContentPanel(
           fillCol(
             flex = c(1, 3),
             fillCol(
               flex = c(1, 1),
-              textInputCode('pattern', 'Regex', width = "100%",
-                            placeholder = "Enter regex, single \\ okay"),
+              textInputCode('pattern', 'RegEx', width = "100%",
+                            placeholder = "Standard RegEx, e.g. \\w+_\\d{2,4}\\s+"),
               checkboxGroupInput(
                 'regex_options',
                 label = HTML(
@@ -95,7 +95,7 @@ regex_gadget <- function(text = NULL,
                             choices = regexFn_choices),
                 tags$span(class = "help-block",
                           style = "font-size:1.25rem; margin-top:-10px; margin-bottom:0px; margin-left:4px;",
-                          "Adjust options in Regex tab")
+                          "Adjust options in RegEx tab")
               ),
               uiOutput("output_sub")
             ),
