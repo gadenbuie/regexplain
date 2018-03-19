@@ -7,7 +7,7 @@ cheatsheet <- tibble::tribble(
   "character classes", "regular", "<code>[abc]</code>", "any of a, b or c",
   "character classes", "regular", "<code>[^abc]</code>", "not a, b, or c",
   "character classes", "regular", "<code>[a-g]</code> <code>[1-3]</code>", "character between a & g or 1 & 3",
-  "character classes", "regular", "<code>[\\^\\-]</code>", "matches <code>-</code> or <code>\\</code>",
+  "character classes", "regular", "<code>[\\^\\-]</code> or <code>[-^]</code>", "matches <code>^</code> or <code>-</code>",
   "character classes", "pre-built", "Used inside <code>[]</code>", "Example <code>[[:digit:]AX]</code> matches all digits and A and X",
   "character classes", "pre-built", "<code>[:punct:]</code>", "punctuation",
   "character classes", "pre-built", "<code>[:alpha:]</code>", "letters",
