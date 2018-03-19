@@ -229,6 +229,15 @@ regex_gadget <- function(text = NULL,
     output$output_result <- renderPrint({
       req(input$regexFn)
       regexPkg <- get_pkg_namespace(input$regexFn)
+      if (!requireNamespace(regexPkg, quietly = TRUE)) {
+        return(cat(
+          paste0(
+            "The package `", regexPkg, "` is not installed.\n",
+            "To preview results from this package, please run\n\n",
+            "    install.packages(\"", regexPkg, "\")"
+          )
+        ))
+      }
       regexFn <- getFromNamespace(input$regexFn, regexPkg)
       req_sub_arg <- input$regexFn %in% regexFn_substitute
       x <- if (regexPkg == "base") {
@@ -268,6 +277,12 @@ regex_gadget <- function(text = NULL,
             )
           )
         }
+      } else if (regexPkg == "rematch2") {
+        regexFn(rtext(), pattern(),
+                ignore.case = 'ignore.case' %in% input$regex_options,
+                perl = 'perl' %in% input$regex_options,
+                fixed = 'fixed' %in% input$regex_options,
+                useBytes = 'useBytes' %in% input$regex_options)
       } else {
         "Um. Not sure how I got here."
       }
@@ -346,6 +361,12 @@ regexFn_choices <- list(
     "str_replace",     #<<
     "str_replace_all", #<<
     "str_split"
+  ),
+  "rematch2" = c(
+    "re_match",
+    "re_match_all",
+    "re_exec",
+    "re_exec_all"
   )
 )
 
