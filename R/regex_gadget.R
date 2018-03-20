@@ -111,7 +111,7 @@ regex_gadget <- function(text = NULL,
       # ---- UI - Tab - Help ----
       miniTabPanel(
         "Help", icon = icon("support"),
-        help_ui("help")
+        generate_help_ui(cheatsheet_only = FALSE)
       )
     )
   )
@@ -290,7 +290,67 @@ regex_gadget <- function(text = NULL,
     })
 
     # ---- Server - Tab - Help ----
-    help_text <- callModule(help_server, "help")
+    source(system.file("shiny", "help_server.R", package = "regexplain"), local = TRUE)
+
+    observeEvent(input$help_try_this, {
+      tagList(
+        tags$p("Try these examples."),
+        tags$h4("Parse Github Repos"),
+        tags$p("Click",
+               actionLink("help_try_this_github", "this link"),
+               "to try out the GitHub repo regex challenge."
+        ),
+        tags$h4("CSS Unit Validation"),
+        tags$p("CSS units can be integer or decimal numbers with units such as",
+               "in, cm, mm, em, ex, pt, px, etc.",
+               "Try to determine if", actionLink("help_try_this_css_text", "these units"),
+               "are", actionLink("help_try_this_css_pattern", "are valid."))
+      ) %>%
+        as.character() %>%
+        help_text()
+    })
+
+    observeEvent(input$help_try_this_github, {
+      github_repos <- c(
+        "metacran/crandb",
+        "jeroenooms/curl@v0.9.3",
+        "jimhester/covr#47",
+        "hadley/dplyr@*release",
+        "r-lib/remotes@550a3c7d3f9e1493a2ba"
+      )
+      owner_rx   <- "(?:(?<owner>[^/]+)/)?"
+      repo_rx    <- "(?<repo>[^/@#]+)"
+      subdir_rx  <- "(?:/(?<subdir>[^@#]*[^@#/]))?"
+      ref_rx     <- "(?:@(?<ref>[^*].*))"
+      pull_rx    <- "(?:#(?<pull>[0-9]+))"
+      release_rx <- "(?:@(?<release>[*]release))"
+
+      subtype_rx <- sprintf("(?:%s|%s|%s)?", ref_rx, pull_rx, release_rx)
+      github_rx  <- sprintf(
+        "^(?:%s%s%s%s|(?<catchall>.*))$",
+        owner_rx, repo_rx, subdir_rx, subtype_rx
+      )
+
+      updateTextAreaInput(session, "text", value = paste(github_repos, collapse = "\n"))
+      updateTextInput(session, 'pattern', value = github_rx)
+      updateCheckboxGroupInput(session, "regex_options", selected = c('text_break_lines', 'perl'))
+      showNotification("Example Loaded! Go to RegEx Tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_css_text, {
+      css_units <- c(
+        "125%","16pt","2cm","7em","3ex","24pt",
+        ".15in","20pc","5.9vw","3.0vh","2vmin"
+      )
+      updateTextAreaInput(session, "text", value = paste(css_units, collapse = "\n"))
+    })
+
+    observeEvent(input$help_try_this_css_pattern, {
+      pattern <- "^(auto|inherit|((\\.\\d+)|(\\d+(\\.\\d+)?))(%|in|cm|mm|em|ex|pt|pc|px|vh|vw|vmin|vmax))$"
+      updateTextInput(session, "pattern", value = pattern)
+      updateCheckboxGroupInput(session, 'regex_options', selected = c('text_break_lines', 'perl'))
+      showNotification("Pattern loaded! Go to RegEx tab", type = "message")
+    })
 
     # ---- Server - Tab - Exit ----
     observeEvent(input$done, {
