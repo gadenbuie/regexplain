@@ -292,25 +292,211 @@ regex_gadget <- function(text = NULL,
     # ---- Server - Tab - Help ----
     source(system.file("shiny", "help_server.R", package = "regexplain"), local = TRUE)
 
+    load_buttons <- function(..., extra_btns = NULL) {
+      prefix <- paste(..., sep = "_")
+      btns <- c(
+        list(c("text", "Load Text", "btn-success"),
+             c("pattern", "Load Pattern", "btn-primary")),
+        extra_btns
+      )
+      tags$span(
+        style = "display: inline-block;",
+        purrr::map(
+          btns,
+          ~ actionButton(paste0(prefix, "_", .[1]), .[2], class = paste("btn-xs", if (!is.na(.[3])) .[3]))
+        )
+      )
+    }
+
     observeEvent(input$help_try_this, {
       tagList(
-        tags$p("Try these examples."),
-        tags$h4("Parse Github Repos"),
-        tags$p("Click",
-               actionLink("help_try_this_github", "this link"),
-               "to try out the GitHub repo regex challenge."
+        tags$h3("Try These Examples"),
+        tags$p("Here are a couple interesting text extraction challenges you can try",
+               "with this gadget."),
+        tags$h4("Harvard Sentences"),
+        tags$p("These examples come from the",
+               tags$a(href = "http://r4ds.had.co.nz/strings.html", "R for Data Science"),
+               "book and are based on a collection of short sentences called the Harvard Sentences."),
+        tags$ol(
+          tags$li(tags$p(
+            "Find sentences that contain a color (i.e. red, orange, yellow, green, blue, purple).",
+            load_buttons("help_try_this", "hs", "colors"))),
+          tags$li(tags$p(
+            "Use the text from Exercise 1 and make sure that only full words that are colors are found.",
+            HTML("E.g. <code>red</code> and not <code>flickered</code>."),
+            tags$span(style = "display: inline-block;",
+                      actionButton("help_try_this_hs_colors_word", "Load Pattern", class = "btn-xs btn-primary"),
+                      actionButton("help_try_this_hs_colors_hint", "Show Hint", class = "btn-xs"))
+            )),
+          tags$li(tags$p(
+            "Extract nouns from sentences by finding any word that comes after \"a\" or \"the\".",
+            "Use", actionLink("help_try_this_hs_words_go2_groups", "Groups"),
+            "to extract the article and possible noun separately and check your results with",
+            HTML("<code>stringr::str_match()</code>:"),
+            load_buttons("help_try_this", "hs", "words",
+                         extra_btns = list(c("output", "Check str_match()")))
+            )),
+          tags$li(tags$p(
+            "Switch the order of the two words following the articles", '"a" or "the"',
+            "using", actionLink("help_try_this_hs_refs_go2_groups", "backreferences,"),
+            "so that", tags$code("the birch canoe"), "would read",
+            HTML("<code>the canoe birch</code>. Use <code>sub</code>"),
+            "in the", tags$strong("Output"), "tab to replace the matched pattern.",
+            load_buttons("help_try_this", "hs", "refs",
+                         extra_btns = list(c("output", "Load Replacement")))
+          ))
         ),
+        tags$h4("Phone Numbers"),
+        tags$p("This example is also from the",
+               tags$a(href = "http://r4ds.had.co.nz/strings.html#other-types-of-pattern",
+                      "R for Data Science"),
+               "book. Phone numbers in the United States start with a 3-digit area code,",
+               "followed by another 3 digits and a final 4-digit group.",
+               "Sometimes the area code is wrapped in parenthesis, or sometimes dots or dashes",
+               "are used to separate the digit groups. Try to extract each digit group from these phone numbers:",
+               load_buttons("help_try_this", "phone",
+                            extra_btns = list(c("output", "Check str_match()")))),
         tags$h4("CSS Unit Validation"),
-        tags$p("CSS units can be integer or decimal numbers with units such as",
-               "in, cm, mm, em, ex, pt, px, etc.",
-               "Try to determine if", actionLink("help_try_this_css_text", "these units"),
-               "are", actionLink("help_try_this_css_pattern", "are valid."))
+        tags$p("This example is used in", tags$code("validateCssUnit()"),
+               "in the", tags$a(href="https://www.r-pkg.org/pkg/htmltools", "htmltools package."),
+               "CSS units can be integer or decimal numbers with units such as",
+               "in, cm, mm, em, ex, pt, px, etc. (see the list",
+               HTML('<a href="https://www.w3.org/Style/Examples/007/units.en.html">here</a>).'),
+               "Try to extract the number and unit from these units:",
+               load_buttons("help_try_this", "css")),
+        tags$h4("Parse Github Repos"),
+        tags$p("This example is from the",
+               tags$a(href = "https://www.r-pkg.org/pkg/rematch2", "rematch2 package."),
+               "Github repositories are often specified in like",
+               HTML("<code>user/repo/subdir@ref*release</code> or <code>user/repo/subdir#PR</code>"),
+               "where only", tags$code("user"), "and", tags$code("repo"), "are required elements.",
+               "Try to extract each piece of the repo text and use",
+               tags$code("rematch2::re_match()"), "to extract a tidy tibble of matches:",
+               load_buttons("help_try_this", "github",
+                            extra_btns = list(c("output", "Check re_match()"))))
       ) %>%
         as.character() %>%
         help_text()
     })
 
-    observeEvent(input$help_try_this_github, {
+    observeEvent(input$help_try_this_hs_colors_text, {
+      color_match <- "\\b(red|orange|yellow|green|blue|purple|he)\\b|red"
+      color_text <- stringr::sentences[grepl(color_match, stringr::sentences)]
+      color_text <- sample(color_text, 25)
+      updateTextAreaInput(session, "text", value = paste(color_text, collapse = "\n"))
+      showNotification("Text loaded! View it in Text tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_hs_colors_pattern, {
+      color_match <- "red|orange|yellow|green|blue|purple"
+      updateTextInput(session, 'pattern', value = color_match)
+      updateCheckboxGroupInput(session, "regex_options", selected = c('text_break_lines', 'perl'))
+      showNotification("Pattern loaded! View it in RegEx tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_hs_colors_word, {
+      color_match <- "\\b(red|orange|yellow|green|blue|purple)\\b"
+      updateTextInput(session, 'pattern', value = color_match)
+      updateCheckboxGroupInput(session, "regex_options", selected = c('text_break_lines', 'perl'))
+      showNotification("Pattern loaded! View it in RegEx tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_hs_colors_hint, {
+      showModal(
+        modalDialog(title = "Hint \U0001f575", footer = NULL, easyClose = TRUE,
+                    tags$p("Try using the", tags$strong("word boundary"), "anchor."))
+      )
+    })
+
+    observeEvent(input$help_try_this_hs_words_go2_groups, {
+      make_help_tab_text("groups")
+    })
+
+    observeEvent(input$help_try_this_hs_words_output, {
+      updateSelectInput(session, 'regexFn', selected = 'str_match')
+      showNotification("Go to Output tab to see results from str_match()", type = "message")
+    })
+
+    observeEvent(input$help_try_this_hs_words_text, {
+      hs_text <- sample(stringr::sentences, 25)
+      updateTextAreaInput(session, "text", value = paste(hs_text, collapse = "\n"))
+      showNotification("Text loaded! View it in Text tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_hs_words_pattern, {
+      noun_pattern <- "(a|the) ([^ ]+)"
+      updateTextInput(session, 'pattern', value = noun_pattern)
+      updateCheckboxGroupInput(session, "regex_options", selected = c('text_break_lines'))
+      updateSelectInput(session, 'regexFn', selected = "str_match")
+      showNotification("Pattern loaded! View it in RegEx and Output tabs", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_hs_refs_go2_groups, {
+      make_help_tab_text("groups")
+    })
+
+    observeEvent(input$help_try_this_hs_refs_output, {
+      regexFn_replacement_val <<- "\\1 \\3 \\2"
+      updateSelectInput(session, 'regexFn', selected = 'sub')
+      showNotification("Replacement loaded! Go to Output tab to see results", type = "message")
+    })
+
+    observeEvent(input$help_try_this_hs_refs_text, {
+      hs_text <- sample(stringr::sentences, 25)
+      updateTextAreaInput(session, "text", value = paste(hs_text, collapse = "\n"))
+      showNotification("Text loaded! View it in Text tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_hs_refs_pattern, {
+      noun_pattern <- "(a|the) ([^ ]+) ([^ ]+)"
+      updateTextInput(session, 'pattern', value = noun_pattern)
+      updateCheckboxGroupInput(session, "regex_options", selected = c('text_break_lines'))
+      showNotification("Pattern loaded! View it in RegEx tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_phone_output, {
+      updateSelectInput(session, 'regexFn', selected = 'str_match')
+      showNotification("Go to Output tab to see results from str_match()", type = "message")
+    })
+
+    observeEvent(input$help_try_this_phone_text, {
+      phone_number <- function() {
+        first <- function() sample(2:9, 1)
+        others <- function(n) sample(1:9, n, replace = TRUE)
+        wrap_types <- c("parens", "dash", "space", "dot", "nothing")
+        wrap <- function(x, type) {
+          switch(
+            match.arg(type, choices = wrap_types),
+            parens = paste0("(", x, ")"),
+            dash = paste0(x, "-"),
+            space = paste0(x, " "),
+            dot = paste0(x, "."),
+            x
+          )
+        }
+
+        area_code <- paste0(c(first(), others(2)), collapse = "")
+        group1 <- paste0(c(first(), others(2)), collapse = "")
+        group2 <- paste0(c(first(), others(3)), collapse = "")
+
+        area_wrap <- sample(wrap_types, 1)
+        other_wrap <- if (area_wrap == "parens") sample(wrap_types[-1], 1) else area_wrap
+
+        paste0(wrap(area_code, area_wrap), wrap(group1, other_wrap), group2)
+      }
+      phone_numbers <- replicate(25, phone_number())
+      updateTextAreaInput(session, "text", value = paste(phone_numbers, collapse = "\n"))
+      showNotification("Text loaded! View it in Text tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_phone_pattern, {
+      phone_pattern <- "\\(?(\\d{3})[-). ]?(\\d{3})[- .]?(\\d{4})"
+      updateTextInput(session, 'pattern', value = phone_pattern)
+      updateCheckboxGroupInput(session, "regex_options", selected = c('text_break_lines'))
+      showNotification("Pattern loaded! View it in RegEx tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_github_text, {
       github_repos <- c(
         "metacran/crandb",
         "jeroenooms/curl@v0.9.3",
@@ -318,6 +504,11 @@ regex_gadget <- function(text = NULL,
         "hadley/dplyr@*release",
         "r-lib/remotes@550a3c7d3f9e1493a2ba"
       )
+      updateTextAreaInput(session, "text", value = paste(github_repos, collapse = "\n"))
+      showNotification("Text loaded! Go to RegEx Tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_github_pattern, {
       owner_rx   <- "(?:(?<owner>[^/]+)/)?"
       repo_rx    <- "(?<repo>[^/@#]+)"
       subdir_rx  <- "(?:/(?<subdir>[^@#]*[^@#/]))?"
@@ -331,10 +522,14 @@ regex_gadget <- function(text = NULL,
         owner_rx, repo_rx, subdir_rx, subtype_rx
       )
 
-      updateTextAreaInput(session, "text", value = paste(github_repos, collapse = "\n"))
       updateTextInput(session, 'pattern', value = github_rx)
       updateCheckboxGroupInput(session, "regex_options", selected = c('text_break_lines', 'perl'))
-      showNotification("Example Loaded! Go to RegEx Tab", type = 'message')
+      showNotification("Pattern loaded! Go to RegEx Tab", type = 'message')
+    })
+
+    observeEvent(input$help_try_this_github_output, {
+      updateSelectInput(session, 'regexFn', selected = 're_match')
+      showNotification("Go to Output tab to see results from re_match()", type = "message")
     })
 
     observeEvent(input$help_try_this_css_text, {
@@ -342,6 +537,7 @@ regex_gadget <- function(text = NULL,
         "125%","16pt","2cm","7em","3ex","24pt",
         ".15in","20pc","5.9vw","3.0vh","2vmin"
       )
+      showNotification("Example text loaded! Go to RegEx tab", type = "message")
       updateTextAreaInput(session, "text", value = paste(css_units, collapse = "\n"))
     })
 
