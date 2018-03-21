@@ -45,8 +45,13 @@ regex_gadget <- function(text = NULL,
             flex = c(1, 3),
             fillCol(
               flex = c(1, 1),
-              textInputCode('pattern', 'RegEx', width = "100%",
-                            placeholder = "Standard RegEx, e.g. \\w+_\\d{2,4}\\s+"),
+              fillRow(
+                flex = c(5, 1),
+                textInputCode('pattern', 'RegEx', width = "100%",
+                              placeholder = "Standard RegEx, e.g. \\w+_\\d{2,4}\\s+"),
+                tags$div(style = "margin-top: 23px; margin-left:6px;",
+                         actionButton("show_templates", "Templates", class = "btn-success"))
+              ),
               checkboxGroupInput(
                 'regex_options',
                 label = HTML(
@@ -203,6 +208,51 @@ regex_gadget <- function(text = NULL,
       )
 
       toHTML(paste(error_message, warning_message, res))
+    })
+
+    # ---- Server - Tab - RegEx - Templates ----
+    templates <- get_templates()
+
+    this_template <- reactive({
+      req(input$template)
+      purrr::keep(templates, ~ .$name == input$template) %>%
+        purrr::flatten()
+    })
+
+    observeEvent(input$show_templates, {
+      showModal(
+        modalDialog(
+          title = "Templates",
+          footer = tagList(
+            modalButton("Cancel"),
+            actionButton("apply_template", "Use Template", class = "btn-success")
+          ),
+          selectInput("template", "Template",
+                      choices = c("Choose template" = "",
+                                  purrr::set_names(purrr::map_chr(templates, 'name')))),
+          uiOutput("template_info")
+        )
+      )
+    })
+
+    output$template_info <- renderUI({
+      req(this_template())
+      tagList(
+        tags$h5("Description"),
+        tags$p(this_template()$description),
+        tags$h5("Pattern"),
+        tags$pre(
+          tags$code(
+            this_template()$regex
+          )
+        )
+      )
+    })
+
+    observeEvent(input$apply_template, {
+      updateTextInput(session, "pattern", value = this_template()$regex)
+      updateSelectInput(session, "template", selected = "")
+      removeModal()
     })
 
     # ---- Server - Tab - Output ----
@@ -753,4 +803,22 @@ check_version <- function(
       )
     )
   } else return(NULL)
+}
+
+#' Loads Regex Pattern Templates
+#'
+#' Sourced from [Regex Hub](https://projects.lukehaas.me/regexhub)
+#' and available at <https://github.com/lukehaas/RegexHub>. Copyright
+#' Luke Haas licensed under the MIT license available at
+#' <https://github.com/lukehaas/RegexHub/commit/3ab87b5a4fd2817b42e2e45dcf040d4f0164ea37>.
+#'
+#' @keywords internal
+get_templates <- function() {
+  if (!requireNamespace("jsonlite")) {
+    warning("Please install the `jsonlite` package to use template features")
+    return(NULL)
+  }
+  f_patterns <- system.file("extdata", "patterns.json", package = "regexplain")
+  if (!file.exists(f_patterns)) return(NULL)
+  jsonlite::fromJSON(f_patterns, simplifyVector = FALSE, simplifyDataFrame = FALSE, simplifyMatrix = FALSE)
 }
