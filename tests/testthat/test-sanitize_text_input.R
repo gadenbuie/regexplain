@@ -8,6 +8,7 @@ test_that("sanitizes unicode", {
   # rx_unicode <- "\\u[0-9a-f]{4,8}"
   expect_equal(sanitize_text_input("\\u2019"), "\u2019")
   expect_equal(sanitize_text_input("\\u000D"), "\r")
+  expect_equal(sanitize_text_input("\\U0001F575"), "\U001F575")
 })
 
 test_that("sanitizes hex", {
