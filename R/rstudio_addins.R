@@ -41,5 +41,5 @@ regexplain_file <- function() {
     message("There were ", format(length(x), big.mark = ","), " lines in ", fname, "\nUsing only first 100.")
     x <- x[1:100]
   }
-  regex_gadget(x, "Regex")
+  regex_gadget(x, "RegEx")
 }
