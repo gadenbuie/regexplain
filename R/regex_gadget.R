@@ -451,7 +451,7 @@ regex_gadget <- function(text = NULL,
     })
 
     observeEvent(input$help_try_this_hs_colors_text, {
-      color_match <- "\\b(red|orange|yellow|green|blue|purple|he)\\b|red"
+      color_match <- "\\b(red|orange|yellow|green|blue|purple)\\b|red"
       color_text <- stringr::sentences[grepl(color_match, stringr::sentences)]
       color_text <- sample(color_text, 25)
       updateTextAreaInput(session, "text", value = paste(color_text, collapse = "\n"))
