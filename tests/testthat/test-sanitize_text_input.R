@@ -1,6 +1,6 @@
 context("test-sanitize_text_input.R")
 
-test_that("sanitizes backreferences properly", {
+test_that("doesn't treat backreferences as octals", {
   expect_equal(sanitize_text_input("\\1 \\2 \\3"), "\\1 \\2 \\3")
 })
 

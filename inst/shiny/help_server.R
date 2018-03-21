@@ -10,6 +10,15 @@ make_html_table <- function(x) {
       format = "html")
 }
 
+make_help_tab_text <- function(category = NULL, group = NULL) {
+  x <- cheatsheet
+  if (!is.null(category)) x <- filter(x, .data$category == !!category)
+  if (!is.null(group))    x <- filter(x, .data$group == !!group)
+  x %>%
+    make_html_table() %>%
+    help_text()
+}
+
 output$help_text_selected <- renderUI({
   help_body <- help_text()
   if (inherits(help_body, "shiny.tag.list")) {
@@ -18,58 +27,34 @@ output$help_text_selected <- renderUI({
 })
 
 observeEvent(input$help_cat_character_classes_regular, {
-  cheatsheet %>%
-    filter(.data$category == "character classes", .data$group == "regular") %>%
-    make_html_table() %>%
-    help_text()
+  make_help_tab_text("character classes", "regular")
 })
 
 observeEvent(input$help_cat_character_classes_prebuilt, {
-  cheatsheet %>%
-    filter(.data$category == "character classes", .data$group == "pre-built") %>%
-    make_html_table() %>%
-    help_text()
+  make_help_tab_text("character classes", "pre-built")
 })
 
 observeEvent(input$help_cat_anchors, {
-  cheatsheet %>%
-    filter(.data$category == "anchors") %>%
-    make_html_table() %>%
-    help_text()
+  make_help_tab_text("anchors")
 })
 
 observeEvent(input$help_cat_escaped_general, {
-  cheatsheet %>%
-    filter(.data$category == "escaped characters", .data$group == "general") %>%
-    make_html_table() %>%
-    help_text()
+  make_help_tab_text("escaped characters", "general")
 })
 
 observeEvent(input$help_cat_escaped_hex, {
-  cheatsheet %>%
-    filter(.data$category == "escaped characters", .data$group == "hex") %>%
-    make_html_table() %>%
-    help_text()
+  make_help_tab_text("escaped characters", "hex")
 })
 
 observeEvent(input$help_cat_escaped_control, {
-  cheatsheet %>%
-    filter(.data$category == "escaped characters", .data$group == "control characters") %>%
-    make_html_table() %>%
-    help_text()
+  make_help_tab_text("escaped characters", "control characters")
 })
 
 observeEvent(input$help_cat_groups, {
-  cheatsheet %>%
-    filter(.data$category == "groups") %>%
-    make_html_table() %>%
-    help_text()
+  make_help_tab_text("groups")
 })
 
 observeEvent(input$help_cat_quantifiers, {
-  cheatsheet %>%
-    filter(.data$category == "quantifiers") %>%
-    make_html_table() %>%
-    help_text()
+  make_help_tab_text("quantifiers")
 })
 
