@@ -380,7 +380,11 @@ regex_gadget <- function(text = NULL,
 
 sanitize_text_input <- function(x) {
   if (is.null(x) || !nchar(x)) return(x)
-  if (grepl("\\u[0-9a-f]{4,8}|\\x[0-9a-f]{2}|\\x\\{[0-9a-f]{1,6}\\}|\\N|\\0[0-8]{1,3}", x)) {
+  rx_unicode <- "\\u[0-9a-f]{4,8}"
+  rx_hex <- "\\\\x[0-9a-f]{2}|\\\\x\\{[0-9a-f]{1,6}\\}"
+  rx_octal <- "\\\\[0][0-7]{1,3}"
+  rx_escape <- paste(rx_unicode, rx_hex, rx_octal, sep = "|")
+  if (grepl(rx_escape, x, ignore.case = TRUE)) {
     try({
       y <- stringi::stri_unescape_unicode(x)
     }, silent = TRUE)
