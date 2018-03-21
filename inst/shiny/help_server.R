@@ -1,4 +1,4 @@
-HELP_DEFAULT_TEXT <- "<p>Select a category from the left sidebar.</p>"
+if (!exists('HELP_DEFAULT_TEXT')) HELP_DEFAULT_TEXT <- "<p>Select a category from the left sidebar.</p>"
 
 help_text <- reactiveVal(HELP_DEFAULT_TEXT)
 
@@ -24,6 +24,10 @@ output$help_text_selected <- renderUI({
   if (inherits(help_body, "shiny.tag.list")) {
     help_body
   } else HTML(help_body)
+})
+
+observeEvent(input$help_default, {
+  help_text(HELP_DEFAULT_TEXT)
 })
 
 observeEvent(input$help_cat_character_classes_regular, {

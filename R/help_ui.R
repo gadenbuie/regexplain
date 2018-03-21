@@ -11,7 +11,8 @@ generate_help_ui <- function(cheatsheet_only = TRUE) {
         shiny::tags$ul(
           id = "help-sidebar",
           if (!cheatsheet_only) tags$li(
-            shiny::actionLink("help_try_this", "Try This")
+            shiny::actionLink("help_default", "Introduction"),
+            shiny::actionLink("help_try_this", "Try These Examples")
           ),
           shiny::tags$li("Character Classes", class = "header"),
           shiny::tags$ul(

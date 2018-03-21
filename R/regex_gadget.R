@@ -290,6 +290,11 @@ regex_gadget <- function(text = NULL,
     })
 
     # ---- Server - Tab - Help ----
+    HELP_DEFAULT_TEXT <- paste0(
+      "<h3>Welcome to RegExplain</h3>",
+      "<p>Choose a category from the menu on the left.</p>"
+    )
+
     source(system.file("shiny", "help_server.R", package = "regexplain"), local = TRUE)
 
     load_buttons <- function(..., extra_btns = NULL) {
