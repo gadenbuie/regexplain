@@ -10,10 +10,12 @@ generate_help_ui <- function(cheatsheet_only = TRUE) {
       shiny::tagList(
         shiny::tags$ul(
           id = "help-sidebar",
-          if (!cheatsheet_only) tags$li(
-            shiny::actionLink("help_default", "Introduction"),
-            shiny::actionLink("help_try_this", "Try These Examples")
-          ),
+          if (!cheatsheet_only) shiny::tagList(
+            shiny::tags$li(shiny::tags$strong("RegExplain"), class = "header"),
+            shiny::tags$li(shiny::actionLink("help_default", "Introduction")),
+            shiny::tags$li(shiny::actionLink("help_try_this", "Try These Examples")),
+            shiny::tags$li(shiny::actionLink("help_resources", "Resources")),
+            shiny::tags$li(class = "header", style = "margin-top: 5px;", shiny::tags$strong("Reference"))),
           shiny::tags$li("Character Classes", class = "header"),
           shiny::tags$ul(
             class = "subgroup",
