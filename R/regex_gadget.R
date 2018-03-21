@@ -383,7 +383,9 @@ regex_gadget <- function(text = NULL,
         tags$h4("Online Resources"),
         tags$ul(
           tags$li(tags$a(href = "https://github.com/aloisdg/awesome-regex", "Awesome RegEx")),
-          tags$li(tags$a(href = "https://www.regular-expressions.info", "Regular-Expressions.info"))
+          tags$li(tags$a(href = "https://www.regular-expressions.info", "Regular-Expressions.info")),
+          tags$li(tags$a(href = "https://projects.lukehaas.me/regexhub", "Regex Hub"), "- common regex patterns"),
+          tags$li(tags$a(href = "http://regexlib.com/DisplayPatterns.aspx", "RegExLib.com"), "- large collection of searchable patterns")
         ),
         tags$h4("Live Preview and Explanations"),
         tags$ul(
