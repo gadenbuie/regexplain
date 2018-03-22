@@ -76,7 +76,7 @@ regex_gadget <- function(text = NULL,
                   HTML('<span style="color: #5cb85c;">Fixed/Literal</span>'),
                   HTML('<span style="color: #f0ad4e;">Perl Style</span>'),
                   HTML('<span style="color: #f0ad4e;">Use Bytes</span>')),
-                selected = c('text_break_lines')
+                selected = c('text_break_lines', 'perl')
               )
             ),
             tags$div(
@@ -675,6 +675,11 @@ regex_gadget <- function(text = NULL,
     observeEvent(input$done, {
       if (pattern() != "") {
         pattern <- paste0('pattern <- "', escape_backslash(pattern()), '"')
+        if (any(c("perl", "fixed", "ignore.case", "useBytes") %in% input$regex_options)) {
+          options <- input$regex_options[input$regex_options != "text_break_lines"]
+          options <- paste0(options, "=TRUE", collapse = ", ")
+          pattern <- paste(pattern, "#", options)
+        }
         if ("regexFn_replacement" %in% names(input) && replacement() != "") {
           pattern <- paste0(
             pattern, "\n",

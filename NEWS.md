@@ -1,12 +1,16 @@
-## regexplain 0.1.x
-
-### 0.1.6
+## regexplain 0.2
 
 * Added "Templates" button that opens a dialog to import regex patterns
   (initially) sourced from <https://projects.lukehaas.me/regexhub>.
 * Added "Introduction", "Try These Examples" and "Resources" tabs to
   the standard gadget Help tab.
-* Several bugfixes and tests were added around unicode character escaping within the gadget.
+* Several bugfixes and tests were added around unicode character escaping within
+  the gadget. 
+* Enable `perl` mode by default in gadget (consistent with `stringr` and most
+  regexes in the wild, but not base R). Write out selected options as comments
+  when not consistent with base R when returning pattern from gadget.
+
+## regexplain 0.1.x
 
 ### 0.1.5
 
