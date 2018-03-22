@@ -12,7 +12,17 @@ view_regex(text, pattern, ..., render = TRUE, escape = render,
 
 \item{pattern}{Regex pattern to look for}
 
-\item{...}{Passed to \code{\link[=run_regex]{run_regex()}}}
+\item{...}{Arguments passed on to \code{base::regexec}
+\describe{
+  \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
+      sensitive} and if \code{TRUE}, case is ignored during matching.}
+  \item{perl}{logical.  Should Perl-compatible regexps be used?}
+  \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
+    matched as is.  Overrides all conflicting arguments.}
+  \item{useBytes}{logical.  If \code{TRUE} the matching is done
+    byte-by-byte rather than character-by-character.  See
+    \sQuote{Details}.}
+}}
 
 \item{render}{Render results to an HTML doc and open in RStudio viewer?}
 
@@ -28,5 +38,12 @@ regex is displayed as interpreted by the regex engine (i.e. double \code{\\\\}
 as a single \code{\\}).}
 }
 \description{
-View grouped regex results
+View the result of the regular expression when applied to the given text.
+The default behavior renders the result as HTML and opens the file in
+the RStudio viewer pane. If \code{render} is \code{FALSE}, the HTML itself is returned.
+If the output is destined for a \link{knitr} document, set \code{knitr} to \code{TRUE}.
+}
+\examples{
+view_regex("example", "amp", render=FALSE)
+
 }

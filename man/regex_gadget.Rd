@@ -14,5 +14,7 @@ regex_gadget(text = NULL, start_page = if (is.null(text)) "Text" else
 \code{"Output"}, or \code{"Help"}}
 }
 \description{
-RegExplain gadget
+The function behind the RegExplain Selection and RegExplain File
+addins. Opens the RegExplain gadget interface in an RStudio viewer
+pane.
 }

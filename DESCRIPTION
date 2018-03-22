@@ -5,13 +5,15 @@ Date: 2018-03-14
 Authors@R: c(
     person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre")),
     person("Winston", "Chang", role = c("ctb"), comment = "Author of textInput and textAreaInput fragments from shiny"),
+    person("Yihui", "Xie", role = c("ctb"), comment = "Author of escape_html fragment from highr"),
     person(family = "RStudio", role = "cph", comment = "Copyright holder of included shiny fragments")
     )
 Description: A set of RStudio Addins to help interactively test and build 
     regular expressions. Provides a Shiny gadget interface for interactively
-    constructing the regexp and viewing the results from common string-searching
-    functions. Also provides a helpful reference sheet as an RStudio addin.
-Depends: R (>= 3.4)
+    constructing the regular expression and viewing the results from common 
+    string-searching functions. The gadget interface includes a helpful 
+    regex syntax reference sheet and a library of common patterns.
+Depends: R (>= 3.2)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -26,7 +28,7 @@ Imports:
     utils,
     tidyr,
     rstudioapi,
-    shiny,
+    shiny (>= 0.13),
     miniUI,
     jsonlite,
     rematch2

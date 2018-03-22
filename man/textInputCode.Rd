@@ -25,3 +25,6 @@ Standard \code{\link[shiny:textInput]{shiny::textInput()}} with additional \code
 font style for the input text and with \code{autocomplete}, \code{autocorrect},
 \code{autocapitalize} and \code{spellcheck} set to \code{off} or \code{false}.
 }
+\seealso{
+Other modified shiny inputs: \code{\link{textAreaInputAlt}}
+}

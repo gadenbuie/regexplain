@@ -1,13 +1,19 @@
 #' RegExplain gadget
 #'
+#' The function behind the RegExplain Selection and RegExplain File
+#' addins. Opens the RegExplain gadget interface in an RStudio viewer
+#' pane.
+#'
 #' @import miniUI
 #' @import shiny
 #' @param text Text to explore in gadget (editable using interface)
 #' @param start_page Open gadget to this tab, one of `"Text"`, `"RegEx"`,
 #'   `"Output"`, or `"Help"`
 #' @export
-regex_gadget <- function(text = NULL,
-                         start_page = if (is.null(text)) "Text" else "RegEx") {
+regex_gadget <- function(
+  text = NULL,
+  start_page = if (is.null(text)) "Text" else "RegEx"
+) {
   stopifnot(requireNamespace("miniUI"), requireNamespace("shiny"))
 
   update_available <- check_version()
@@ -164,13 +170,13 @@ regex_gadget <- function(text = NULL,
 
     observe({
       if (getOption('regexplain.debug.gadget.text', FALSE)) {
-        cat("\npattern: ", rtext())
+        cat("\ntext   :", rtext())
       }
       if (getOption('regexplain.debug.gadget.pattern', FALSE)) {
-        cat("\npattern: ", pattern())
+        cat("\npattern:", pattern())
       }
       if (getOption('regexplain.debug.gadget.replacement', FALSE)) {
-        cat("\npattern: ", replacement())
+        cat("\nreplace:", replacement())
       }
       cat("\n")
     })
@@ -374,6 +380,9 @@ regex_gadget <- function(text = NULL,
       "<p>An extra backslash is still needed to match a literal <code>\\</code> in standard regular expressions. This means that you will need to enter <code>\\\\</code> in the <strong>RegEx</strong> tab, and the output to R will be <code>&quot;\\\\\\\\&quot;</code>.</p>"
       )
 
+    # avoid CRAN check NOTES
+    help_text <- NULL          # in help_server.R
+    make_help_tab_text <- NULL # in help_server.R
     source(system.file("shiny", "help_server.R", package = "regexplain"), local = TRUE)
 
     observeEvent(input$help_resources, {

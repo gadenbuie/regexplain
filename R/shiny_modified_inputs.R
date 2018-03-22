@@ -11,6 +11,7 @@
 #'
 #' @inheritParams shiny::textAreaInput
 #' @param is_code Should the text input be considered verbatim code input?
+#' @family modified shiny inputs
 textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = NULL,
                              cols = NULL, rows = NULL, placeholder = NULL, resize = NULL,
                              is_code = TRUE) {
@@ -65,6 +66,7 @@ textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = 
 #'
 #' @inheritParams shiny::textInput
 #' @param width Width of `shiny-input-container` div.
+#' @family modified shiny inputs
 textInputCode <- function(inputId, label, value = "", width = NULL,
                           placeholder = NULL) {
   `%AND%` <- getFromNamespace("%AND%", "shiny")

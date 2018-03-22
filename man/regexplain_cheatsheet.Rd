@@ -7,5 +7,7 @@
 regexplain_cheatsheet()
 }
 \description{
-Regex Cheatsheet Quick Reference
+The function behind the RegExplain Cheatsheet addin. Opens a summary of
+regular expression syntax -- the RegExplain cheatsheet -- in an RStudio
+viewer pane.
 }

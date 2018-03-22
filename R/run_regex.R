@@ -2,16 +2,14 @@
 #'
 #' @param text Text to search
 #' @param pattern regexp
-#' @inheritParams base::regexec
-#' @export
+#' @inheritDotParams base::regexec ignore.case perl fixed useBytes
 run_regex <- function(
   text,
   pattern,
   ignore.case = FALSE,
   perl = FALSE,
   fixed = FALSE,
-  useBytes = FALSE,
-  invert = FALSE
+  useBytes = FALSE
 ) {
   # Use regex to get matches by group, gives start index and length
   m <- regexec(pattern, text, ignore.case, perl, fixed, useBytes)
@@ -155,6 +153,14 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
 
 #' View grouped regex results
 #'
+#' View the result of the regular expression when applied to the given text.
+#' The default behavior renders the result as HTML and opens the file in
+#' the RStudio viewer pane. If `render` is `FALSE`, the HTML itself is returned.
+#' If the output is destined for a [knitr] document, set `knitr` to `TRUE`.
+#'
+#' @examples
+#' view_regex("example", "amp", render=FALSE)
+#'
 #' @param text Text to search
 #' @param pattern Regex pattern to look for
 #' @param render Render results to an HTML doc and open in RStudio viewer?
@@ -166,7 +172,7 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
 #'   the double `\\\\` required for escaping backslashes in R. When `FALSE`,
 #'   regex is displayed as interpreted by the regex engine (i.e. double `\\\\`
 #'   as a single `\\`).
-#' @param ... Passed to [run_regex()]
+#' @inheritDotParams base::regexec ignore.case perl fixed useBytes
 #' @export
 view_regex <- function(
   text,

@@ -5,27 +5,24 @@
 \title{Extract matched groups from regexp}
 \usage{
 run_regex(text, pattern, ignore.case = FALSE, perl = FALSE, fixed = FALSE,
-  useBytes = FALSE, invert = FALSE)
+  useBytes = FALSE)
 }
 \arguments{
 \item{text}{Text to search}
 
 \item{pattern}{regexp}
 
-\item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
+\item{...}{Arguments passed on to \code{base::regexec}
+\describe{
+  \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
-
-\item{perl}{logical.  Should Perl-compatible regexps be used?}
-
-\item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
+  \item{perl}{logical.  Should Perl-compatible regexps be used?}
+  \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
     matched as is.  Overrides all conflicting arguments.}
-
-\item{useBytes}{logical.  If \code{TRUE} the matching is done
+  \item{useBytes}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character.  See
     \sQuote{Details}.}
-
-\item{invert}{logical.  If \code{TRUE} return indices or values for
-    elements that do \emph{not} match.}
+}}
 }
 \description{
 Extract matched groups from regexp
