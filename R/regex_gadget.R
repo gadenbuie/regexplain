@@ -358,7 +358,7 @@ regex_gadget <- function(text = NULL,
     # ---- Server - Tab - Help ----
     HELP_DEFAULT_TEXT <- c(
       "<h3>Welcome to RegExplain</h3>",
-      "<p>If you’re new to regular expressions, one of the best places to start is <a href=\"http://stringr.tidyverse.org/articles/regular-expressions.html\">the regular expressions vignette</a> from <code>stringr</code>. The chapter on strings in <a href=\"http://r4ds.had.co.nz/strings.html\">R for Data Science</a> is also an excellent first resource.</p>",
+      "<p>If you're new to regular expressions, one of the best places to start is <a href=\"http://stringr.tidyverse.org/articles/regular-expressions.html\">the regular expressions vignette</a> from <code>stringr</code>. The chapter on strings in <a href=\"http://r4ds.had.co.nz/strings.html\">R for Data Science</a> is also an excellent first resource.</p>",
       "<p><strong>Exploring or looking for a challenge?</strong> Click on <i>Try These Examples</i> to see what you can do with this addin.</p>",
       "<h4>Getting Started</h4>",
       "<ul>",
@@ -368,7 +368,7 @@ regex_gadget <- function(text = NULL,
       "<li><p><i class=\"fa fa-support\"></i> Get <strong>Help</strong> and look up the regular expression syntax.</p></li>",
       "</ul>",
       "<h4>Escaping characters</h4>",
-      "<p>In order to store a backslash (<code>\\</code>) as a character in R, backslashes need to be escaped…with another backslash! To write a literal <code>\\</code> in an R character string, you need to actually store <code>&quot;\\\\&quot;</code>.</p>",
+      "<p>In order to store a backslash (<code>\\</code>) as a character in R, backslashes need to be escaped...with another backslash! To write a literal <code>\\</code> in an R character string, you need to actually store <code>&quot;\\\\&quot;</code>.</p>",
       "<p>In regular expressions, <code>\\w</code> stands for any alphabetical character, but to store it in a string in R you need <code>&quot;\\\\w&quot;</code>.</p>",
       "<p>Inside <strong>RegExplain</strong>, however, standard regular expressions can be used so that you can easily copy patterns from other places. When you click on the <span class=\"btn btn-xs btn-primary\">Send RegEX to Console</span> button, the necessary extra <code>\\</code> will be included.</p>",
       "<p>An extra backslash is still needed to match a literal <code>\\</code> in standard regular expressions. This means that you will need to enter <code>\\\\</code> in the <strong>RegEx</strong> tab, and the output to R will be <code>&quot;\\\\\\\\&quot;</code>.</p>"
