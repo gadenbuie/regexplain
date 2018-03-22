@@ -61,3 +61,6 @@ dd {
   padding-top: 4px;
   height: 100%;
 }
+#help_text_selected > h3 {
+  margin-top: 0px;
+}
