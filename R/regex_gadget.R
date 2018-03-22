@@ -162,6 +162,19 @@ regex_gadget <- function(text = NULL,
       sanitize_text_input(input$pattern)
     })
 
+    observe({
+      if (getOption('regexplain.debug.gadget.text', FALSE)) {
+        cat("\npattern: ", rtext())
+      }
+      if (getOption('regexplain.debug.gadget.pattern', FALSE)) {
+        cat("\npattern: ", pattern())
+      }
+      if (getOption('regexplain.debug.gadget.replacement', FALSE)) {
+        cat("\npattern: ", replacement())
+      }
+      cat("\n")
+    })
+
     alert_result <- function(msg, type = "danger") {
       msg <- gsub("\n", "<br>", msg)
       msg <- gsub("\t", "&nbsp;&nbsp;", msg)
