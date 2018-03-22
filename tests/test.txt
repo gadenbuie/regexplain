@@ -1,0 +1,60 @@
+Format dates as 04/12/2014, 04-12-2014, 04.12.2014. or
+04/12/14 but leaves mismatched: 12.12/2014
+Sept 09, 2002
+October 22, 1887
+not 04-12-2014 and may match good 00, 9999
+R uses time in this format 2018-03-22 13:13:19.
+v0.1.5
+version 3.4.4.9042
+yahoo.com
+I went to yahoo.com/finance the other day
+https://www.yahoo.com/finance was on fire
+98.139.180.149
+69.89.31.226
+2002:4559:1FE2::4559:1FE2
+Anchorage, AK
+New York City, NY
+Some Place, Another Place, LA
+At 3:00 we'll meet up and leave by 4:30:20
+We'll meet at 6:33.
+He ran it in :22.34
+for 10:47 AM I'm getting 0:47 AM instead.
+Some time has 12:04 a.m. or the form 1:22 pm
+Some time has 12:04 with no AM/PM after it
+ There is ( $5.50 ) for , me .
+  that's [ 45.6% ] of! the pizza !
+       14% is { $26  } or $25.99 ?
+Oh ;  here's colon : Yippee !
+I say \parencite*{Ted2005, Moe1999} go there in \textcite{Few2010} said to.
+But then \authorcite{Ware2013} said it was so \pcite[see][p. 22]{Get9999c}.
+then I \citep[p. 22]{Foo1882c} him
+I went to Washington Heights, NY 54321 for food!
+It's in West ven,PA 12345, near Bolly Bolly Bolly, CA12345-1234!
+are :-)) it 8-D he XD on =-D they :D of :-) is :> for :o) that :-/
+-2 is an integer.  -4.3 and 3.33 are not.
+123,456 is 0 alot -123456 more than -.2
+and 3456789123 fg for 345.
+fg 12,345 23 .44 or 18.
+don't remove this 444,44
+fred is fred@foo.com
+joe is joe@example.com
+but @this is a twitter handle for
+twit@here.com or
+foo+bar@google.com
+fred@foo.fnord
+There is $5.50 for me.
+that's 45.6% of the pizza
+14% is $26 or $25.99
+aaaahahahahaha that was a good joke peep and pepper and pepe
+Mr. Bean bought 2 tickets 2-613-213-4567 or 5555555555 call either one
+Please contact Mr. Bean (613)2134567
+.575.555.5555 is his #1 number
+7164347566
+this is a big is a Big deal
+I want want to see
+I want, want to see
+I want...want to see see see how
+I like it. It is cool
+this is a big is a Big deal for those of, those of you who are.
+Dr. Brend is mizz hart's in mrs. Holtz's.
+Where is mr. Bob Jr. and Ms. John Kennedy?
