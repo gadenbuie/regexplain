@@ -1,14 +1,14 @@
-Name: Regexplain Selection
+Name: RegExplain Selection
 Description: Build a regexp for use on selected text
 Binding: regexplain_addin
 Interactive: true
 
-Name: Regexplain File
+Name: RegExplain File
 Description: Choose a file for which to build a regexp
 Binding: regexplain_file
 Interactive: true
 
-Name: Regexplain Cheatsheet
+Name: RegExplain Cheatsheet
 Description: Regex Cheatsheet Quick Reference
 Binding: regexplain_cheatsheet
 Interactive: false
