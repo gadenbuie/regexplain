@@ -233,7 +233,6 @@ regex_gadget <- function(text = NULL,
     })
 
     observeEvent(input$library_show, {
-      browser()
       showModal(
         modalDialog(
           title = "Regex Library",
@@ -267,7 +266,7 @@ regex_gadget <- function(text = NULL,
     })
 
     observeEvent(input$library_apply_pattern, {
-      updateTextInput(session, "pattern", value = this_template()$regex)
+      updateTextInput(session, "pattern", value = this_pattern()$regex)
       updateSelectInput(session, "template", selected = "")
       removeModal()
     })
