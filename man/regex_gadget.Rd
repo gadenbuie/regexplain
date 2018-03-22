@@ -2,7 +2,7 @@
 % Please edit documentation in R/regex_gadget.R
 \name{regex_gadget}
 \alias{regex_gadget}
-\title{regexplain gadget}
+\title{RegExplain gadget}
 \usage{
 regex_gadget(text = NULL, start_page = if (is.null(text)) "Text" else
   "RegEx")
@@ -14,5 +14,5 @@ regex_gadget(text = NULL, start_page = if (is.null(text)) "Text" else
 \code{"Output"}, or \code{"Help"}}
 }
 \description{
-regexplain gadget
+RegExplain gadget
 }

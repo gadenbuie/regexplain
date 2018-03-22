@@ -1,4 +1,4 @@
-regexplain
+RegExplain
 ================
 
 <!-- [![packageversion](https://img.shields.io/github/description/v/gadenbuie/regexplain.svg)](commits/master) -->
@@ -8,7 +8,7 @@ regexplain
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/regexplain)](https://cran.r-project.org/package=regexplain)
-<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--14-yellowgreen.svg)](/commits/master) -->
+<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--21-yellowgreen.svg)](/commits/master) -->
 
 <!-- Links -->
 
@@ -122,19 +122,19 @@ with the fine packages this addin is built on. If you do find an issue,
 
 #### Planned improvements
 
-  - Make better use of the opening view of **Help** tab to explain the
-    gadget. Also add one or more additional tabs with an overview of
-    regular expressions, with links to R4DS and
+  - **v0.1.6\!** Make better use of the opening view of **Help** tab to
+    explain the gadget. Also add one or more additional tabs with an
+    overview of regular expressions, with links to R4DS and
     `vignette('regular-expressions', package = 'stringr')`. Maybe also a
     **Try This** feature that sets the `text` and `pattern` with regex
     challenges (possibly borrowed from R4DS).
 
-  - Add a global search option to the **Regex** tab. Groups would be
-    lost, but I can still highlight global matches.
+  - ~~Add a global search option to the **Regex** tab. Groups would be
+    lost, but I can still highlight global matches.~~
 
-  - Add “flavors” menu to **Regex** tab. Automatically sets options to
+  - ~~Add “flavors” menu to **Regex** tab. Automatically sets options to
     common flavors. Mainly for clarity when switching between “base”"
-    style and “tidyverse/stringr” defaults.
+    style and “tidyverse/stringr” defaults.~~
 
   - **Done in v0.1.5\!** Add replacement functions somewhere. Maybe to
     **Output** tab with `g?sub` and `str_replace(_all)?` as options with

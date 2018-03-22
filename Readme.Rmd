@@ -1,5 +1,5 @@
 ---
-title: "regexplain"
+title: "RegExplain"
 output: github_document
 ---
 
@@ -112,17 +112,17 @@ If you do find an issue, [please file an issue](https://github.com/gadenbuie/reg
 
 #### Planned improvements
 
-- Make better use of the opening view of **Help** tab to explain the gadget.
+- **v0.1.6!** Make better use of the opening view of **Help** tab to explain the gadget.
   Also add one or more additional tabs with an overview of regular expressions,
   with links to R4DS and `vignette('regular-expressions', package = 'stringr')`.
   Maybe also a **Try This** feature that sets the `text` and `pattern` with
   regex challenges (possibly borrowed from R4DS).
 
-- Add a global search option to the **Regex** tab. Groups would be lost, but I 
-  can still highlight global matches.
+- ~~Add a global search option to the **Regex** tab. Groups would be lost, but I 
+  can still highlight global matches.~~
 
-- Add "flavors" menu to **Regex** tab. Automatically sets options to common flavors.
-  Mainly for clarity when switching between "base"" style and "tidyverse/stringr" defaults.
+- ~~Add "flavors" menu to **Regex** tab. Automatically sets options to common flavors.
+  Mainly for clarity when switching between "base"" style and "tidyverse/stringr" defaults.~~
   
 - **Done in v0.1.5!** Add replacement functions somewhere. Maybe to **Output** tab with `g?sub` and 
   `str_replace(_all)?` as options with an additional "replacement" field that 

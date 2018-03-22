@@ -1,4 +1,4 @@
-#' regexplain gadget
+#' RegExplain gadget
 #'
 #' @import miniUI
 #' @import shiny
@@ -17,7 +17,7 @@ regex_gadget <- function(text = NULL,
     shiny::includeCSS(system.file("styles", "style.css", package = "regexplain")),
     shiny::includeCSS(system.file("styles", "gadget.css", package = "regexplain")),
     gadgetTitleBar(
-      "regexplain",
+      "RegExplain",
       right = miniTitleBarButton("done", "Send RegEx To Console", TRUE)
     ),
     miniTabstripPanel(
@@ -57,9 +57,9 @@ regex_gadget <- function(text = NULL,
                 label = HTML(
                   '<div style="font-size: 1.25rem;">',
                   'Option Groups: ',
-                  '<span style="color: #337ab7;">regexplain</span>,',
-                  '<span style="color: #5cb85c;">all</span>, ',
-                  '<span style="color: #f0ad4e;">base only</span>',
+                  '<span style="color: #337ab7;">RegExplain</span>,',
+                  '<span style="color: #5cb85c;">All</span>, ',
+                  '<span style="color: #f0ad4e;">Base only</span>',
                   '</div>'
                 ),
                 inline = TRUE,
@@ -341,11 +341,9 @@ regex_gadget <- function(text = NULL,
 
     # ---- Server - Tab - Help ----
     HELP_DEFAULT_TEXT <- c(
-      "<div id=\"welcome-to-regexplain\" class=\"section level3\">",
       "<h3>Welcome to RegExplain</h3>",
       "<p>If you’re new to regular expressions, one of the best places to start is <a href=\"http://stringr.tidyverse.org/articles/regular-expressions.html\">the regular expressions vignette</a> from <code>stringr</code>. The chapter on strings in <a href=\"http://r4ds.had.co.nz/strings.html\">R for Data Science</a> is also an excellent first resource.</p>",
       "<p><strong>Exploring or looking for a challenge?</strong> Click on <i>Try These Examples</i> to see what you can do with this addin.</p>",
-      "<div id=\"getting-started\" class=\"section level4\">",
       "<h4>Getting Started</h4>",
       "<ul>",
       "<li><p><i class=\"fa fa-file-text-o\"></i> Enter or edit the <strong>Text</strong> you want to search.</p></li>",
@@ -353,14 +351,12 @@ regex_gadget <- function(text = NULL,
       "<li><p><i class=\"fa fa-table\"></i> Test the <strong>Output</strong> of your regular expression with common functions, including <i>search and replace</i> functions.</p></li>",
       "<li><p><i class=\"fa fa-support\"></i> Get <strong>Help</strong> and look up the regular expression syntax.</p></li>",
       "</ul>",
-      "</div>",
-      "<div id=\"escaping-characters\" class=\"section level4\">",
       "<h4>Escaping characters</h4>",
       "<p>In order to store a backslash (<code>\\</code>) as a character in R, backslashes need to be escaped…with another backslash! To write a literal <code>\\</code> in an R character string, you need to actually store <code>&quot;\\\\&quot;</code>.</p>",
       "<p>In regular expressions, <code>\\w</code> stands for any alphabetical character, but to store it in a string in R you need <code>&quot;\\w&quot;</code>.</p>",
       "<p>Inside <strong>RegExplain</strong>, however, standard regular expressions can be used so that you can easily copy patterns from other places. When you click on the <span class=\"btn btn-xs btn-primary\">Send RegEX to Console</span> button, the necessary extra <code>\\</code> will be included.</p>",
-      "<p>An extra backslash is still needed to match a literal <code>\\</code> in standard regular expressions. This means that you will need to enter <code>\\\\</code> in the <strong>RegEx</strong> tab, and the output to R will be <code>&quot;\\\\\\\\&quot;</code>.</p>",
-      "</div>")
+      "<p>An extra backslash is still needed to match a literal <code>\\</code> in standard regular expressions. This means that you will need to enter <code>\\\\</code> in the <strong>RegEx</strong> tab, and the output to R will be <code>&quot;\\\\\\\\&quot;</code>.</p>"
+      )
 
     source(system.file("shiny", "help_server.R", package = "regexplain"), local = TRUE)
 
