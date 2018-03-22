@@ -75,7 +75,7 @@
 },
 {
 	"name":"Web, URL Extended",
-	"regex":"(?:(?:http(?:s)?|ftp)://)(?:\\S+(?::(?:\\S)*)?@)?(?:(?:[a-z0-9\u00a1-\uffff](?:-)*)*(?:[a-z0-9\u00a1-\uffff])+)(?:\\.(?:[a-z0-9\u00a1-\uffff](?:-)*)*(?:[a-z0-9\u00a1-\uffff])+)*(?:\\.(?:[a-z0-9\u00a1-\uffff]){2,})(?::(?:\\d){2,5})?(?:/(?:\\S)*)?",
+	"regex":"(?:(?:http(?:s)?|ftp)://)(?:\\S+(?::(?:\\S)*)?@)?(?:(?:[a-z0-9\\u00a1-\\uffff](?:-)*)*(?:[a-z0-9\\u00a1-\\uffff])+)(?:\\.(?:[a-z0-9\\u00a1-\\uffff](?:-)*)*(?:[a-z0-9\\u00a1-\\uffff])+)*(?:\\.(?:[a-z0-9\\u00a1-\\uffff]){2,})(?::(?:\\d){2,5})?(?:/(?:\\S)*)?",
 	"description":"More complicated URL validation that handles fully-qualified URLs such as <code>http://www.example.com/wpstyle/?p=364</code>, <code>http://foo.com/blah_blah_(wikipedia)_(again)</code>, or even <code>http://userid:password@example.com:8080/</code>.",
 	"tags":"url,address,http",
 	"source":"http://rpubs.com/jimhester/rex-url_parsing"
