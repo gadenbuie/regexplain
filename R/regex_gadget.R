@@ -403,6 +403,8 @@ regex_gadget <- function(text = NULL,
           tags$dd("Friendly Regular Expressions: complex regular expressions from human readable expressions"),
           tags$dt(tags$a(href = "https://github.com/richierocks/rebus", "rebus")),
           tags$dd("Build regular expressions in a human readable way"),
+          tags$dt(tags$a(href = "https://www.r-pkg.org/pkg/qdapRegex", "qdapRegex")),
+          tags$dd("A collection of regular expression tools for extraction/removal/replacement of common patterns in text documents"),
           tags$dt(tags$a(href = "https://github.com/AdamSpannbauer/r_regex_tester_app", "R Regex Tester")),
           tags$dd("A Shiny app for testing regular expressions")
         )
