@@ -250,14 +250,16 @@ regex_gadget <- function(text = NULL,
 
     output$template_info <- renderUI({
       req(this_template())
+      tt <- this_template()
+      rx_url <- "((https?|ftp|file)://)?([[:alnum:].-]+)\\.([a-zA-Z.]{2,6})([/[[:alpha:].-]*)*/?"
       tagList(
         tags$h5("Description"),
-        tags$p(this_template()$description),
+        tags$p(HTML(tt$description)),
         tags$h5("Pattern"),
-        tags$pre(
-          tags$code(
-            this_template()$regex
-          )
+        tags$pre(tags$code(tt$regex)),
+        if (!is.null(tt$source)) tags$p(
+          "Source:",
+          if (grepl(rx_url, tt$source)) tags$a(href = tt$source, tt$source) else tt$source
         )
       )
     })
@@ -846,5 +848,6 @@ get_templates <- function() {
     simplifyDataFrame = FALSE,
     simplifyMatrix = FALSE
   )
+  patterns <- purrr::keep(patterns, ~ .$name != "")
   patterns[order(purrr::map_chr(patterns, 'name'))]
 }
