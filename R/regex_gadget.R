@@ -820,5 +820,11 @@ get_templates <- function() {
   }
   f_patterns <- system.file("extdata", "patterns.json", package = "regexplain")
   if (!file.exists(f_patterns)) return(NULL)
-  jsonlite::fromJSON(f_patterns, simplifyVector = FALSE, simplifyDataFrame = FALSE, simplifyMatrix = FALSE)
+  patterns <- jsonlite::fromJSON(
+    f_patterns,
+    simplifyVector = FALSE,
+    simplifyDataFrame = FALSE,
+    simplifyMatrix = FALSE
+  )
+  patterns[order(purrr::map_chr(patterns, 'name'))]
 }
