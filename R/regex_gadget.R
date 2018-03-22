@@ -829,10 +829,12 @@ check_version <- function(
 
 #' Loads Regex Pattern Templates
 #'
-#' Sourced from [Regex Hub](https://projects.lukehaas.me/regexhub)
-#' and available at <https://github.com/lukehaas/RegexHub>. Copyright
+#' Patterns sourced from [Regex Hub](https://projects.lukehaas.me/regexhub)
+#' are available at <https://github.com/lukehaas/RegexHub> and are copyright
 #' Luke Haas licensed under the MIT license available at
 #' <https://github.com/lukehaas/RegexHub/commit/3ab87b5a4fd2817b42e2e45dcf040d4f0164ea37>.
+#' Patterns source from [qdapRegex](https://github.com/trinker/qdapRegex) are
+#' copyright Tyler Rinker and Jason Gray, licensed under the GPL-2 license.
 #'
 #' @keywords internal
 get_templates <- function() {

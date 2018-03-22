@@ -1,193 +1,430 @@
 [{
-	"name":"Date/Time, Date in format dd/mm/yyyy",
+	"name":"Date/Time, Date DD/MM/YYY",
 	"regex":"(0?[1-9]|[12][0-9]|3[01])([ /-])(0?[1-9]|1[012])\\2([0-9][0-9][0-9][0-9])(([ -])([0-1]?[0-9]|2[0-3]):([0-5]?[0-9]):[0-5]?[0-9])?",
-	"description":"Will match dates with dashes, slashes or with spaces (e.g. dd-mm-yyyy dd/mm/yyyy dd mm yyyy), and optional time separated by a space or a dash (e.g. dd-mm-yyyy-hh:mm:ss or dd/mm/yyyy hh:mm:ss).",
-	"tags":"date,time"
+	"description":"Will match dates with dashes, slashes or with spaces (e.g. <code>dd-mm-yyyy</code> <code>dd/mm/yyyy</code> <code>dd mm yyyy</code>), and optional time separated by a space or a dash (e.g. <code>dd-mm-yyyy-hh:mm:ss</code> or <code>dd/mm/yyyy hh:mm:ss</code>).",
+	"tags":"date,time",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
-	"name":"Date/Time, Date in format mm/dd/yyyy",
+	"name":"Date/Time, Date MM/DD/YYYY",
 	"regex":"(0?[1-9]|1[012])([ /-])(0?[1-9]|[12][0-9]|3[01])\\2([0-9][0-9][0-9][0-9])(([ -])([0-1]?[0-9]|2[0-3]):([0-5]?[0-9])(?::([0-5]?[0-9])))?",
-	"description":"Will match dates with dashes, slashes or with spaces (e.g. mm-dd-yyyy mm/dd/yyyy mm dd yyyy), and optional time separated by a space or a dash (e.g. mm-dd-yyyy-hh:mm:ss or mm/dd/yyyy hh:mm:ss).",
+	"description":"Will match dates with dashes, slashes or with spaces (e.g. <code>mm-dd-yyyy</code> <code>mm/dd/yyyy</code> <code>mm dd yyyy</code>), and optional time separated by a space or a dash (e.g. <code>mm-dd-yyyy-hh:mm:ss</code> or <code>mm/dd/yyyy hh:mm:ss</code>).",
 	"tags":"date,time"
 },
 {
 	"name":"Date/Time, Time in 24-hour format",
 	"regex":"([01]?[0-9]|2[0-3]):([0-5][0-9]):?([0-5][0-9])?",
-	"description": "Match times in 24 hour format",
-	"tags":"date,time"
+	"description": "Match times in 24 hour format.",
+	"tags":"date,time",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
-	"name":"Date/Time, ISO-8601 format",
+	"name":"Date/Time, Time ISO-8601",
 	"regex":"(?![+-]?\\d{4,5}-?(?:\\d{2}|W\\d{2})T)(?:|(\\d{4}|[+-]\\d{5})-?(?:|(0\\d|1[0-2])(?:|-?([0-2]\\d|3[0-1]))|([0-2]\\d{2}|3[0-5]\\d|36[0-6])|W([0-4]\\d|5[0-3])(?:|-?([1-7])))(?:(?!\\d)|T(?=\\d)))(?:|([01]\\d|2[0-4])(?:|:?([0-5]\\d)(?:|:?([0-5]\\d)(?:|\\.(\\d{3})))(?:|[zZ]|([+-](?:[01]\\d|2[0-4]))(?:|:?([0-5]\\d)))))",
-	"description": "Will match a valid date and times in the ISO-8601 format, excludes durations. Requires Perl.",
-	"tags": "date,time"
+	"description": "Will match a valid date and times in the <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\">ISO-8601 format</a>, excludes durations. Requires Perl.",
+	"tags": "date,time",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Web, HTML tags",
 	"regex":"<([a-z1-6]+)([^<]+)*(?:>(.*)</\\1>| */>)",
-	"description":"Match opening and closing HTML tags with content between",
-	"tags":"markup,xml,html"
+	"description":"Match opening and closing HTML tags with content between.",
+	"tags":"markup,xml,html",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Web, Username",
 	"regex":"[a-zA-Z0-9_-]{3,16}",
-	"description":"A string between 3 and 16 characters, allowing alphanumeric characters and hyphens and underscores",
-	"tags":"username,validation"
+	"description":"A string between 3 and 16 characters, allowing alphanumeric characters and hyphens and underscores.",
+	"tags":"username,validation",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Hex Color Value",
 	"regex":"#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})\\b",
-	"description":"RGB hex colors",
-	"tags":"hex,color"
+	"description":"Detect RGB hex colors.",
+	"tags":"hex,color",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Web, URL Slug",
 	"regex":"[[:alnum:]-]+",
-	"description":"Match valid URL slugs",
-	"tags":"URL"
+	"description":"Match valid URL slugs.",
+	"tags":"URL",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Web, Email",
 	"regex":"([[:alnum:]_.-]+)@([[:alnum:].-]+)\\.([[:alpha:].]{2,6})",
-	"description":"Simple (but imperfect) email validation",
+	"description":"Simple (but imperfect) email validation.",
 	"tags":"email,validation"
 },
 {
 	"name":"Web, Image Source Path",
 	"regex":"<\\s*img[^>]+src\\s*=\\s*([\"'])(.*?)\\1[^>]*>",
-	"description":"Match the src attribute of an HTML image tag",
-	"tags":"html,tag,image"
+	"description":"Match the src attribute of an HTML image tag.",
+	"tags":"html,tag,image",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Web, URL",
-	"regex":"((https?|ftp|file)://)?([[:alnum:].-]+)\\.([a-zA-Z.]{2,6})([/[[:alpha:].-]*)*/?",
-	"description":"Match URL with optional protocol",
-	"tags":"url,address,http"
+	"regex":"((https?|ftp|file)://)?([\\w\\d.-]+)\\.([a-zA-Z.]{2,6})([-/.a-zA-Z0-9]+)*/?",
+	"description":"Match URL with optional protocol, e.g. <code>yahoo.com</code> or <code>https://yahoo.com/finance</code>. (Validation only, may have high false positives.)",
+	"tags":"url,address,http",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Network, IPv4 Address",
 	"regex":"(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)",
-	"description":"Match IP v4 addresses",
-	"tags":"tcpip,internet,address"
+	"description":"Match IP v4 addresses, e.g. <code>98.139.180.149</code>.",
+	"tags":"tcpip,internet,address",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Network, IPv6 Address",
 	"regex":"(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))",
-	"description": "Match IP v6 addresses",
+	"description": "Match IP v6 addresses, e.g. <code>2002:4559:1FE2::4559:1FE2</code>.",
 	"tags":"tcpip,internet,address"
 },
 {
 	"name":"Web, JSON Web Token",
 	"regex":"[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*",
-	"description": "JSON Web Token (encoded)",
-	"tags":"www"
+	"description": "JSON Web Token (encoded).",
+	"tags":"www",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Number, Positive Integer",
 	"regex":"\\d+",
-	"description":"Match whole numbers above zero",
-	"tags":"number"
+	"description":"Match whole numbers above zero.",
+	"tags":"number",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Number, Negative Integer",
 	"regex":"-\\d+",
-	"description":"Match whole numbers below zero",
-	"tags":"number"
+	"description":"Match whole numbers below zero.",
+	"tags":"number",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Number, Integer",
 	"regex":"-?\\d+",
-	"description":"Match whole numbers, above or below zero",
-	"tags":"number"
+	"description":"Match whole numbers, above or below zero.",
+	"tags":"number",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Number, Positive (integer or float)",
 	"regex":"\\d*\\.?\\d+",
-	"description":"Match integers or floats that are positive",
-	"tags":"float"
+	"description":"Match integers or floats that are positive.",
+	"tags":"float",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Number, Negative (integer or float)",
 	"regex":"-\\d*\\.?\\d+",
-	"description":"Match integers or floats that are negative",
-	"tags":"float"
+	"description":"Match integers or floats that are negative.",
+	"tags":"float",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Number, Integer or Float",
 	"regex":"-?\\d*\\.?\\d+",
-	"description":"Match integers or floats that are positive or negative",
-	"tags":"float"
+	"description":"Match integers or floats that are positive or negative.",
+	"tags":"float",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Phone Number, General",
 	"regex":"\\+?(\\d.*){3,}",
-	"description":"Match phone numbers at least 3 digits long",
-	"tags":"validation"
+	"description":"Match phone numbers at least 3 digits long.",
+	"tags":"validation",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Phone Number, US",
 	"regex":"(?:1)?[ .-]?(?:\\(?([2-9][0-9]{2})\\)?[ .-]?)?(?:(([2-9][0-9]{2})[ .-]?([0-9]{4}))|([0-9]{3}[ .-]?[0-9]{4}))",
-	"description":"Match US phone number, with or without country or area code. Matches phone numbers like 1-800-234-5678 or 234-5679 or (555) 432-1234.",
+	"description":"Match US phone number, with or without country or area code. Matches phone numbers like <code>1-800-234-5678</code> or <code>234-5679</code> or <code>(555) 432-1234</code>.",
 	"tags":"validation"
-},
-{
-	"name":"Whitespace, New line",
-	"regex":"\\r|\\n",
-	"description":"Match new lines within text",
-	"tags":"text"
-},
-{
-	"name":"Whitespace",
-	"regex":"\\s",
-	"description":"Match whitespace",
-	"tags":"text"
 },
 {
 	"name":"Web, Youtube ID from Video URL",
 	"regex":"https?://(?:youtu\\.be/|(?:[a-z]{2,3}\\.)?youtube\\.com/watch(?:\\?|#!)v=)([[:alnum:]-]{11}).*",
-	"description":"Match the ID of a youtube video URL",
-	"tags":"video,youtube,url"
+	"description":"Match the ID of a youtube video URL.",
+	"tags":"video,youtube,url",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Web, Youtube ID of Channel from URL",
 	"regex":"https?://(www\\.)?youtube.com/channel/UC([-_a-z0-9]{22})/i",
-	"description":"Match the ID of a youtube channel URL",
-	"tags":"channel,youtube,url"
+	"description":"Match the ID of a youtube channel URL.",
+	"tags":"channel,youtube,url",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Web, CSS comment",
 	"regex":"/\\*[^*]*\\*+([^/*][^*]*\\*+)*/",
-	"description":"Match standard CSS comments",
-	"tags":"css,comment,code"
+	"description":"Match standard CSS comments.",
+	"tags":"css,comment,code",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Web, Wordpress shortcodes",
 	"regex":"\\[([a-z-_0-9]+)([^\\[]+)*(?:\\](.*)\\[/\\1\\]|\\s+/\\])",
 	"description":"Matches opening and closing shortcode tags with content in-between them.",
-	"tags":"wordpress,shortcodes,markup"
+	"tags":"wordpress,shortcodes,markup",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
-	"name":"Postal Code, U.S./Canadian ZIP/Postal Code",
+	"name":"Postal, U.S./Canadian ZIP/Postal Code",
 	"regex":"(^\\d{5}(-\\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1}$)",
-	"description":"Matches US ZIP, ZIP+4, and Canadian Postal Codes",
-	"tags":"address, postal, zip"
+	"description":"Matches US ZIP, ZIP+4, and Canadian Postal Codes.",
+	"tags":"address, postal, zip",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
-	"name":"Postal Code, UK Postal Code",
+	"name":"Postal, UK Postal Code",
 	"regex":"(([gG][iI][rR] {0,}0[aA]{2})|(([aA][sS][cC][nN]|[sS][tT][hH][lL]|[tT][dD][cC][uU]|[bB][bB][nN][dD]|[bB][iI][qQ][qQ]|[fF][iI][qQ][qQ]|[pP][cC][rR][nN]|[sS][iI][qQ][qQ]|[iT][kK][cC][aA]) {0,}1[zZ]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yxA-HK-XY]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))",
-	"description":"Matches all UK postcodes",
-	"tags":"address, postal, zip"
+	"description":"Matches all UK postcodes.",
+	"tags":"address, postal, zip",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
-	"name":"Postal Code, Brazilian ZIP/Postal Code",
+	"name":"Postal, Brazilian ZIP/Postal Code",
 	"regex":"[0-9]{5}-[0-9]{3}",
-	"description":"Matches BR ZIP/Postal Code",
-	"tags":"address, postal, zip"
+	"description":"Matches BR ZIP/Postal Code.",
+	"tags":"address, postal, zip",
+	"source":"https://projects.lukehaas.me/regexhub"
 },
 {
 	"name":"Morse Code",
 	"regex":"[.-]{1,5}(?:[ \\t]+[.-]{1,5})*(?:[ \\t]+[.-]{1,5}(?:[ \\t]+[.-]{1,5})*)*",
-	"description":"Matches valid Morse Code",
-	"tags":"morse, code"
+	"description":"Matches valid Morse Code.",
+	"tags":"morse, code",
+	"source":"https://projects.lukehaas.me/regexhub"
+},
+{
+  "name":"LaTeX Citation",
+  "regex":"\\\\[a-zA-Z0-9]{0,}cite[a-zA-Z0-9]{0,}(\\[([^]]+)\\]){0,2}\\**\\{([a-zA-Z0-9 ,]+)\\}",
+  "description":"Matches LaTeX citation commands, such as <code>\\cite{Moe1999}</code> and <code>\\authorcite{Curly2000}</code>",
+  "tags":"latex, text",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Postal, US City and State",
+  "regex":"([A-Z][\\w-]*(\\s+[A-Z][\\w-]*)+),\\s*([A-Z]{2})\\b|(\\b[A-Za-z]+),\\s*([A-Z]{2})\\b",
+  "description":"Detects city comma state, e.g. <code>Anchorage, AK</code> or <code>New York City, NY</code>",
+  "tags":"address, postal, zip, city, state",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Postal, US City, State and Zip",
+  "regex":"([A-Z][\\w-]*(\\s+[A-Z][\\w-]*)+),\\s*([A-Z]{2})\\s*(?<!\\d)\\d{5}(?:[ -]\\d{4})?\\b|(\\b[A-Za-z]+),\\s*([A-Z]{2})\\s*(?<!\\d)\\d{5}(?:[ -]\\d{4})?\\b",
+  "description":"Detects (single lower case word or multiple consecutive capitalized words before a comma and state) + state (2 consecutive capital letters) + zip code (5 digits or 5 + 4 digits) from a string.",
+  "tags":"address, postal, zip, city, state",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Date/Time, Date Numeric",
+  "regex":"\\d{0,2}/\\d{2}/(?:\\d{4}|\\d{2})?|\\d{0,2}-\\d{2}-(?:\\d{4}|\\d{2})?|\\d{0,2}\\.\\d{2}\\.(?:\\d{4}|\\d{2})?",
+  "description":"Detects dates of the form <code>XX/XX/XXXX</code>, <code>XX/XX/XX</code>, <code>XX-XX-XXXX</code>, <code>XX-XX-XX</code>, <code>XX.XX.XXXX</code>, or <code>XX.XX.XX</code>.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Date/Time, Date Longform with Month",
+  "regex":"(\\b)([A-Za-z]{3,9})(\\s+)([0-9][0-9]*)(,)(\\s+)([0-9]{4})",
+  "description":"Detects dates of the form <code>March XX, XXXX</code> or <code>Mar XX, XXXX</code>",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Date/Time, Date YYYY-MM-DD",
+  "regex":"[0-9]{4}[.-][0-9]{2}[.-][0-9]{2}",
+  "description":"Detects numeric European-style dates: <code>YYYY-MM-DD</code>",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Date/Time, Date General",
+  "regex":"\\d{0,2}/\\d{2}/(?:\\d{4}|\\d{2})?|\\d{0,2}-\\d{2}-(?:\\d{4}|\\d{2})?|\\d{0,2}\\.\\d{2}\\.(?:\\d{4}|\\d{2})?|(\\b)([A-Za-z]{3,9})(\\s+)([0-9][0-9]*)(,)(\\s+)([0-9]{4})|[0-9]{4}-[0-9]{2}-[0-9]{2}",
+  "description":"Detects numeric dates or dates with text month, e.g. <code>XX/XX/XXXX</code>, etc., or <code>Mar XX, XXXX</code>, etc., or <code>XXXX-XX-XX</code>",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Web, Email 2",
+  "regex":"([_+a-z0-9-]+(\\.[_+a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,14}))",
+  "description":"General (not perfect) detection of email adressess such as <code>foo@google.com</code>. Will also detect other valid email addressess like <code>foo+bar@google.com</code>.",
+  "tags":"",
+  "source":"http://stackoverflow.com/a/25077704/1000343"
+},
+{
+  "name":"Web, Emoticon",
+  "regex":">?[:;=8XB]{1}[-~+o^]?[|\")(&gt;DO>{pP3/]+|</?3|XD+|D:<|x[-~+o^]?[|\")(&gt;DO>{pP3/]+",
+  "description":"Captures common text emoticons, like <code>:-P</code>",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Number, General",
+  "regex":"(?<=^| )[-.]*\\d+(?:\\.\\d+)?(?= |\\.?$)|\\d+(?:,\\d{3})+(\\.\\d+)*",
+  "description":"Detect numbers in a string (works on numbers with commas, decimals and negatives)",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Number, Percentage",
+  "regex":"\\(?[0-9.]+\\)?%",
+  "description":"Detects percentages in a string",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},{
+  "name":"Phone Number, US Extended",
+  "regex":"(?:(?:\\+?1\\s*(?:[.-]\\s*)?)?(?:\\(\\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\\s*\\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\\s*(?:[.-]\\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\\s*(?:[.-]\\s*)?([0-9]{4})(?:\\s*(?:#|x\\.?|ext\\.?|extension)\\s*(\\d+))?",
+  "description":"General phone number that just \"look for a string of at least 5 characters made up entirely of digits, periods, brackets, hyphens or spaces\"",
+  "tags":"",
+  "source":"http://stackoverflow.com/a/21008254/1000343"
+},
+{
+  "name":"Text, Repeated Characters",
+  "regex":"\\b(\\S+?)\\1\\S*\\b",
+  "description":"Detect words with repeating characters. The word must contain characters, each repeating at east 2 times.",
+  "tags":"",
+  "source":"http://stackoverflow.com/a/29438461/1000343"
+},
+{
+  "name":"Text, Repeated Phrases",
+  "regex":"(?i)\\b(\\w.*)((?:\\s|\\.{3}|,)+\\1)+\\b",
+  "description":"Detect repeating phrases in a string.",
+  "tags":"",
+  "source":"http://stackoverflow.com/a/28786617/1000343"
+},
+{
+  "name":"Text, Repeated Words",
+  "regex":"(?i)\\b(\\w+)\\s+\\1\\b",
+  "description":"Detect repeating words in a string.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Title Name",
+  "regex":"(((Dr|Mr|Mrs|Ms|dr|mr|mrs|ms)(\\.))|(Miss|Mizz|mizz))(\\s+)([A-Za-z]+)(\\s[A-Z][A-Za-z]*\\b)*",
+  "description":"Detect title (honorific) + person name(s) from a string.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Date/Time, Time General",
+  "regex":"\\d{0,2}:\\d{2}(?:[:.]\\d+)?",
+  "description":"Detects time formats like <code>HH:MM</code>, <code>HH:MM:SS</code>, or <code>MM:SS.dddd</code>.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Date/Time, Time with AM/PM",
+  "regex":"(\\d{0,2}:\\d{2}(?:[:.]\\d+)?)(\\s+(([AP]\\.{0,1}M\\.{0,1})|([ap]\\.{0,1}m\\.{0,1})))",
+  "description":"Detects time formats that optionally include AM/PM indicators.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Date/Time, Timestamp",
+  "regex":"(#)?([0-9]){1,2}:?([0-9]){1,2}[:.]([0-9]){2}([:,.-][0-9]+)?#??|\\d{1}:\\d{2}",
+  "description":"Detects full timestamps formatted like <code>HH:MM:SS.OS</code>",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Web, Twitter URL",
+  "regex":"(https?://t\\.co[^ ]*)|(t\\.co[^ ]*)",
+  "description":"Detects Twitter Short URLs.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace Anywhere",
+  "regex":"^\\s+|\\s+$|\\s+(?=[.](?:\\D|$))|(\\s+)(?=[,]|[;:?!\\]\\}\\)]+)|(?<=[\\(\\[\\{])(\\s+)|(\\s+)(?=[\\s])",
+  "description":"Detects multiple white space, white space before a comma, white space before a single or consecutive combination of a colon, semicolon, or endmark (period, question mark, or exclamation point), white space after a left bracket (\"\", \"(\", \"[\") or before a right bracket (\"\", \")\", \"]\"), leading or trailing white space.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace Bracket",
+  "regex":"(\\s+)(?=[\\)\\]\\}])|(?<=[\\(\\[\\{])(\\s+)",
+  "description":"Detects white space after a left bracket (\"\", \"(\", \"[\") or before a right bracket (\"\", \")\", \"]\").",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace Before Colon",
+  "regex":"(\\s+)(?=[\\:\\;]+)",
+  "description":"Detects white space before a single or consecutive combination of a colon, semicolon.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace Before Comma",
+  "regex":"(\\s+)(?=,)",
+  "description":"Detects white space before a comma.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace After Comma",
+  "regex":"(?!\\s+),(?=\\D)",
+  "description":"Detects white space after a comma.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace Before Endmark",
+  "regex":"\\s+(?=[.?!](?:\\D|$))",
+  "description":"Detects white space before endmark(s) (\".\", \"?\", \"!\").",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace Leading",
+  "regex":"^\\s+",
+  "description":"Detects leading white space.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace Leading or Trailing",
+  "regex":"^\\s+|\\s+$",
+  "description":"Detects leading or trailing white space.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace Multiple",
+  "regex":"(\\s+)(?=[\\s])",
+  "description":"Detects multiple white space (more than single whitespace element).",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace Before Punctuation",
+  "regex":"\\s+(?=[.](?:\\D|$))|(\\s+)(?=[,]|[;:?!]+)",
+  "description":"Detects multiple white space before a comma, white space before a single or consecutive combination of a colon, semicolon, or endmark (period, question mark, or exclamation point).",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Text, Whitespace Trailing",
+  "regex":"\\s+$",
+  "description":"Detects trailing white space.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
+},
+{
+  "name":"Semantic Version",
+  "regex":"\\b(v(ersion)*\\s*)([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:\\.([0-9]+))?\\b",
+  "description":"Detects semantic version numbers like <code>0.1.5</code> or <code>3.4.4.9034</code> prefaced with <code>v</code> or <code>version<code>.",
+  "tags":"",
+  "source":"https://github.com/trinker/qdapRegex/"
 }
 ]

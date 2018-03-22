@@ -7,9 +7,11 @@
 get_templates()
 }
 \description{
-Sourced from \href{https://projects.lukehaas.me/regexhub}{Regex Hub}
-and available at \url{https://github.com/lukehaas/RegexHub}. Copyright
+Patterns sourced from \href{https://projects.lukehaas.me/regexhub}{Regex Hub}
+are available at \url{https://github.com/lukehaas/RegexHub} and are copyright
 Luke Haas licensed under the MIT license available at
 \url{https://github.com/lukehaas/RegexHub/commit/3ab87b5a4fd2817b42e2e45dcf040d4f0164ea37}.
+Patterns source from \href{https://github.com/trinker/qdapRegex}{qdapRegex} are
+copyright Tyler Rinker and Jason Gray, licensed under the GPL-2 license.
 }
 \keyword{internal}
