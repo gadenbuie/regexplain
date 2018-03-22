@@ -46,11 +46,11 @@ regex_gadget <- function(text = NULL,
             fillCol(
               flex = c(1, 1),
               fillRow(
-                flex = c(5, 1),
+                flex = c(6, 1),
                 textInputCode('pattern', 'RegEx', width = "100%",
                               placeholder = "Standard RegEx, e.g. \\w+_\\d{2,4}\\s+"),
                 tags$div(style = "margin-top: 23px; margin-left:6px;",
-                         actionButton("show_templates", "Templates", class = "btn-success"))
+                         actionButton("library_show", "Library", class = "btn-success"))
               ),
               checkboxGroupInput(
                 'regex_options',
@@ -223,48 +223,50 @@ regex_gadget <- function(text = NULL,
       toHTML(paste(error_message, warning_message, res))
     })
 
-    # ---- Server - Tab - RegEx - Templates ----
-    templates <- get_templates()
+    # ---- Server - Tab - RegEx - Library ----
+    library_patterns <- get_regex_library()
 
-    this_template <- reactive({
-      req(input$template)
-      purrr::keep(templates, ~ .$name == input$template) %>%
+    this_pattern <- reactive({
+      req(input$library_pattern)
+      purrr::keep(library_patterns, ~ .$name == input$library_pattern) %>%
         purrr::flatten()
     })
 
-    observeEvent(input$show_templates, {
+    observeEvent(input$library_show, {
+      browser()
       showModal(
         modalDialog(
-          title = "Templates",
+          title = "Regex Library",
+          easyClose = TRUE,
           footer = tagList(
             modalButton("Cancel"),
-            actionButton("apply_template", "Use Template", class = "btn-success")
+            actionButton("library_apply_pattern", "Use Pattern", class = "btn-success")
           ),
-          selectInput("template", "Template",
-                      choices = c("Choose template" = "",
-                                  purrr::set_names(purrr::map_chr(templates, 'name')))),
-          uiOutput("template_info")
+          selectInput("library_pattern", "Pattern",
+                      choices = c("Choose pattern" = "",
+                                  purrr::set_names(purrr::map_chr(library_patterns, 'name')))),
+          uiOutput("library_pattern_info")
         )
       )
     })
 
-    output$template_info <- renderUI({
-      req(this_template())
-      tt <- this_template()
+    output$library_pattern_info <- renderUI({
+      req(this_pattern())
+      tp <- this_pattern()
       rx_url <- "((https?|ftp|file)://)?([[:alnum:].-]+)\\.([a-zA-Z.]{2,6})([/[[:alpha:].-]*)*/?"
       tagList(
         tags$h5("Description"),
-        tags$p(HTML(tt$description)),
+        tags$p(HTML(tp$description)),
         tags$h5("Pattern"),
-        tags$pre(tags$code(tt$regex)),
-        if (!is.null(tt$source)) tags$p(
+        tags$pre(tp$regex),
+        if (!is.null(tp$source)) tags$p(
           "Source:",
-          if (grepl(rx_url, tt$source)) tags$a(href = tt$source, tt$source) else tt$source
+          if (grepl(rx_url, tp$source)) tags$a(href = tp$source, tp$source) else tp$source
         )
       )
     })
 
-    observeEvent(input$apply_template, {
+    observeEvent(input$library_apply_pattern, {
       updateTextInput(session, "pattern", value = this_template()$regex)
       updateSelectInput(session, "template", selected = "")
       removeModal()
@@ -827,7 +829,7 @@ check_version <- function(
   } else return(NULL)
 }
 
-#' Loads Regex Pattern Templates
+#' Loads Regex Pattern Library
 #'
 #' Patterns sourced from [Regex Hub](https://projects.lukehaas.me/regexhub)
 #' are available at <https://github.com/lukehaas/RegexHub> and are copyright
@@ -837,7 +839,7 @@ check_version <- function(
 #' copyright Tyler Rinker and Jason Gray, licensed under the GPL-2 license.
 #'
 #' @keywords internal
-get_templates <- function() {
+get_regex_library <- function() {
   if (!requireNamespace("jsonlite")) {
     warning("Please install the `jsonlite` package to use template features")
     return(NULL)
