@@ -366,7 +366,7 @@ regex_gadget <- function(text = NULL,
       "</ul>",
       "<h4>Escaping characters</h4>",
       "<p>In order to store a backslash (<code>\\</code>) as a character in R, backslashes need to be escaped…with another backslash! To write a literal <code>\\</code> in an R character string, you need to actually store <code>&quot;\\\\&quot;</code>.</p>",
-      "<p>In regular expressions, <code>\\w</code> stands for any alphabetical character, but to store it in a string in R you need <code>&quot;\\w&quot;</code>.</p>",
+      "<p>In regular expressions, <code>\\w</code> stands for any alphabetical character, but to store it in a string in R you need <code>&quot;\\\\w&quot;</code>.</p>",
       "<p>Inside <strong>RegExplain</strong>, however, standard regular expressions can be used so that you can easily copy patterns from other places. When you click on the <span class=\"btn btn-xs btn-primary\">Send RegEX to Console</span> button, the necessary extra <code>\\</code> will be included.</p>",
       "<p>An extra backslash is still needed to match a literal <code>\\</code> in standard regular expressions. This means that you will need to enter <code>\\\\</code> in the <strong>RegEx</strong> tab, and the output to R will be <code>&quot;\\\\\\\\&quot;</code>.</p>"
       )
