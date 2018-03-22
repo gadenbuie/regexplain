@@ -386,8 +386,10 @@ regex_gadget <- function(text = NULL,
         tags$h4("Live Preview and Explanations"),
         tags$ul(
           tags$li(tags$a(href = "https://regexr.com", "https://regexr.com")),
+          tags$li(tags$a(href = "https://regexper.com/", "https://regexper.com")),
           tags$li(tags$a(href = "https://debuggex.com", "https://debuggex.com")),
           tags$li(tags$a(href = "https://regex101.com", "https://regex101.com")),
+          tags$li(tags$a(href = "http://rick.measham.id.au/paste/explain", "http://rick.measham.id.au/paste/explain")),
           tags$li(tags$a(href = "http://www.mactechnologies.com/index.php?page=downloads#regexrx", "RegexRx"), "(app)"),
           tags$li(tags$a(href = "https://www.regexbuddy.com/", "Regex Buddy"), "(paid app)")
         ),
