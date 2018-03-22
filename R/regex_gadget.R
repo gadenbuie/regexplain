@@ -260,7 +260,7 @@ regex_gadget <- function(text = NULL,
         tags$pre(tp$regex),
         if (!is.null(tp$source)) tags$p(
           "Source:",
-          if (grepl(rx_url, tp$source)) tags$a(href = tp$source, tp$source) else tp$source
+          if (grepl(rx_url, tp$source)) tags$a(href = tp$source, tp$source) else HTML(tp$source)
         )
       )
     })
