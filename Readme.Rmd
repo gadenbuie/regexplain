@@ -23,10 +23,10 @@ Inspired by [RegExr][regexr] and `stringr::str_view`.
 
 ## Installation
 
-Installation is easy with `devtools`:
+The Installation is easy with `devtools`:
 
 ```r
-devtools::install_github("gadenbuie/regexplain")
+devtools::install_github("gadenbuie/regexplain@dev")
 ```
 
 ## Status

@@ -8,7 +8,7 @@ RegExplain
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/regexplain)](https://cran.r-project.org/package=regexplain)
-<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--21-yellowgreen.svg)](/commits/master) -->
+<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--23-yellowgreen.svg)](/commits/master) -->
 
 <!-- Links -->
 
@@ -18,10 +18,10 @@ your regex expressions. Inspired by [RegExr](https://regexr.com/) and
 
 ## Installation
 
-Installation is easy with `devtools`:
+The Installation is easy with `devtools`:
 
 ``` r
-devtools::install_github("gadenbuie/regexplain")
+devtools::install_github("gadenbuie/regexplain@dev")
 ```
 
 ## Status
