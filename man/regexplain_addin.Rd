@@ -2,11 +2,17 @@
 % Please edit documentation in R/rstudio_addins.R
 \name{regexplain_addin}
 \alias{regexplain_addin}
-\title{regexplain_addin}
+\title{RegExplain Addin}
 \usage{
 regexplain_addin()
 }
 \description{
-regexplain_addin
+Addin for regexplain. If the selection does not contain multiple lines, the
+addin tries to evaluate the selection and coerce the result to a character
+string. Only unique lines are passed to the gadget to maximize screen space.
+The max number of lines returned is set by the option
+\code{regexplain.addin.max_lines}, with a default value of 100 lines.
+If evaluating the selection does not produce a character vector without
+errors, the original selection is returned.
 }
 \keyword{internal}

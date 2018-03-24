@@ -2,11 +2,12 @@
 % Please edit documentation in R/rstudio_addins.R
 \name{regexplain_file}
 \alias{regexplain_file}
-\title{regexplain file loader}
+\title{Regexplain File Addin}
 \usage{
 regexplain_file()
 }
 \description{
-regexplain file loader
+See \link{regexplain_addin}. Opens file chooser to pick file, reads lines, returns
+first \code{regexplain.addin.max_lines} (default 100).
 }
 \keyword{internal}

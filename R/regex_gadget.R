@@ -721,7 +721,7 @@ regex_gadget <- function(
     })
   }
 
-  viewer <- shiny::paneViewer(minHeight = 1000)
+  viewer <- shiny::paneViewer(minHeight = 800)
   runGadget(ui, server, viewer = viewer)
 }
 
