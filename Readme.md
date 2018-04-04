@@ -10,7 +10,7 @@ Status: Active – The project has reached a stable, usable state and is
 being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/regexplain)](https://cran.r-project.org/package=regexplain)
-<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--04--03-yellowgreen.svg)](/commits/master) -->
+<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--04--04-yellowgreen.svg)](/commits/master) -->
 
 <!-- Links -->
 
