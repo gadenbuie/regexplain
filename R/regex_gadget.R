@@ -193,6 +193,8 @@ regex_gadget <- function(
     # ---- Server - Tab - Regex ----
     output$result <- renderUI({
       if (is.null(rtext())) return(NULL)
+      delay <- getOption('regexplain.input_delay_ms', NULL)
+      if (!is.null(delay)) invalidateLater(delay, session)
       if (pattern() == "") {
         return(toHTML(paste('<p class="results">', escape_html(rtext()), "</p>", collapse = "")))
       }
@@ -272,9 +274,16 @@ regex_gadget <- function(
     })
 
     observeEvent(input$library_apply_pattern, {
-      updateTextInput(session, "pattern", value = this_pattern()$regex)
+      updateTextInput(session, "pattern", value = this_pattern()$regex, placeholder = "")
       updateSelectInput(session, "template", selected = "")
       removeModal()
+    })
+
+    observe({
+      is_empty <- input$pattern == ""
+      if (is_empty) updateTextInput(
+        session, "pattern",
+        placeholder = "Standard RegEx, e.g. \\w+_\\d{2,4}\\s+")
     })
 
     # ---- Server - Tab - Output ----
