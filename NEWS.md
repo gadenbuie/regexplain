@@ -1,7 +1,11 @@
-## regexplain 0.2
+## regexplain 0.2.x
 
-* Added "Templates" button that opens a dialog to import regex patterns
-  (initially) sourced from <https://projects.lukehaas.me/regexhub>.
+### 0.2.0
+
+* Added "Library" button that opens a dialog to import regex patterns sourced 
+  from <https://projects.lukehaas.me/regexhub> and 
+  <https://github.com/trinker/qdapRegex>. The library is stored in
+  `inst/extdata/patterns.json`.
 * Added "Introduction", "Try These Examples" and "Resources" tabs to
   the standard gadget Help tab.
 * Several bugfixes and tests were added around unicode character escaping within
@@ -9,6 +13,9 @@
 * Enable `perl` mode by default in gadget (consistent with `stringr` and most
   regexes in the wild, but not base R). Write out selected options as comments
   when not consistent with base R when returning pattern from gadget.
+* Rewrote Readme with new screenshots and screencasts.
+* Added options `regexplain.addin.max_lines` and options for debugging gadget inputs.
+
 
 ## regexplain 0.1.x
 

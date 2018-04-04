@@ -5,7 +5,7 @@ RegExplain
 
 <!-- [![packageversion](https://img.shields.io/github/description/v/gadenbuie/regexplain.svg)](commits/master) -->
 
-![](https://img.shields.io/badge/lifecycle-mature-blue.svg) [![Project
+![](https://img.shields.io/badge/lifecycle-maturing-blue.svg) [![Project
 Status: Active – The project has reached a stable, usable state and is
 being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
@@ -14,9 +14,12 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 
 <!-- Links -->
 
-**RegExplain** is an RStudio addin that helps you interactively build up
-your regular expressions. Inspired by [RegExr.com](https://regexr.com/)
-and `stringr::str_view()`.
+**RegExplain** is an RStudio addin slash utility belt for regular
+expressions. Interactively build your regexp, check the output of common
+string matching functions, consult the interactive help pages, or use
+the included resources to learn regular expressions. And more.
+
+Inspired by [RegExr.com](https://regexr.com/) and `stringr::str_view()`.
 
 ## Installation
 
@@ -44,9 +47,9 @@ or for hands-free installation
 
 ![regexplain examples](docs/regexplain-try-this.gif)
 
-## R Studio Addin
+## RStudio Addin
 
-The main feature of this package is the R Studio Addin **RegExplain
+The main feature of this package is the RStudio Addin **RegExplain
 Selection**. Just select the text or object containing text (such as the
 variable name of a vector or a data.frame column) and run **RegExplain
 Selection** from the RStudio Addins
@@ -87,16 +90,16 @@ expression syntax.
 
 ![regexplain help windows](docs/regexplain-gadget-help.png)
 
-Open **RegExplain Cheatsheet** from the R Studio Addins drop down to
-open the regex reference page in the Viewer pane without blocking your
+Open **RegExplain Cheatsheet** from the RStudio Addins drop down to open
+the regex reference page in the Viewer pane without blocking your
 current R session.
 
 ### Import Your Text
 
 There are two ways to get your text into *RegExplain*. The first way was
-described above: select an object name or lines of text or code in the R
-Studio source pane and run **RegExplain Selection**. To import text from
-a file, use **RegExplain File** to you import the text you want to
+described above: select an object name or lines of text or code in the
+RStudio source pane and run **RegExplain Selection**. To import text
+from a file, use **RegExplain File** to you import the text you want to
 process with regular expressions.
 
 When importing text, *RegExplain* automatically reduces the text to the
@@ -106,11 +109,11 @@ unique entries and limits the number of lines.
 
 ### Regular Expressions Library
 
-The *RegExplain* gadget also includes a regular expressions library in
-the **RegEx** tab. The library features common regular expressions,
-sourced from [qdapRegex](https://github.com/trinker/qdapRegex) and
-[Regex Hub](https://projects.lukehaas.me/regexhub), with several
-additional patterns.
+The *RegExplain* gadget includes a regular expressions library in the
+**RegEx** tab. The library features common regular expressions, sourced
+from [qdapRegex](https://github.com/trinker/qdapRegex) and [Regex
+Hub](https://projects.lukehaas.me/regexhub), with several additional
+patterns.
 
 The full library is stored as a JSON file in
 [inst/extdata/patterns.json](/inst/extdata/patterns.json), feel free to
@@ -121,10 +124,10 @@ request.
 
 ## View Static Regex Results
 
-*RegExplain* also provides the function `view_regex()` that you can use
-as a `stringr::str_view()` replacement. In addition to highlighting
-matched portions of the text, `view_regex()` colorizes groups and
-attempts to colorize the regex expression itself as well.
+*RegExplain* provides the function `view_regex()` that you can use as a
+`stringr::str_view()` replacement. In addition to highlighting matched
+portions of the text, `view_regex()` colorizes groups and attempts to
+colorize the regex expression itself as well.
 
 ``` r
 text <- c("breakfast=eggs;lunch=pizza",
