@@ -144,7 +144,7 @@ regex_gadget <- function(
             if ("devtools" %in% installed.packages()) tags$p(
               "The fastest way to update is with devtools:",
               tags$pre(
-                "devtools::update_packages(\"gadenbuie/regexplain\")"
+                "devtools::update_packages(\"regexplain\")"
               )
             ),
             tags$p(
