@@ -3,44 +3,57 @@ title: "RegExplain"
 output: github_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.path = "man/figures/Readme-")
+library(regexplain)
+```
+
+#### *Regular expressions are tricky.* RegExplain *makes it easier to see what you're doing.*
+
 <!-- [![packageversion](https://img.shields.io/github/description/v/gadenbuie/regexplain.svg)](commits/master) -->
-![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+![](https://img.shields.io/badge/lifecycle-mature-blue.svg)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/regexplain)](https://cran.r-project.org/package=regexplain)
 <!-- [![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)](/commits/master) -->
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(regexplain)
-```
-
-
 <!-- Links -->
 [regexr]: https://regexr.com/
 
-regexplain is an RStudio addin that helps you interactively build up your regex expressions.
-Inspired by [RegExr][regexr] and `stringr::str_view`.
+**RegExplain** is an RStudio addin that helps you interactively build up your regular expressions.
+Inspired by [RegExr.com][regexr] and `stringr::str_view()`.
 
 ## Installation
 
-The Installation is easy with `devtools`:
+Installation is easy with `devtools`
 
 ```r
-devtools::install_github("gadenbuie/regexplain@dev")
+devtools::install_github("gadenbuie/regexplain")
 ```
 
-## Status
+or for hands-free installation
 
-Mostly working, but there [may be issues or future changes](#known-issues-and-future-work).
+```
+source("https://install-github.me/gadenbuie/regexplain")
+```
 
-I would love your help testing this, feel free to send me your feedback on Twitter at [&commat;grrrck](https://twitter.com/grrrck) or through the [issue tracker](https://github.com/gadenbuie/regexplain).
+## RegExplain in Action
 
-## RStudio Addin
+#### Overview
 
-![regexplain screencast](docs/gadget-screencast.gif)
+![regexplain selection](docs/regexplain-selection.gif)
 
-The main feature of this package is the RStudio Addin **Regexplain Selection**.
-Just select the text or object containing text (such as the variable name of a vector or a data.frame column) and run **Regexplain Selection** from the RStudio Addins dropdown.
+#### Regular Expressions Library
+
+![regexplain library](docs/regexplain-library.gif)
+
+#### Try the Built-In Examples
+
+![regexplain examples](docs/regexplain-try-this.gif)
+
+## R Studio Addin
+
+The main feature of this package is the R Studio Addin **RegExplain Selection**.
+Just select the text or object containing text (such as the variable name of a vector or a data.frame column) and run **RegExplain Selection** from the RStudio Addins dropdown.
 
 <img src="docs/rstudio-addin-list.png" width = "250px;" alt="regexplain in the Rstudio Addins dropdown">
 
@@ -56,19 +69,43 @@ The addin will open an interface with 4 panes where you can
 When you're done, click on the **Send Regex to Console** to send your regex expression to... the console!
 
 ```r
-> pattern <- "(is|were|was) ([[:alpha:]]+) ([[:alpha:]]+)"
+> pattern <- "\\b(red|orange|yellow|green|blue|purple|white|brown)(?:\\s(\\w+))?"
 ```
 
-### Additional Addins
+Notice that _RegExplain_ handled the extra backslashes needed for storing the RegEx characters `\b`, `\s`, and `\w`.
+Inside the gadget you can use regular old regular expressions as you found them in the wild (hello, [Stack Overflow](https://stackoverflow.com/questions/tagged/regex)!).
 
-There are two more addins.
-**Regexplain File** lets you import the text lines from a file containing the text you want to process with regular expressions.
-**Regexplain Cheatsheet** opens the help page in the Viewer pane without blocking your current R session.
+### Help and Cheat Sheet
 
-## View regex results without the interactivity
+The **Help** tab is full of resources, guides, and R packages and includes an easy-to-navigate reference of commonly used regular expression syntax.
 
-regexplain also provides the function `view_regex()` that you can use as a `stringr::str_view()` replacement.
-In addition to highlighting matched portions of the text, `view_regex()` also colorizes groups and attempts to colorize the regex expression itself as well.
+![regexplain help windows](docs/regexplain-gadget-help.png)
+
+Open **RegExplain Cheatsheet** from the R Studio Addins drop down to open the regex reference page in the Viewer pane without blocking your current R session.
+
+### Import Your Text
+
+There are two ways to get your text into *RegExplain*.
+The first way was described above: select an object name or lines of text or code in the R Studio source pane and run **RegExplain Selection**.
+To import text from a file, use **RegExplain File** to you import the text you want to process with regular expressions.
+
+When importing text, _RegExplain_ automatically reduces the text to the unique entries and limits the number of lines.
+
+![regexplain addins](docs/addin-screenshots.png)
+
+### Regular Expressions Library
+
+The _RegExplain_ gadget also includes a regular expressions library in the **RegEx** tab.
+The library features common regular expressions, sourced from [qdapRegex](https://github.com/trinker/qdapRegex) and [Regex Hub](https://projects.lukehaas.me/regexhub), with several additional patterns.
+
+The full library is stored as a JSON file in [inst/extdata/patterns.json](/inst/extdata/patterns.json), feel free to contribute patterns you find useful or use regularly via pull request.
+
+<img src="docs/regexplain-gadget-library.png" height="400px" alt="regexplain library modal">
+
+## View Static Regex Results
+
+_RegExplain_ also provides the function `view_regex()` that you can use as a `stringr::str_view()` replacement.
+In addition to highlighting matched portions of the text, `view_regex()` colorizes groups and attempts to colorize the regex expression itself as well.
 
 ```r
 text <- c("breakfast=eggs;lunch=pizza",
@@ -90,46 +127,10 @@ view_regex(t_nested, r_nested)
 ![Example of nested groups](docs/view-nested.png)
 
 
-## Known Issues and Future Work
+## Notes
 
 Regular expressions are nothing if not a collection of corner cases.
 Trying to pass regular expressions through Shiny and HTML inputs is a bit of a labyrinth.
 For now, assume any issues or oddities you experience with this addin are entirely my fault and have nothing to do with the fine packages this addin is built on.
 If you do find an issue, [please file an issue](https://github.com/gadenbuie/regexplain).
-
-#### Notes
-
-- I've set up this app so that most escape sequences don't need to be escaped.
-  For example, you can enter `\w`, whereas in R this would need to be stored as 
-  `"\\w"`. The regex returned by the gadget will include the double backslash.
-  In these cases the text input is not escaped by Shiny.
-  
-  Unicode and hex escape characters also do not need to be escaped, thanks to
-  `stringi::stri_unescape_unicode()`. Here, `"\u"` *is* escaped by Shiny so I
-  had to make sure they are unescaped. The list of escaped characters that get
-  unescaped is `"\\u|\\x|\\N|\\a|\\o"`, please let me know if you find any 
-  others that should be on this list.
-
-#### Planned improvements
-
-- **v0.1.6!** Make better use of the opening view of **Help** tab to explain the gadget.
-  Also add one or more additional tabs with an overview of regular expressions,
-  with links to R4DS and `vignette('regular-expressions', package = 'stringr')`.
-  Maybe also a **Try This** feature that sets the `text` and `pattern` with
-  regex challenges (possibly borrowed from R4DS).
-
-- ~~Add a global search option to the **Regex** tab. Groups would be lost, but I 
-  can still highlight global matches.~~
-
-- ~~Add "flavors" menu to **Regex** tab. Automatically sets options to common flavors.
-  Mainly for clarity when switching between "base"" style and "tidyverse/stringr" defaults.~~
-  
-- **Done in v0.1.5!** Add replacement functions somewhere. Maybe to **Output** tab with `g?sub` and 
-  `str_replace(_all)?` as options with an additional "replacement" field that 
-  appears when those are selected. Or possibly as a "flavor" (see above) in the
-  **Regex** tab.
-
-- I may add `stringi` functions to the list of available functions in the **Output** tab.
-
-- **Done in v0.1.5!** I would like to add the regex/function options for the functions in the **Output** tab, i
-  similar to the options present in the **Regex** tab.
+Pull requests are welcomed!
