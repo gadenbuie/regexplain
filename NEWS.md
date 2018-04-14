@@ -1,5 +1,10 @@
 ## regexplain 0.2.x
 
+### 0.2.1
+
+* Fix addin crash when replacement function is visited but replacement field
+  is not initated (#8).
+
 ### 0.2.0
 
 * Added "Library" button that opens a dialog to import regex patterns sourced 

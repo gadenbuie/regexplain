@@ -714,7 +714,7 @@ regex_gadget <- function(
           options <- paste0(options, "=TRUE", collapse = ", ")
           pattern <- paste(pattern, "#", options)
         }
-        if ("regexFn_replacement" %in% names(input) && replacement() != "") {
+        if ("regexFn_replacement" %in% names(input) && isTruthy(replacement())) {
           pattern <- paste0(
             pattern, "\n",
             'replacement <- "', escape_backslash(replacement()), '"'
