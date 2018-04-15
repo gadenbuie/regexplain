@@ -60,12 +60,23 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
   inserts <- inserts %>%
     tidyr::gather(type, loc, start:end) %>%
     filter(!is.na(.data$loc)) %>%
+    dplyr::arrange(loc, class, desc(type)) %>%
     mutate(
       class = ifelse(.data$pad > 0, sprintf("%s pad%02d", .data$class, .data$pad), .data$class),
       insert = ifelse(.data$type == 'start', sprintf('<span class="%s">', .data$class), "</span>")
-    ) %>%
+    )
+  inserts_g0 <- filter(inserts, class == "group g00")
+  inserts_other <- filter(inserts, class != "group g00")
+  inserts <- dplyr::bind_rows(
+    filter(inserts_g0, type == "start"),
+    inserts_other,
+    filter(inserts_g0, type == "end")
+  ) %>%
+    mutate(type = sprintf("%05d%s", 1:nrow(.), type)) %>%
     group_by(.data$loc, .data$type) %>%
-    summarize(insert = paste(.data$insert, collapse = ''))
+    summarize(insert = paste(.data$insert, collapse = '')) %>%
+    dplyr::ungroup() %>%
+    mutate(type = sub("^\\d{5}", "", type))
 
   # inserts now gives html (span open and close) to insert and loc
   # first split text at inserts$loc locations,
