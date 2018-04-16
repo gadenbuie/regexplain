@@ -1,9 +1,15 @@
 ## regexplain 0.2.x
 
+### 0.2.2
+
+* Fix issues with coloring of groups in regexplain gadget when matched groups
+  start and end at the same index, especially when there are zero-length
+  groups (thanks, @HanOostdijk).
+
 ### 0.2.1
 
 * Fix addin crash when replacement function is visited but replacement field
-  is not initated (#8).
+  is not initiated (#8).
 
 ### 0.2.0
 
