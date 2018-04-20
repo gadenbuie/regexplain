@@ -43,15 +43,15 @@ source("https://install-github.me/gadenbuie/regexplain")
 
 #### Overview
 
-![regexplain selection](docs/regexplain-selection.gif)
+![regexplain selection](https://raw.githubusercontent.com/gadenbuie/regexplain/af4fe0988a10f34dc528b4d359b80bb06af7809a/docs/regexplain-selection.gif)
 
 #### Regular Expressions Library
 
-![regexplain library](docs/regexplain-library.gif)
+![regexplain library](https://raw.githubusercontent.com/gadenbuie/regexplain/af4fe0988a10f34dc528b4d359b80bb06af7809a/docs/regexplain-library.gif)
 
 #### Try the Built-In Examples
 
-![regexplain examples](docs/regexplain-try-this.gif)
+![regexplain examples](https://raw.githubusercontent.com/gadenbuie/regexplain/af4fe0988a10f34dc528b4d359b80bb06af7809a/docs/regexplain-try-this.gif)
 
 ## RStudio Addin
 

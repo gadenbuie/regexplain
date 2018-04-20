@@ -6,6 +6,9 @@
   start and end at the same index, especially when there are zero-length
   groups (thanks, @HanOostdijk).
 
+* Reduce package size by optimizing images and offloading the screencast gifs to
+  the `assets` branch.
+
 ### 0.2.1
 
 * Fix addin crash when replacement function is visited but replacement field

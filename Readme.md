@@ -10,7 +10,7 @@ Status: Active – The project has reached a stable, usable state and is
 being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/regexplain)](https://cran.r-project.org/package=regexplain)
-<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--04--04-yellowgreen.svg)](/commits/master) -->
+<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--04--19-yellowgreen.svg)](/commits/master) -->
 
 <!-- Links -->
 
@@ -37,15 +37,18 @@ or for hands-free installation
 
 #### Overview
 
-![regexplain selection](docs/regexplain-selection.gif)
+![regexplain
+selection](https://raw.githubusercontent.com/gadenbuie/regexplain/af4fe0988a10f34dc528b4d359b80bb06af7809a/docs/regexplain-selection.gif)
 
 #### Regular Expressions Library
 
-![regexplain library](docs/regexplain-library.gif)
+![regexplain
+library](https://raw.githubusercontent.com/gadenbuie/regexplain/af4fe0988a10f34dc528b4d359b80bb06af7809a/docs/regexplain-library.gif)
 
 #### Try the Built-In Examples
 
-![regexplain examples](docs/regexplain-try-this.gif)
+![regexplain
+examples](https://raw.githubusercontent.com/gadenbuie/regexplain/af4fe0988a10f34dc528b4d359b80bb06af7809a/docs/regexplain-try-this.gif)
 
 ## RStudio Addin
 
