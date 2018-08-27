@@ -64,3 +64,10 @@ dd {
 #help_text_selected > h3 {
   margin-top: 0px;
 }
+
+.gadget-result {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 8px;
+  overflow-wrap: break-word;
+}

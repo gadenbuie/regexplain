@@ -176,13 +176,13 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
 #' @param pattern Regex pattern to look for
 #' @param render Render results to an HTML doc and open in RStudio viewer?
 #' @param escape Escape HTML-related characters in `text`?
-#' @param knitr Print into knitr doc? If `TRUE`, marks text as `asis_output` and
-#'   sets `render = FALSE` and `escape = TRUE`.
 #' @param exact Should the regex pattern be displayed as entered by the user
 #'   into R console or source (default)? When `TRUE`, regex is displayed with
 #'   the double `\\\\` required for escaping backslashes in R. When `FALSE`,
 #'   regex is displayed as interpreted by the regex engine (i.e. double `\\\\`
 #'   as a single `\\`).
+#' @param result_only Should only the result be displayed? If `FALSE`, then
+#'   the colorized regular expression is also displayed in the output.
 #' @inheritDotParams base::regexec ignore.case perl fixed useBytes
 #' @export
 view_regex <- function(
@@ -191,14 +191,18 @@ view_regex <- function(
   ...,
   render = TRUE,
   escape = render,
-  knitr = FALSE,
-  exact = escape
+  exact = escape,
+  result_only = FALSE
 ) {
+  knitr <- isTRUE(getOption('knitr.in.progress'))
   if (knitr) {
     render <- FALSE
     escape <- TRUE
   }
-  res <- run_regex(text, pattern, ...)
+  regex_opts <- deprecate_knitr_option(...)
+  regex_opts$text <- text
+  regex_opts$pattern <- pattern
+  res <- do.call(run_regex, regex_opts)
   res <- purrr::map_chr(res, wrap_result, escape = escape, exact = exact)
   res <- purrr::map_chr(res, function(resi) {
     result_pad <- ""
@@ -213,9 +217,18 @@ view_regex <- function(
   })
   res <- paste(res, collapse = "")
   if (!nchar(pattern)) res <- paste("<p class='results'>", text, "</p>")
-  if (knitr) return(knitr::asis_output(res))
+  if (knitr) {
+    # embed css
+    css <- if (!isTRUE(getOption("regexplain.knitr_css_loaded"))) paste(
+      "<style>",
+      paste(readLines(system.file("styles", "groups.css", package = "regexplain")), collapse = "\n"),
+      "</style>",
+      sep = "\n")
+    if (!is.null(css)) options("regexplain.knitr_css_loaded" = TRUE)
+    return(knitr::asis_output(paste(css, res, sep = "\n")))
+  }
   if (!render) return(res)
-  head <- c(
+  head <- if (!result_only) c(
     "---", "pagetitle: View Regex", "---",
     "<h5>Pattern</h5>",
     "<p><pre>", wrap_regex(pattern, escape, exact), "</pre></p>",
@@ -228,10 +241,19 @@ view_regex <- function(
     rmarkdown::render(
       tmp,
       output_format = rmarkdown::html_document(css = c(system.file("styles", 'skeleton.css', package='regexplain'),
-                                                       system.file("styles", 'style.css', package='regexplain')),
+                                                       system.file("styles", 'view_regex.css', package='regexplain'),
+                                                       system.file("styles", 'groups.css', package='regexplain')),
                                                theme = NULL,
                                                md_extensions = "-autolink_bare_uris"),
       quiet = TRUE
   ))
   rstudioapi::viewer(tmp_html)
+}
+
+deprecate_knitr_option <- function(...) {
+  regex_opts <- list(...)
+  if ("knitr" %in% names(regex_opts)) {
+    warning("The `knitr` parameter of `view_regex()` has been removed. Running `view_regex()` in R Markdown is automatically detected.")
+  }
+  regex_opts[setdiff(names(regex_opts), "knitr")]
 }

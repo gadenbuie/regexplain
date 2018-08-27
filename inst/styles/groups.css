@@ -2,20 +2,11 @@
   font-family: monospace;
   color: #888888;
 }
-
-.gadget-result {
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-  padding: 8px;
-  overflow-wrap: break-word;
-}
-
 .group {
   border-bottom: 2px solid;
   color: black;
   padding: 0px;
 }
-
 .g00 {
   padding: 1px;
   background-color: #f0f0f0;
@@ -24,57 +15,46 @@
   border-right: 1px solid #b0b0b0;
   border-top: 1px solid #b0b0b0;
 }
-
 .g01 {
   border-color: green;
   color: green;
 }
-
 .g02 {
   border-color: blue;
   color: blue;
 }
-
 .g03 {
   border-color: red;
   color: red;
 }
-
 .g04 {
   border-color: orange;
   color: orange;
 }
-
 .g05 {
   border-color: purple;
   color: purple;
 }
-
 .g06 {
   border-color: DeepPink;
   color: DeepPink;
 }
-
 .g07 {
   border-color: Tomato;
   color: Tomato;
 }
-
 .g08 {
   border-color: DarkSeaGreen;
   color: DarkSeaGreen;
 }
-
 .g09 {
   border-color: DeepSkyBlue;
   color: DeepSkyBlue;
 }
-
 .g10 {
   border-color: Sienna;
   color: Sienna;
 }
-
 .pad01 {
   padding-bottom: 3px;
 }
@@ -106,17 +86,3 @@
   padding-bottom: 25px;
   margin-bottom: 25px;
 }
-
-pre,
-blockquote,
-dl,
-figure,
-table,
-p,
-ul,
-ol,
-form {
-  margin-bottom: 1rem; }
-
-body {
-  line-height: 18px;}

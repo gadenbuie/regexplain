@@ -20,7 +20,7 @@ regex_gadget <- function(
 
   # ---- UI ----
   ui <- miniPage(
-    shiny::includeCSS(system.file("styles", "style.css", package = "regexplain")),
+    shiny::includeCSS(system.file("styles", "groups.css", package = "regexplain")),
     shiny::includeCSS(system.file("styles", "gadget.css", package = "regexplain")),
     gadgetTitleBar(
       "RegExplain",
