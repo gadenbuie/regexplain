@@ -60,7 +60,7 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
   inserts <- inserts %>%
     tidyr::gather(type, loc, start:end) %>%
     filter(!is.na(.data$loc)) %>%
-    dplyr::arrange(loc, class, desc(type)) %>%
+    dplyr::arrange(loc, class, dplyr::desc(type)) %>%
     mutate(
       class = ifelse(.data$pad > 0, sprintf("%s pad%02d", .data$class, .data$pad), .data$class),
       insert = ifelse(.data$type == 'start', sprintf('<span class="%s">', .data$class), "</span>")
