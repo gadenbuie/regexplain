@@ -1,7 +1,7 @@
 Package: regexplain
 Title: Rstudio Addin to Explain, Test and Build Regular
     Expressions
-Version: 0.2.1.9000
+Version: 0.2.2
 Date: 2018-04-04
 Authors@R: 
     c(person(given = "Garrick",

@@ -4,13 +4,15 @@
 \name{regexplain-package}
 \alias{regexplain}
 \alias{regexplain-package}
-\title{regexplain: Rstudio Addin to Explain, Test and Build Regular Expressions}
+\title{regexplain: Rstudio Addin to Explain, Test and Build Regular
+    Expressions}
 \description{
-A set of RStudio Addins to help interactively test and build 
-    regular expressions. Provides a Shiny gadget interface for interactively
-    constructing the regular expression and viewing the results from common 
-    string-searching functions. The gadget interface includes a helpful 
-    regex syntax reference sheet and a library of common patterns.
+A set of RStudio Addins to help interactively test
+    and build regular expressions. Provides a Shiny gadget interface for
+    interactively constructing the regular expression and viewing the
+    results from common string-searching functions. The gadget interface
+    includes a helpful regex syntax reference sheet and a library of
+    common patterns.
 }
 \seealso{
 Useful links:
