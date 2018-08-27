@@ -1,40 +1,54 @@
 Package: regexplain
-Title: Rstudio Addin to Explain, Test and Build Regular Expressions
+Title: Rstudio Addin to Explain, Test and Build Regular
+    Expressions
 Version: 0.2.1.9000
 Date: 2018-04-04
-Authors@R: c(
-    person("Garrick", "Aden-Buie", email = "g.adenbuie@gmail.com", role = c("aut", "cre")),
-    person("Winston", "Chang", role = c("ctb"), comment = "Author of textInput and textAreaInput fragments from shiny"),
-    person("Yihui", "Xie", role = c("ctb"), comment = "Author of escape_html fragment from highr"),
-    person(family = "RStudio", role = "cph", comment = "Copyright holder of included shiny fragments")
-    )
-Description: A set of RStudio Addins to help interactively test and build 
-    regular expressions. Provides a Shiny gadget interface for interactively
-    constructing the regular expression and viewing the results from common 
-    string-searching functions. The gadget interface includes a helpful 
-    regex syntax reference sheet and a library of common patterns.
-Depends: R (>= 3.2)
+Authors@R: 
+    c(person(given = "Garrick",
+             family = "Aden-Buie",
+             role = c("aut", "cre"),
+             email = "g.adenbuie@gmail.com"),
+      person(given = "Winston",
+             family = "Chang",
+             role = "ctb",
+             comment = "Author of textInput and textAreaInput fragments from shiny"),
+      person(given = "Yihui",
+             family = "Xie",
+             role = "ctb",
+             comment = "Author of escape_html fragment from highr"),
+      person(family = "RStudio",
+             role = "cph",
+             comment = "Copyright holder of included shiny fragments"))
+Description: A set of RStudio Addins to help interactively test
+    and build regular expressions. Provides a Shiny gadget interface for
+    interactively constructing the regular expression and viewing the
+    results from common string-searching functions. The gadget interface
+    includes a helpful regex syntax reference sheet and a library of
+    common patterns.
 License: GPL-3
-Encoding: UTF-8
-LazyData: true
-Imports: 
-    stringr,
-    stringi,
-    rlang,
-    purrr,
-    dplyr,
-    rmarkdown,
-    knitr,
-    utils,
-    tidyr,
-    rstudioapi,
-    shiny (>= 0.13),
-    miniUI,
-    jsonlite,
-    rematch2
-RoxygenNote: 6.1.0
-Roxygen: list(markdown = TRUE)
 URL: https://github.com/gadenbuie/regexplain
 BugReports: https://github.com/gadenbuie/regexplain/issues
+Depends: 
+    R (>= 3.2)
+Imports: 
+    dplyr,
+    htmltools,
+    jsonlite,
+    knitr,
+    miniUI,
+    purrr,
+    rematch2,
+    rlang,
+    rmarkdown,
+    rstudioapi,
+    shiny (>= 0.13),
+    stringi,
+    stringr,
+    tidyr,
+    utils
 Suggests: 
     testthat
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.0

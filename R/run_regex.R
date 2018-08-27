@@ -219,13 +219,12 @@ view_regex <- function(
   if (!nchar(pattern)) res <- paste("<p class='results'>", text, "</p>")
   if (knitr) {
     # embed css
-    css <- if (!isTRUE(getOption("regexplain.knitr_css_loaded"))) paste(
-      "<style>",
-      paste(readLines(system.file("styles", "groups.css", package = "regexplain")), collapse = "\n"),
-      "</style>",
-      sep = "\n")
-    if (!is.null(css)) options("regexplain.knitr_css_loaded" = TRUE)
-    return(knitr::asis_output(paste(css, res, sep = "\n")))
+    group_css <- htmltools::htmlDependency(
+      name = "regexplain-groups", version = packageVersion("regexplain"),
+      src = system.file("styles", package = "regexplain"),
+      stylesheet = "groups.css")
+    res <- htmltools::attachDependencies(htmltools::HTML(res), group_css)
+    return(res)
   }
   if (!render) return(res)
   head <- if (!result_only) c(
