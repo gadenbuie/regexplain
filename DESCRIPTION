@@ -32,7 +32,7 @@ Imports:
     miniUI,
     jsonlite,
     rematch2
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/gadenbuie/regexplain
 BugReports: https://github.com/gadenbuie/regexplain/issues

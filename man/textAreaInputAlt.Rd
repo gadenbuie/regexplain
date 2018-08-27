@@ -4,9 +4,9 @@
 \alias{textAreaInputAlt}
 \title{Modified Text Area Input}
 \usage{
-textAreaInputAlt(inputId, label, value = "", width = NULL, height = NULL,
-  cols = NULL, rows = NULL, placeholder = NULL, resize = NULL,
-  is_code = TRUE)
+textAreaInputAlt(inputId, label, value = "", width = NULL,
+  height = NULL, cols = NULL, rows = NULL, placeholder = NULL,
+  resize = NULL, is_code = TRUE)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -48,3 +48,4 @@ code font style for the input text and with \code{autocomplete}, \code{autocorre
 \seealso{
 Other modified shiny inputs: \code{\link{textInputCode}}
 }
+\concept{modified shiny inputs}

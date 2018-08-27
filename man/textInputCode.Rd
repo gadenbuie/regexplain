@@ -28,3 +28,4 @@ font style for the input text and with \code{autocomplete}, \code{autocorrect},
 \seealso{
 Other modified shiny inputs: \code{\link{textAreaInputAlt}}
 }
+\concept{modified shiny inputs}

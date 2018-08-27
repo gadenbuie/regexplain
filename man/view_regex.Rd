@@ -5,7 +5,7 @@
 \title{View grouped regex results}
 \usage{
 view_regex(text, pattern, ..., render = TRUE, escape = render,
-  knitr = FALSE, exact = escape)
+  exact = escape, result_only = FALSE)
 }
 \arguments{
 \item{text}{Text to search}
@@ -28,14 +28,14 @@ view_regex(text, pattern, ..., render = TRUE, escape = render,
 
 \item{escape}{Escape HTML-related characters in \code{text}?}
 
-\item{knitr}{Print into knitr doc? If \code{TRUE}, marks text as \code{asis_output} and
-sets \code{render = FALSE} and \code{escape = TRUE}.}
-
 \item{exact}{Should the regex pattern be displayed as entered by the user
 into R console or source (default)? When \code{TRUE}, regex is displayed with
 the double \code{\\\\} required for escaping backslashes in R. When \code{FALSE},
 regex is displayed as interpreted by the regex engine (i.e. double \code{\\\\}
 as a single \code{\\}).}
+
+\item{result_only}{Should only the result be displayed? If \code{FALSE}, then
+the colorized regular expression is also displayed in the output.}
 }
 \description{
 View the result of the regular expression when applied to the given text.

@@ -1,5 +1,12 @@
 ## regexplain 0.2.x
 
+### 0.2.3
+
+* Use of `knitr` is automatically detected when calling `view_regex()` inside
+  an R Markdown document. The `knitr` parameter of `view_regex()` has been
+  removed. Added `result_only` parameter for interactive viewing. As a side
+  effect, the group coloring CSS is automatically embedded in the HTML output.
+
 ### 0.2.2
 
 * Fix issues with coloring of groups in regexplain gadget when matched groups
