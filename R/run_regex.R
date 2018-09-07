@@ -13,18 +13,33 @@ run_regex <- function(
 ) {
   # Use regex to get matches by group, gives start index and length
   m <- regexec(pattern, text, ignore.case, perl, fixed, useBytes)
-  # Convert to start/end index
-  x <- purrr::map(m, function(mi) {
-    list(
-      'idx' = purrr::map2(mi, attr(mi, "match.length"),
-                          ~ if(.x[1] != -1) c(.x, .x + .y)))
-  })
-  # Store text and original regexc result with same hierarchy
-  y <- purrr::map(text, ~ list(text = .))
-  z <- purrr::map(regmatches(text, m), ~ list(m = .))
-  # Zip text, indexes and regexc match object lists
-  purrr::map(seq_along(x), ~ list(text = y[[.]][[1]], idx = x[[.]][[1]], m = z[[.]][[1]]))
+
+  m <- purrr::map2(text, m, ~ list(text = .x, idx = expand_matches(.y)))
+  mmi <- max_match_index(m)
+  if (any(!is.na(mmi))) {
+    subtext <-  purrr::map_chr(m, "text") %>% purrr::map2_chr(mmi, substring)
+    subtext[is.na(subtext)] <- ""
+    m2 <- run_regex(subtext, pattern, ignore.case, perl, fixed, useBytes)
+    for (i in seq_along(m2)) {
+      if (is.null(m2[[i]]$idx[[1]])) next
+      m[[i]]$idx <- c(m[[i]]$idx, purrr::map(m2[[i]]$idx, ~ . + mmi[i] - 1))
+    }
+  }
+  m
 }
+
+expand_matches <- function(m) {
+  if (m[1] == -1) return(list(NULL))
+  m_length <- attr(m, "match.length")
+  purrr::map2(m, m_length, ~ c(.x, .x + .y))
+}
+
+max_match_index <- function(m) {
+  purrr::modify_depth(m, 1, ~purrr::pluck(., "idx")) %>%
+    purrr::modify_depth(1, ~purrr::map_int(., ~ ifelse(is.null(.), NA, max(.)))) %>%
+    purrr::map_int(max)
+}
+
 
 #' Wrap matches in HTML span tags to colorize via CSS
 #'
