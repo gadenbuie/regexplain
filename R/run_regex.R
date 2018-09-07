@@ -2,6 +2,7 @@
 #'
 #' @param text Text to search
 #' @param pattern regexp
+#' @param global If `TRUE`, enables global pattern matching
 #' @inheritDotParams base::regexec ignore.case perl fixed useBytes
 run_regex <- function(
   text,
@@ -9,12 +10,16 @@ run_regex <- function(
   ignore.case = FALSE,
   perl = FALSE,
   fixed = FALSE,
-  useBytes = FALSE
+  useBytes = FALSE,
+  global = FALSE
 ) {
   # Use regex to get matches by group, gives start index and length
   m <- regexec(pattern, text, ignore.case, perl, fixed, useBytes)
-
   m <- purrr::map2(text, m, ~ list(text = .x, idx = expand_matches(.y)))
+
+  attr(m, "global") <- global
+  if (!global) return(m)
+
   mmi <- max_match_index(m)
   if (any(!is.na(mmi))) {
     subtext <-  purrr::map_chr(m, "text") %>% purrr::map2_chr(mmi, substring)
@@ -22,7 +27,8 @@ run_regex <- function(
     m2 <- run_regex(subtext, pattern, ignore.case, perl, fixed, useBytes)
     for (i in seq_along(m2)) {
       if (is.null(m2[[i]]$idx[[1]])) next
-      m[[i]]$idx <- c(m[[i]]$idx, purrr::map(m2[[i]]$idx, ~ . + mmi[i] - 1))
+      m2[[i]]$idx[, c(1, 2)] <- m2[[i]]$idx[, c(1, 2)] + mmi[i] - 1
+      m[[i]]$idx <- dplyr::bind_rows(m[[i]]$idx, m2[[i]]$idx)
     }
   }
   m
@@ -31,13 +37,22 @@ run_regex <- function(
 expand_matches <- function(m) {
   if (m[1] == -1) return(list(NULL))
   m_length <- attr(m, "match.length")
-  purrr::map2(m, m_length, ~ c(.x, .x + .y))
+  x <- purrr::map2(m, m_length, ~ c(.x, .x + .y))
+  x <- as.data.frame(do.call(rbind, x))
+  names(x) <- c("start", "end")
+  x$start <- ifelse(x$start == 0L, NA_integer_, x$start)
+  x$end   <- ifelse(x$end == 0L, NA_integer_, x$end)
+  x$group <- 1:nrow(x) - 1L
+  dplyr::as_tibble(x, validate = FALSE)
 }
 
 max_match_index <- function(m) {
-  purrr::modify_depth(m, 1, ~purrr::pluck(., "idx")) %>%
-    purrr::modify_depth(1, ~purrr::map_int(., ~ ifelse(is.null(.), NA, max(.)))) %>%
-    purrr::map_int(max)
+  max_na <- function(x) if (is.null(x)) NA else max(x, na.rm = TRUE)
+  max_int <- function(x) as.integer(max(x))
+
+  purrr::map(m, "idx") %>%
+    purrr::modify_depth(1, ~c(start = max_na(.x$start), end = max_na(.x$end))) %>%
+    purrr::map_int(max_int)
 }
 
 

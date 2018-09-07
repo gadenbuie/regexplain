@@ -5,12 +5,14 @@
 \title{Extract matched groups from regexp}
 \usage{
 run_regex(text, pattern, ignore.case = FALSE, perl = FALSE,
-  fixed = FALSE, useBytes = FALSE)
+  fixed = FALSE, useBytes = FALSE, global = FALSE)
 }
 \arguments{
 \item{text}{Text to search}
 
 \item{pattern}{regexp}
+
+\item{global}{If \code{TRUE}, enables global pattern matching}
 
 \item{...}{Arguments passed on to \code{base::regexec}
 \describe{
