@@ -5,7 +5,7 @@ cheatsheet <- tibble::tribble(
   "character classes", "regular", "<code>\\W</code> <code>\\D</code> <code>\\S</code>", "not word, not digit, not whitespace",
   "character classes", "regular", "<code>\\p{property name}</code>", "matches character with unicode property, like <code>\\p{Uppercase}</code>, see <a href=\"http://www.unicode.org/reports/tr44/#Property_Index.\">unicode property list</a> (not supported by <em>regexplain</em>).",
   "character classes", "regular", "<code>[abc]</code>", "any of a, b or c",
-  "character classes", "regular", "<code>[^abc]</code>", "not a, b, nor c",
+  "character classes", "regular", "<code>[^abc]</code>", "not a, b, or c",
   "character classes", "regular", "<code>[a-g]</code> <code>[1-3]</code>", "character between a & g or 1 & 3",
   "character classes", "regular", "<code>[\\^\\-]</code> or <code>[-^]</code>", "matches <code>^</code> or <code>-</code>",
   "character classes", "pre-built", "Used inside <code>[]</code>", "Example <code>[[:digit:]AX]</code> matches all digits and A and X",
