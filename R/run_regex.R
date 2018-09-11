@@ -11,7 +11,7 @@ run_regex <- function(
   perl = FALSE,
   fixed = FALSE,
   useBytes = FALSE,
-  global = FALSE
+  global = TRUE
 ) {
   # Use regex to get matches by group, gives start index and length
   m <- regexec(pattern, text, ignore.case, perl, fixed, useBytes)
@@ -27,8 +27,8 @@ run_regex <- function(
     m2 <- run_regex(subtext, pattern, ignore.case, perl, fixed, useBytes)
     for (i in seq_along(m2)) {
       if (is.null(m2[[i]]$idx[[1]])) next
-      m2[[i]]$idx[, c(1, 2)] <- m2[[i]]$idx[, c(1, 2)] + mmi[i] - 1
-      m[[i]]$idx <- dplyr::bind_rows(m[[i]]$idx, m2[[i]]$idx)
+      m2[[i]]$idx[, c(1, 2)] <- m2[[i]]$idx[, c(1, 2)] + mmi[i] - 1L
+      m[[i]]$idx <- rbind(m[[i]]$idx, m2[[i]]$idx)
     }
   }
   m
@@ -43,7 +43,7 @@ expand_matches <- function(m) {
   x$start <- ifelse(x$start == 0L, NA_integer_, x$start)
   x$end   <- ifelse(x$end == 0L, NA_integer_, x$end)
   x$group <- 1:nrow(x) - 1L
-  dplyr::as_tibble(x, validate = FALSE)
+  x
 }
 
 max_match_index <- function(m) {
@@ -64,20 +64,12 @@ max_match_index <- function(m) {
 wrap_result <- function(x, escape = FALSE, exact = FALSE) {
   if (is.null(x$idx[[1]])) return(if (escape) escape_html(x$text) else x$text)
   text <- x$text
-  idx <- x$idx
-  len_idx <- length(idx)
-  inserts <- data.frame(
-    i = 1:len_idx - 1,
-    start = purrr::map_int(idx, ~ .[1]),
-    end = purrr::map_int(idx, ~ .[2])
-  ) %>%
-    mutate(
-      # unmatched groups have start/end of zero
-      start = ifelse(.data$start == 0, NA, .data$start),
-      end = ifelse(.data$end == 0, NA, .data$end),
-      class = sprintf("group g%02d", .data$i),
-      pad = 0
-    )
+
+  inserts <- x$idx
+  inserts$class <- sprintf("group g%02d", inserts$group)
+  inserts$pad <- 0L
+  names(inserts)[which(names(inserts) == "group")] <- "i"
+
   for (j in seq_len(nrow(inserts))) {
     if (inserts$i[j] == 0) next
     if (is.na(inserts$start[j]) || is.na(inserts$end[j])) next
