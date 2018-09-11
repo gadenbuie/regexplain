@@ -5,7 +5,7 @@
 \title{Extract matched groups from regexp}
 \usage{
 run_regex(text, pattern, ignore.case = FALSE, perl = FALSE,
-  fixed = FALSE, useBytes = FALSE, global = FALSE)
+  fixed = FALSE, useBytes = FALSE, global = TRUE)
 }
 \arguments{
 \item{text}{Text to search}

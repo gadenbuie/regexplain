@@ -2,7 +2,7 @@ context("test-regex")
 
 test_that("expand_matches gives data frame of indices with groups", {
   m <- regexec("(a)(b)(d)?", "abcaba")
-  idx <- dplyr::data_frame(
+  idx <- data.frame(
     start = c(1L, 1L, 2L, NA_integer_),
     end   = c(3L, 2L, 3L, NA_integer_),
     group = c(0L, 1L, 2L, 3L)
@@ -10,6 +10,16 @@ test_that("expand_matches gives data frame of indices with groups", {
   expect_equal(expand_matches(m[[1]]), idx)
 })
 
+test_that("start/end indices are integers", {
+  text <- "ab ab"
+  pattern <- "(a)(b)"
+  m <- run_regex(text, pattern, global = TRUE)
+  expect_is(m[[1]]$idx$start, "integer")
+  expect_is(m[[1]]$idx$end,   "integer")
+  expect_is(m[[1]]$idx$group, "integer")
+})
+
 test_that("max_match_index works", {
-  m <- run_regex(c("abcaba", "aba", "z"), c("(a)(b)(d)?c?"), global = TRUE)
+  m <- run_regex(c("abcaba", "aba", "z"), c("(a)(b)(d)?c?"), global = FALSE)
+  expect_equal(max_match_index(m), c(4, 3, NA_integer_))
 })
