@@ -71,12 +71,14 @@ regex_gadget <- function(
                 inline = TRUE,
                 width = "90%",
                 choiceValues = list(
+                  "global",
                   "text_break_lines",
                   "ignore.case",
                   "fixed",
                   "perl",
                   "useBytes"),
                 choiceNames = list(
+                  HTML('<span style="color: #337ab7;">Global</span>'),
                   HTML('<span style="color: #337ab7;">Break Lines</span>'),
                   HTML('<span style="color: #5cb85c;">Ignore Case</span>'),
                   HTML('<span style="color: #5cb85c;">Fixed/Literal</span>'),
@@ -213,7 +215,8 @@ regex_gadget <- function(
             # invert = 'invert' %in% input$regex_options,
             render = FALSE,
             escape = TRUE,
-            exact  = FALSE),
+            exact  = FALSE,
+            global = "global" %in% input$regex_options),
           collapse = ""
         )
       },
@@ -710,7 +713,7 @@ regex_gadget <- function(
       if (pattern() != "") {
         pattern <- paste0('pattern <- "', escape_backslash(pattern()), '"')
         if (any(c("perl", "fixed", "ignore.case", "useBytes") %in% input$regex_options)) {
-          options <- input$regex_options[input$regex_options != "text_break_lines"]
+          options <- input$regex_options[!input$regex_options %in% c("text_break_lines", "global")]
           options <- paste0(options, "=TRUE", collapse = ", ")
           pattern <- paste(pattern, "#", options)
         }
