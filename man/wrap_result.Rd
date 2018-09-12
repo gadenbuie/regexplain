@@ -7,7 +7,7 @@
 wrap_result(x, escape = FALSE, exact = FALSE)
 }
 \arguments{
-\item{x}{Individual list item in list returned by \code{\link[=run_regex]{run_regex()}}}
+\item{x}{Individual list item in list returned by \code{\link[=regex]{regex()}}}
 
 \item{escape}{Escape HTML-related characters in \code{text}?}
 

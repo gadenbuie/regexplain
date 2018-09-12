@@ -14,20 +14,20 @@ test_that("expand_matches gives data frame of indices with groups", {
 test_that("start/end indices are integers", {
   text <- "ab ab"
   pattern <- "(a)(b)"
-  m <- run_regex(text, pattern, global = TRUE)
+  m <- regex(text, pattern, global = TRUE)
   expect_is(m[[1]]$idx$start, "integer")
   expect_is(m[[1]]$idx$end,   "integer")
   expect_is(m[[1]]$idx$group, "integer")
 })
 
 test_that("max_match_index works", {
-  m <- run_regex(c("abcaba", "aba", "z"), c("(a)(b)(d)?c?"), global = FALSE)
+  m <- regex(c("abcaba", "aba", "z"), c("(a)(b)(d)?c?"), global = FALSE)
   expect_equal(max_match_index(m), c(4, 3, NA_integer_))
 })
 
 test_that("results group (pass) is calculated correctly", {
   text <- "ab ab"
   pattern <- "(a)(b)"
-  m <- run_regex(text, pattern, global = TRUE)
+  m <- regex(text, pattern, global = TRUE)
   expect_equal(unique(m[[1]]$idx$pass), c(1L, 2L))
 })
