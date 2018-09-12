@@ -42,7 +42,7 @@ regexplain_addin <- function() {
   },
   error = function(e) {as.character(ctx_text[1:min(length(ctx_text), max_lines)])})
 
-  regex_gadget(if (length(obj) && obj != "") obj)
+  regexplain_gadget(if (length(obj) && obj != "") obj)
 
 }
 
@@ -63,5 +63,5 @@ regexplain_file <- function() {
             "increase the number of lines.")
     x <- x[1:max_lines]
   }
-  regex_gadget(x, "RegEx")
+  regexplain_gadget(x, "RegEx")
 }
