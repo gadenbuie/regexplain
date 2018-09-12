@@ -4,7 +4,7 @@
 #' @param pattern regexp
 #' @param global If `TRUE`, enables global pattern matching
 #' @inheritParams base::regexec
-run_regex <- function(
+regex <- function(
   text,
   pattern,
   ignore.case = FALSE,
@@ -24,7 +24,7 @@ run_regex <- function(
   if (any(!is.na(mmi))) {
     subtext <-  purrr::map_chr(m, "text") %>% purrr::map2_chr(mmi, substring)
     subtext[is.na(subtext)] <- ""
-    m2 <- run_regex(subtext, pattern, ignore.case, perl, fixed, useBytes)
+    m2 <- regex(subtext, pattern, ignore.case, perl, fixed, useBytes)
     for (i in seq_along(m2)) {
       if (is.null(m2[[i]]$idx[[1]])) next
       m2[[i]]$idx[, c(1, 2)] <- m2[[i]]$idx[, c(1, 2)] + mmi[i] - 1L
@@ -60,7 +60,7 @@ max_match_index <- function(m) {
 
 #' Wrap matches in HTML span tags to colorize via CSS
 #'
-#' @param x Individual list item in list returned by [run_regex()]
+#' @param x Individual list item in list returned by [regex()]
 #' @inheritParams view_regex
 #' @keywords internal
 wrap_result <- function(x, escape = FALSE, exact = FALSE) {
@@ -241,7 +241,7 @@ view_regex <- function(
   regex_opts <- deprecate_knitr_option(...)
   regex_opts$text <- text
   regex_opts$pattern <- pattern
-  res <- do.call(run_regex, regex_opts)
+  res <- do.call(regex, regex_opts)
   res <- purrr::map_chr(res, wrap_result, escape = escape, exact = exact)
   res <- purrr::map_chr(res, function(resi) {
     result_pad <- ""
