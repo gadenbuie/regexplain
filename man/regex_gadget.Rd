@@ -4,11 +4,13 @@
 \alias{regex_gadget}
 \title{RegExplain gadget}
 \usage{
-regex_gadget(text = NULL, start_page = if (is.null(text)) "Text" else
-  "RegEx")
+regex_gadget(text = NULL, pattern = NULL, start_page = if
+  (is.null(text)) "Text" else "RegEx")
 }
 \arguments{
 \item{text}{Text to explore in gadget (editable using interface)}
+
+\item{pattern}{Regular Expression to edit or visualize using RegExplain}
 
 \item{start_page}{Open gadget to this tab, one of \code{"Text"}, \code{"RegEx"},
 \code{"Output"}, or \code{"Help"}}

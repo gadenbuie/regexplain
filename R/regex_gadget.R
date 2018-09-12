@@ -7,11 +7,13 @@
 #' @import miniUI
 #' @import shiny
 #' @param text Text to explore in gadget (editable using interface)
+#' @param pattern Regular Expression to edit or visualize using RegExplain
 #' @param start_page Open gadget to this tab, one of `"Text"`, `"RegEx"`,
 #'   `"Output"`, or `"Help"`
 #' @export
 regex_gadget <- function(
   text = NULL,
+  pattern = NULL,
   start_page = if (is.null(text)) "Text" else "RegEx"
 ) {
   stopifnot(requireNamespace("miniUI"), requireNamespace("shiny"))
@@ -54,6 +56,7 @@ regex_gadget <- function(
               fillRow(
                 flex = c(6, 1),
                 textInputCode('pattern', 'RegEx', width = "100%",
+                              value = pattern,
                               placeholder = "Standard RegEx, e.g. \\w+_\\d{2,4}\\s+"),
                 tags$div(style = "margin-top: 23px; margin-left:6px;",
                          actionButton("library_show", "Library", class = "btn-success"))
