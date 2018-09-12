@@ -12,19 +12,19 @@ run_regex(text, pattern, ignore.case = FALSE, perl = FALSE,
 
 \item{pattern}{regexp}
 
-\item{global}{If \code{TRUE}, enables global pattern matching}
-
-\item{...}{Arguments passed on to \code{base::regexec}
-\describe{
-  \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
+\item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
-  \item{perl}{logical.  Should Perl-compatible regexps be used?}
-  \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
+
+\item{perl}{logical.  Should Perl-compatible regexps be used?}
+
+\item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
     matched as is.  Overrides all conflicting arguments.}
-  \item{useBytes}{logical.  If \code{TRUE} the matching is done
+
+\item{useBytes}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character.  See
     \sQuote{Details}.}
-}}
+
+\item{global}{If \code{TRUE}, enables global pattern matching}
 }
 \description{
 Extract matched groups from regexp
