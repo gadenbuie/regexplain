@@ -1,3 +1,4 @@
+# usethis::use_data(cheatsheet, overwrite = TRUE, internal = TRUE)
 cheatsheet <- tibble::tribble(
   ~category, ~group, ~regexp, ~text,
   "character classes", "regular", "<code>.</code>", "any character except newline",
