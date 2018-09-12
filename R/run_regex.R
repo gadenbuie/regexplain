@@ -28,6 +28,7 @@ run_regex <- function(
     for (i in seq_along(m2)) {
       if (is.null(m2[[i]]$idx[[1]])) next
       m2[[i]]$idx[, c(1, 2)] <- m2[[i]]$idx[, c(1, 2)] + mmi[i] - 1L
+      m2[[i]]$idx$pass <- m2[[i]]$idx$pass + 1L
       m[[i]]$idx <- rbind(m[[i]]$idx, m2[[i]]$idx)
     }
   }
@@ -43,6 +44,7 @@ expand_matches <- function(m) {
   x$start <- ifelse(x$start == 0L, NA_integer_, x$start)
   x$end   <- ifelse(x$end == 0L, NA_integer_, x$end)
   x$group <- 1:nrow(x) - 1L
+  x$pass  <- 1L
   x
 }
 
@@ -87,18 +89,18 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
       class = ifelse(.data$pad > 0, sprintf("%s pad%02d", .data$class, .data$pad), .data$class),
       insert = ifelse(.data$type == 'start', sprintf('<span class="%s">', .data$class), "</span>")
     )
-  inserts_g0 <- filter(inserts, class == "group g00")
-  inserts_other <- filter(inserts, class != "group g00")
-  inserts <- dplyr::bind_rows(
-    filter(inserts_g0, type == "start"),
-    inserts_other,
-    filter(inserts_g0, type == "end")
-  ) %>%
-    mutate(type = sprintf("%05d%s", 1:nrow(.), type)) %>%
-    group_by(.data$loc, .data$type) %>%
-    summarize(insert = paste(.data$insert, collapse = '')) %>%
-    dplyr::ungroup() %>%
-    mutate(type = sub("^\\d{5}", "", type))
+
+  inserts <- if (max(inserts$pass) == 1) {
+    collapse_span_inserts(inserts)
+  } else {
+    inserts %>%
+      tidyr::nest(-pass) %>%
+      mutate(data = purrr::map(data, collapse_span_inserts)) %>%
+      tidyr::unnest() %>%
+      group_by(loc, type) %>%
+      summarize(insert = paste(insert, collapse = "")) %>%
+      dplyr::ungroup()
+  }
 
   # inserts now gives html (span open and close) to insert and loc
   # first split text at inserts$loc locations,
@@ -122,6 +124,21 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
   }
   if (exact) out <- escape_backslash(out)
   paste(out, collapse = '')
+}
+
+collapse_span_inserts <- function(inserts) {
+  inserts_g0 <- filter(inserts, class == "group g00")
+  inserts_other <- filter(inserts, class != "group g00")
+  dplyr::bind_rows(
+    filter(inserts_g0, type == "start"),
+    inserts_other,
+    filter(inserts_g0, type == "end")
+  ) %>%
+    mutate(type = sprintf("%05d%s", 1:nrow(.), type)) %>%
+    group_by(.data$loc, .data$type) %>%
+    summarize(insert = paste(.data$insert, collapse = '')) %>%
+    dplyr::ungroup() %>%
+    mutate(type = sub("^\\d{5}", "", type))
 }
 
 #' Wraps capture groups in regex pattern in span tags to colorize with CSS

@@ -34,9 +34,21 @@ test_that("wrap_results works when groups start and end at same index", {
   expect_equal(res, "<span class=\"group g00\"><span class=\"group g01\">728</span><span class=\"group g02\">229</span><span class=\"group g03\">8386</span></span>")
 })
 
-test_that("wrap_regex searches globally", {
+test_that("wrap_result searches globally", {
   text <- "ab ab"
   pattern <- "(a)(b)"
   result <- paste(rep("<span class=\"group g00\"><span class=\"group g01\">a</span><span class=\"group g02\">b</span></span>", 2), collapse = " ")
+  expect_equal(wrap_result(run_regex(text, pattern, global = TRUE)[[1]]), result)
+})
+
+test_that("wrap_result starts/ends correctly with touching groups", {
+  text <- "The big red apple fell to the ground."
+  pattern <- "(\\w+) (\\w+) "
+  result <- paste0(
+    '<span class=\"group g00\"><span class=\"group g01\">The</span> <span class=\"group g02\">big</span> </span>',
+    '<span class=\"group g00\"><span class=\"group g01\">red</span> <span class=\"group g02\">apple</span> </span>',
+    '<span class=\"group g00\"><span class=\"group g01\">fell</span> <span class=\"group g02\">to</span> </span>',
+    'the ground.'
+  )
   expect_equal(wrap_result(run_regex(text, pattern, global = TRUE)[[1]]), result)
 })
