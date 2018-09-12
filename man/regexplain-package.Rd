@@ -14,6 +14,16 @@ A set of RStudio Addins to help interactively test
     includes a helpful regex syntax reference sheet and a library of
     common patterns.
 }
+\section{Options}{
+
+\itemize{
+\item \code{regexplain.no.check.version} if \code{TRUE} or unset, the app will check for
+updates on the first run of the session.
+\item \code{regexplain.addin.max_lines} controls the number of lines of text imported
+into the gadget, defaults to 100. Higher values will degrade performance.
+}
+}
+
 \seealso{
 Useful links:
 \itemize{
