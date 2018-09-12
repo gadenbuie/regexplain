@@ -3,7 +3,7 @@
 #' @param text Text to search
 #' @param pattern regexp
 #' @param global If `TRUE`, enables global pattern matching
-#' @inheritDotParams base::regexec ignore.case perl fixed useBytes
+#' @inheritParams base::regexec
 run_regex <- function(
   text,
   pattern,
@@ -94,11 +94,11 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
     collapse_span_inserts(inserts)
   } else {
     inserts %>%
-      tidyr::nest(-pass) %>%
-      mutate(data = purrr::map(data, collapse_span_inserts)) %>%
+      tidyr::nest(-.data$pass) %>%
+      mutate(data = purrr::map(.data$data, collapse_span_inserts)) %>%
       tidyr::unnest() %>%
-      group_by(loc, type) %>%
-      summarize(insert = paste(insert, collapse = "")) %>%
+      group_by(.data$loc, .data$type) %>%
+      summarize(insert = paste(.data$insert, collapse = "")) %>%
       dplyr::ungroup()
   }
 
@@ -134,7 +134,7 @@ collapse_span_inserts <- function(inserts) {
     inserts_other,
     filter(inserts_g0, type == "end")
   ) %>%
-    mutate(type = sprintf("%05d%s", 1:nrow(.), type)) %>%
+    mutate(type = sprintf("%05d%s", dplyr::row_number(), type)) %>%
     group_by(.data$loc, .data$type) %>%
     summarize(insert = paste(.data$insert, collapse = '')) %>%
     dplyr::ungroup() %>%
