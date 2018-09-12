@@ -2,7 +2,7 @@ cheatsheet <- tibble::tribble(
   ~category, ~group, ~regexp, ~text,
   "character classes", "regular", "<code>.</code>", "any character except newline",
   "character classes", "regular", "<code>\\w</code> <code>\\d</code> <code>\\s</code>", "word, digit, whitespace",
-  "character classes", "regular", "<code>\\W</code> <code>\\D</code> <code>\\S</code>", "not word, digit, whitespace",
+  "character classes", "regular", "<code>\\W</code> <code>\\D</code> <code>\\S</code>", "not word, not digit, not whitespace",
   "character classes", "regular", "<code>\\p{property name}</code>", "matches character with unicode property, like <code>\\p{Uppercase}</code>, see <a href=\"http://www.unicode.org/reports/tr44/#Property_Index.\">unicode property list</a> (not supported by <em>regexplain</em>).",
   "character classes", "regular", "<code>[abc]</code>", "any of a, b or c",
   "character classes", "regular", "<code>[^abc]</code>", "not a, b, or c",
