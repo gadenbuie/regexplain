@@ -65,7 +65,16 @@ dd {
 #help_text_selected > h3 {
   margin-top: 0px;
 }
-
+#regexOptions {
+  padding-left: 15px;
+}
+#regexInput {
+  padding: 0 15px 15px 10px;
+}
+#library_show {
+  margin-top: 25px;
+  padding-left: 10px;
+}
 .gadget-result {
   border: 1px solid #ccc;
   border-radius: 0.5rem;

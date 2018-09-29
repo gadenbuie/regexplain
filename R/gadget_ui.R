@@ -30,18 +30,26 @@ regexplain_gadget_ui <- function(text = NULL, pattern = NULL, start_page = "Text
       miniTabPanel(
         "RegEx", icon = icon('terminal'),
         miniContentPanel(
-          fillCol(
-            flex = c(1, 3),
-            fillCol(
-              flex = c(1, 1),
-              fillRow(
-                flex = c(6, 1),
-                textInputCode('pattern', 'RegEx', width = "100%",
-                              value = pattern,
-                              placeholder = "Standard RegEx, e.g. \\w+_\\d{2,4}\\s+"),
-                tags$div(style = "margin-top: 23px; margin-left:6px;",
-                         actionButton("library_show", "Library", class = "btn-success"))
-              ),
+          tags$div(
+            id = "regexPage",
+            class = "container-fluid",
+            style = "height: 90%",
+            fluidRow(
+              id = "regexInput",
+              tags$div(
+                class = "col-12",
+                textInputCode(
+                  'pattern', 'RegEx', width = "100%",
+                  value = pattern,
+                  placeholder = "Standard RegEx, e.g. \\w+_\\d{2,4}\\s+",
+                  tags$span(class = "input-group-btn",
+                            actionButton("library_show", "Library", class = "btn-primary")
+                  )
+                )
+              )
+            ),
+            fluidRow(
+              id = "regexOptions",
               checkboxGroupInput(
                 'regex_options',
                 label = HTML(
@@ -72,8 +80,9 @@ regexplain_gadget_ui <- function(text = NULL, pattern = NULL, start_page = "Text
               )
             ),
             tags$div(
+              id = "regexResult",
               class = "gadget-result",
-              style = "overflow-y: scroll; height: 100%;",
+              style = "overflow-y: scroll; height: 100%; max-height: calc(100% - 90px);",
               htmlOutput('result')
             )
           )
