@@ -55,11 +55,12 @@ dd {
   margin-left: 90px;
   padding: 0 0 0.5em 0;
 }
-.gadget-tabs-container ul.gadget-tabs > li.active {
-  background-color: #ddd;
-  border-color: #ddd;
-  padding-top: 4px;
-  height: 100%;
+.nav > li > a:focus, .nav > li > a:hover {
+  background: none;
+}
+.gadget-tabs-container ul.gadget-tabs > li > a:hover {
+  color: #344d63;
+  background: none;
 }
 #help_text_selected > h3 {
   margin-top: 0px;
