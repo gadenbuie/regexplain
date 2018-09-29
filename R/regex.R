@@ -246,8 +246,8 @@ view_regex <- function(
   res <- purrr::map_chr(res, function(resi) {
     result_pad <- ""
     if (grepl("pad\\d{2}", resi)) {
-      max_pad <- max(stringr::str_extract_all(resi, "pad\\d{2}")[[1]])
-      max_pad_level <- as.integer(stringr::str_extract(max_pad, "\\d{2}"))
+      max_pad <- max(stringi::stri_extract_all_regex(resi, "pad\\d{2}")[[1]])
+      max_pad_level <- as.integer(stringi::stri_extract_all_regex(max_pad, "\\d{2}"))
       if (max_pad_level - 3 > 0) {
         result_pad <- sprintf("pad%02d", max_pad_level - 3)
       }

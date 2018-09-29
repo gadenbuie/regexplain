@@ -42,12 +42,12 @@ Imports:
     rstudioapi,
     shiny (>= 0.13),
     stringi,
-    stringr,
     tidyr,
     utils
 Suggests: 
-    testthat,
-    rematch2
+    rematch2,
+    stringr,
+    testthat
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

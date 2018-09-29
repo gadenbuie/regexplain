@@ -216,7 +216,7 @@ regexplain_gadget_server <- function(update_available = NULL) {
           req(replacement())
           regexFn(
             rtext(),
-            stringr::regex(
+            stringr_regex(
               pattern(),
               ignore_case = 'ignore.case' %in% input$regex_options,
               literal = 'fixed' %in% input$regex_options
@@ -226,7 +226,7 @@ regexplain_gadget_server <- function(update_available = NULL) {
         } else {
           regexFn(
             rtext(),
-            stringr::regex(
+            stringr_regex(
               pattern(),
               ignore_case = 'ignore.case' %in% input$regex_options,
               literal = 'fixed' %in% input$regex_options
@@ -244,6 +244,14 @@ regexplain_gadget_server <- function(update_available = NULL) {
       }
       print(x)
     })
+
+    stringr_regex <- function(pattern, ignore_case = FALSE, literal = FALSE) {
+      if (!requireNamespace("stringr", quietly = TRUE)) return(NULL)
+      do.call(
+        eval(parse(text = "stringr::regex")),
+        list(pattern = pattern, ignore_case, ignore_case, literal = literal)
+      )
+    }
 
     # ---- Server - Tab - Help ----
     HELP_DEFAULT_TEXT <- c(
@@ -413,10 +421,14 @@ regexplain_gadget_server <- function(update_available = NULL) {
 
     observeEvent(input$help_try_this_hs_colors_text, {
       color_match <- "\\b(red|orange|yellow|green|blue|purple)\\b|red"
-      color_text <- stringr::sentences[grepl(color_match, stringr::sentences)]
-      color_text <- sample(color_text, 25)
-      updateTextAreaInput(session, "text", value = paste(color_text, collapse = "\n"))
-      showNotification("Text loaded! View it in Text tab", type = 'message')
+      if (requireNamespace("stringr", quietly = TRUE)) {
+        color_text <- stringr::sentences[grepl(color_match, stringr::sentences)]
+        color_text <- sample(color_text, 25)
+        updateTextAreaInput(session, "text", value = paste(color_text, collapse = "\n"))
+        showNotification("Text loaded! View it in Text tab", type = 'message')
+      } else {
+        showNotification("Please install {stringr} for this example", type = 'error')
+      }
     })
 
     observeEvent(input$help_try_this_hs_colors_pattern, {
@@ -450,9 +462,13 @@ regexplain_gadget_server <- function(update_available = NULL) {
     })
 
     observeEvent(input$help_try_this_hs_words_text, {
-      hs_text <- sample(stringr::sentences, 25)
-      updateTextAreaInput(session, "text", value = paste(hs_text, collapse = "\n"))
-      showNotification("Text loaded! View it in Text tab", type = 'message')
+      if (requireNamespace("stringr", quietly = TRUE)) {
+        hs_text <- sample(stringr::sentences, 25)
+        updateTextAreaInput(session, "text", value = paste(hs_text, collapse = "\n"))
+        showNotification("Text loaded! View it in Text tab", type = 'message')
+      } else {
+        showNotification("Please install {stringr} for this example", type = 'error')
+      }
     })
 
     observeEvent(input$help_try_this_hs_words_pattern, {
@@ -474,9 +490,13 @@ regexplain_gadget_server <- function(update_available = NULL) {
     })
 
     observeEvent(input$help_try_this_hs_refs_text, {
-      hs_text <- sample(stringr::sentences, 25)
-      updateTextAreaInput(session, "text", value = paste(hs_text, collapse = "\n"))
-      showNotification("Text loaded! View it in Text tab", type = 'message')
+      if (requireNamespace("stringr", quietly = TRUE)) {
+        hs_text <- sample(stringr::sentences, 25)
+        updateTextAreaInput(session, "text", value = paste(hs_text, collapse = "\n"))
+        showNotification("Text loaded! View it in Text tab", type = 'message')
+      } else {
+        showNotification("Please install {stringr} for this example", type = 'error')
+      }
     })
 
     observeEvent(input$help_try_this_hs_refs_pattern, {
