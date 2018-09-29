@@ -4,6 +4,13 @@
 #' addins. Opens the RegExplain gadget interface in an RStudio viewer
 #' pane.
 #'
+#' @examples
+#' \dontrun{
+#' regexplain_gadget(text = month.name, pattern = "(Ma|Ju)|(er)")
+#' regexplain_web(text = month.name, pattern = "(Ma|Ju)|(er)")
+#' regexplain_file()
+#' }
+#'
 #' @import miniUI
 #' @import shiny
 #' @param text Text to explore in gadget (editable using interface)

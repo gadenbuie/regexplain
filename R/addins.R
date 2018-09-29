@@ -46,13 +46,11 @@ regexplain_addin <- function() {
 
 }
 
-#' Regexplain File Addin
-#'
-#' See [regexplain_addin]. Opens file chooser to pick file, reads lines, returns
-#' first `regexplain.addin.max_lines` (default 100).
-#'
-#' @keywords internal
-regexplain_file <- function() {
+#' @describeIn regexplain_gadget Opens file chooser to pick file, reads lines,
+#'   returns first `regexplain.addin.max_lines` (default 100). Used in the
+#'   "Regexplain File" [regexplain_addin].
+#' @export
+regexplain_file <- function(pattern = NULL, start_page = "RegEx") {
   fname <- file.choose()
   x <- readLines(fname)
   max_lines <- getOption("rexeplain.addin.max_lines", 100)
@@ -63,5 +61,5 @@ regexplain_file <- function() {
             "increase the number of lines.")
     x <- x[1:max_lines]
   }
-  regexplain_gadget(x, "RegEx")
+  regexplain_gadget(text = x, pattern = pattern, start_page = start_page)
 }

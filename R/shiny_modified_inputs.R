@@ -66,6 +66,7 @@ textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = 
 #'
 #' @inheritParams shiny::textInput
 #' @param width Width of `shiny-input-container` div.
+#' @param ... Extra elements to be included in the `input-group` div.
 #' @family modified shiny inputs
 textInputCode <- function(inputId, label, value = "", width = NULL,
                           placeholder = NULL, ...) {

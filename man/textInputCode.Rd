@@ -5,7 +5,7 @@
 \title{Modified Text Input}
 \usage{
 textInputCode(inputId, label, value = "", width = NULL,
-  placeholder = NULL)
+  placeholder = NULL, ...)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -19,6 +19,8 @@ textInputCode(inputId, label, value = "", width = NULL,
 \item{placeholder}{A character string giving the user a hint as to what can
 be entered into the control. Internet Explorer 8 and 9 do not support this
 option.}
+
+\item{...}{Extra elements to be included in the \code{input-group} div.}
 }
 \description{
 Standard \code{\link[shiny:textInput]{shiny::textInput()}} with additional \code{width} parameter, added code
