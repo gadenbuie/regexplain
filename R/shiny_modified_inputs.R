@@ -68,17 +68,18 @@ textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = 
 #' @param width Width of `shiny-input-container` div.
 #' @family modified shiny inputs
 textInputCode <- function(inputId, label, value = "", width = NULL,
-                          placeholder = NULL) {
+                          placeholder = NULL, ...) {
   `%AND%` <- getFromNamespace("%AND%", "shiny")
   value <- shiny::restoreInput(id = inputId, default = value)
 
-  shiny::div(class = "form-group shiny-input-container",
+  shiny::div(class = "input-group shiny-input-container",
              style = if (!is.null(width)) paste0("width: ", shiny::validateCssUnit(width), ";"),
              label %AND% shiny::tags$label(label, `for` = inputId),
              shiny::tags$input(id = inputId, type="text", class="form-control", value=value,
                                style = 'font-family: "Monaco", "Inconsolata", monospace;',
                                autocomplete = "off", autocorrect = "off",
                                autocapitalize = "off", spellcheck = "false",
-                               placeholder = placeholder)
+                               placeholder = placeholder),
+             ...
   )
 }
