@@ -1,4 +1,21 @@
-## regexplain 0.2.x
+## regexplain 0.2
+
+### 0.2.2.9000 (will be 0.3.0)
+
+* Rewrote regexp-matching internals, the RStudio addin can now display global
+  regexp matches.
+  
+* `regexplain_gadget()` accepts both `text` and `pattern` arguments, so you can
+  easily load text or regular expressions from your R session into the gadget.
+  If you're working with designing a regular expression, this lets you move
+  back and forth between the gadget and your code much more easily.
+
+* Fixed design of the RegEx tab so that inputs, options and output will no
+  longer overlap when the gadget is open in a small viewer pane.
+  
+* Clarified meaning of `\W`, `\D`, and `\S`, thanks @GegznaV.
+
+* Moved `stringr` and `rematch2` to Suggests.
 
 ### 0.2.2
 
