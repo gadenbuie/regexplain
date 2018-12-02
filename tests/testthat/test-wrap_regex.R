@@ -14,3 +14,10 @@ test_that("wrap_regex doesn't wrap non-capture groups", {
   expect_equal(wrap_regex("((?:a(b))c)"),
                "<span class=\"g01\">((?:a<span class=\"g02\">(b)</span>)c)</span>")
 })
+
+test_that("wrap_regex returns text if no matches", {
+  expect_equal(
+    wrap_result(list(text = "no result")),
+    "no result"
+  )
+})

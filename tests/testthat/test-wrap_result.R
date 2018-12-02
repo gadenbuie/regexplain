@@ -52,3 +52,24 @@ test_that("wrap_result starts/ends correctly with touching groups", {
   )
   expect_equal(wrap_result(regex(text, pattern, global = TRUE)[[1]]), result)
 })
+
+test_that("handles escaped parentheses", {
+  expect_equal(
+    wrap_regex("\\((word)\\)"),
+    '\\\\(<span class=\"g01\">(word)</span>\\\\)'
+  )
+})
+
+test_that("wrap_result with exact = TRUE", {
+  # input/output standard R characters
+  expect_equal(
+    wrap_result(regex("a\\b", "\\\\")[[1]]),
+    "a<span class=\"group g00\">\\</span>b"
+  )
+
+  # input is "literal", output is R string to match literal input
+  expect_equal(
+    wrap_result(regex("a\\b", "\\\\")[[1]], exact = TRUE),
+    "a<span class=\"group g00\">\\\\</span>b"
+  )
+})
