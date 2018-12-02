@@ -252,7 +252,7 @@ view_regex <- function(
         result_pad <- sprintf("pad%02d", max_pad_level - 3)
       }
     }
-    paste("<p class='results", result_pad, "'>", resi, "</p>")
+    paste('<p class="results', result_pad, '">', resi, "</p>")
   })
   res <- paste(res, collapse = "")
   if (!nchar(pattern)) res <- paste("<p class='results'>", text, "</p>")
@@ -278,11 +278,12 @@ view_regex <- function(
   tmp_html <- suppressWarnings(
     rmarkdown::render(
       tmp,
-      output_format = rmarkdown::html_document(css = c(system.file("styles", 'skeleton.css', package='regexplain'),
-                                                       system.file("styles", 'view_regex.css', package='regexplain'),
-                                                       system.file("styles", 'groups.css', package='regexplain')),
-                                               theme = NULL,
-                                               md_extensions = "-autolink_bare_uris"),
+      output_format = rmarkdown::html_document(
+        css = c(system.file("styles", 'skeleton.css', package='regexplain'),
+                system.file("styles", 'view_regex.css', package='regexplain'),
+                system.file("styles", 'groups.css', package='regexplain')),
+        theme = NULL,
+        md_extensions = "-autolink_bare_uris"),
       quiet = TRUE
   ))
   rstudioapi::viewer(tmp_html)
