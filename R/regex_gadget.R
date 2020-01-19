@@ -54,7 +54,7 @@ regex_gadget <- function(
               fillRow(
                 flex = c(6, 1),
                 textInputCode('pattern', 'RegEx', width = "100%",
-                              placeholder = "Standard RegEx, e.g. \\w+_\\d{2,4}\\s+"),
+                              placeholder = "Standard RegEx WITH SINGLE SLASH FOR ESCAPE, e.g. \\w+_\\d{2,4}\\s+"),
                 tags$div(style = "margin-top: 23px; margin-left:6px;",
                          actionButton("library_show", "Library", class = "btn-success"))
               ),
@@ -283,7 +283,7 @@ regex_gadget <- function(
       is_empty <- input$pattern == ""
       if (is_empty) updateTextInput(
         session, "pattern",
-        placeholder = "Standard RegEx, e.g. \\w+_\\d{2,4}\\s+")
+        placeholder = "Standard RegEx WITH SINGLE SLASH FOR ESCAPE, e.g. \\w+_\\d{2,4}\\s+")
     })
 
     # ---- Server - Tab - Output ----
