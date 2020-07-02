@@ -4,25 +4,33 @@
 \alias{view_regex}
 \title{View grouped regex results}
 \usage{
-view_regex(text, pattern, ..., render = TRUE, escape = render,
-  exact = escape, result_only = FALSE)
+view_regex(
+  text,
+  pattern,
+  ...,
+  render = TRUE,
+  escape = render,
+  exact = escape,
+  result_only = FALSE
+)
 }
 \arguments{
 \item{text}{Text to search}
 
 \item{pattern}{Regex pattern to look for}
 
-\item{...}{Arguments passed on to \code{base::regexec}
-\describe{
-  \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
+\item{...}{
+  Arguments passed on to \code{\link[base:regexec]{base::regexec}}
+  \describe{
+    \item{\code{ignore.case}}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
-  \item{perl}{logical.  Should Perl-compatible regexps be used?}
-  \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
+    \item{\code{perl}}{logical.  Should Perl-compatible regexps be used?}
+    \item{\code{fixed}}{logical.  If \code{TRUE}, \code{pattern} is a string to be
     matched as is.  Overrides all conflicting arguments.}
-  \item{useBytes}{logical.  If \code{TRUE} the matching is done
+    \item{\code{useBytes}}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character.  See
     \sQuote{Details}.}
-}}
+  }}
 
 \item{render}{Render results to an HTML doc and open in RStudio viewer?}
 
@@ -30,9 +38,9 @@ view_regex(text, pattern, ..., render = TRUE, escape = render,
 
 \item{exact}{Should the regex pattern be displayed as entered by the user
 into R console or source (default)? When \code{TRUE}, regex is displayed with
-the double \code{\\\\} required for escaping backslashes in R. When \code{FALSE},
-regex is displayed as interpreted by the regex engine (i.e. double \code{\\\\}
-as a single \code{\\}).}
+the double \verb{\\\\\\\\} required for escaping backslashes in R. When \code{FALSE},
+regex is displayed as interpreted by the regex engine (i.e. double \verb{\\\\\\\\}
+as a single \verb{\\\\}).}
 
 \item{result_only}{Should only the result be displayed? If \code{FALSE}, then
 the colorized regular expression is also displayed in the output.}

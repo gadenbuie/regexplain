@@ -4,8 +4,11 @@
 \alias{check_version}
 \title{Check if an updated version is available}
 \usage{
-check_version(gh_user = "gadenbuie", gh_repo = "regexplain",
-  this_version = packageVersion("regexplain"))
+check_version(
+  gh_user = "gadenbuie",
+  gh_repo = "regexplain",
+  this_version = packageVersion("regexplain")
+)
 }
 \arguments{
 \item{gh_user}{GitHub user account}
