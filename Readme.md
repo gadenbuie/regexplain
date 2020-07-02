@@ -10,7 +10,7 @@ Status: Active – The project has reached a stable, usable state and is
 being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/regexplain)](https://cran.r-project.org/package=regexplain)
-<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2018--04--19-yellowgreen.svg)](/commits/master) -->
+<!-- [![Last-changedate](https://img.shields.io/badge/last%20change-2020--07--02-yellowgreen.svg)](/commits/master) -->
 
 <!-- Links -->
 
@@ -23,15 +23,12 @@ Inspired by [RegExr.com](https://regexr.com/) and `stringr::str_view()`.
 
 ## Installation
 
-Installation is easy with `devtools`
+Installation is easy with `remotes`
 
 ``` r
-devtools::install_github("gadenbuie/regexplain")
+# install.packages("remotes")
+remotes::install_github("gadenbuie/regexplain")
 ```
-
-or for hands-free installation
-
-    source("https://install-github.me/gadenbuie/regexplain")
 
 ## RegExplain in Action
 
@@ -55,10 +52,17 @@ examples](https://raw.githubusercontent.com/gadenbuie/regexplain/af4fe0988a10f34
 The main feature of this package is the RStudio Addin **RegExplain
 Selection**. Just select the text or object containing text (such as the
 variable name of a vector or a data.frame column) and run **RegExplain
-Selection** from the RStudio Addins
-dropdown.
+Selection** from the RStudio Addins dropdown.
 
 <img src="docs/rstudio-addin-list.png" width = "250px;" alt="regexplain in the Rstudio Addins dropdown">
+
+You can also open the addin with `regexplain_gadget()`. This allows you
+to pass text or a regular expression to the gadget, which is useful when
+you want to work with a regular expression in your code or environment.
+
+``` r
+regexplain_gadget(text_vector, "\\b(red|blue|green): \\d{3}")
+```
 
 The addin will open an interface with 4 panes where you can
 
@@ -72,8 +76,7 @@ The addin will open an interface with 4 panes where you can
 ![The panes of regexplain](docs/regexplain-gadget-tabs.png)
 
 When you’re done, click on the **Send Regex to Console** to send your
-regex expression to… the
-console\!
+regex expression to… the console\!
 
 ``` r
 > pattern <- "\\b(red|orange|yellow|green|blue|purple|white|brown)(?:\\s(\\w+))?"
@@ -120,8 +123,7 @@ patterns.
 
 The full library is stored as a JSON file in
 [inst/extdata/patterns.json](/inst/extdata/patterns.json), feel free to
-contribute patterns you find useful or use regularly via pull
-request.
+contribute patterns you find useful or use regularly via pull request.
 
 <img src="docs/regexplain-gadget-library.png" height="400px" alt="regexplain library modal">
 
