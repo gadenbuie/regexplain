@@ -2,7 +2,6 @@ Package: regexplain
 Title: Rstudio Addin to Explain, Test and Build Regular
     Expressions
 Version: 0.2.2.9000
-Date: 2018-04-04
 Authors@R: 
     c(person(given = "Garrick",
              family = "Aden-Buie",
