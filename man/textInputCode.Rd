@@ -4,8 +4,14 @@
 \alias{textInputCode}
 \title{Modified Text Input}
 \usage{
-textInputCode(inputId, label, value = "", width = NULL,
-  placeholder = NULL, ...)
+textInputCode(
+  inputId,
+  label,
+  value = "",
+  width = NULL,
+  placeholder = NULL,
+  ...
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -28,6 +34,7 @@ font style for the input text and with \code{autocomplete}, \code{autocorrect},
 \code{autocapitalize} and \code{spellcheck} set to \code{off} or \code{false}.
 }
 \seealso{
-Other modified shiny inputs: \code{\link{textAreaInputAlt}}
+Other modified shiny inputs: 
+\code{\link{textAreaInputAlt}()}
 }
 \concept{modified shiny inputs}

@@ -13,9 +13,9 @@ wrap_regex(pattern, escape = TRUE, exact = TRUE)
 
 \item{exact}{Should the regex pattern be displayed as entered by the user
 into R console or source (default)? When \code{TRUE}, regex is displayed with
-the double \code{\\\\} required for escaping backslashes in R. When \code{FALSE},
-regex is displayed as interpreted by the regex engine (i.e. double \code{\\\\}
-as a single \code{\\}).}
+the double \verb{\\\\\\\\} required for escaping backslashes in R. When \code{FALSE},
+regex is displayed as interpreted by the regex engine (i.e. double \verb{\\\\\\\\}
+as a single \verb{\\\\}).}
 }
 \description{
 Wraps capture groups in regex pattern in span tags to colorize with CSS

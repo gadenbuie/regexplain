@@ -4,8 +4,15 @@
 \alias{regex}
 \title{Extract matched groups from regexp}
 \usage{
-regex(text, pattern, ignore.case = FALSE, perl = FALSE,
-  fixed = FALSE, useBytes = FALSE, global = TRUE)
+regex(
+  text,
+  pattern,
+  ignore.case = FALSE,
+  perl = FALSE,
+  fixed = FALSE,
+  useBytes = FALSE,
+  global = TRUE
+)
 }
 \arguments{
 \item{text}{Text to search}
