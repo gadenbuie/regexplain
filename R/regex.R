@@ -94,9 +94,9 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
     collapse_span_inserts(inserts)
   } else {
     inserts %>%
-      tidyr::nest(-.data$pass) %>%
-      mutate(data = purrr::map(.data$data, collapse_span_inserts)) %>%
-      tidyr::unnest() %>%
+      tidyr::nest(spans = -.data$pass) %>%
+      mutate(spans = purrr::map(.data$spans, collapse_span_inserts)) %>%
+      tidyr::unnest(.data$spans) %>%
       group_by(.data$loc, .data$type) %>%
       summarize(insert = paste(.data$insert, collapse = "")) %>%
       dplyr::ungroup()
