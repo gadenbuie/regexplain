@@ -33,7 +33,6 @@ Depends:
 Imports: 
     dplyr,
     htmltools,
-    jsonlite,
     knitr,
     miniUI,
     purrr,
@@ -45,6 +44,7 @@ Imports:
     tidyr,
     utils
 Suggests: 
+    jsonlite,
     rematch2,
     stringr,
     testthat

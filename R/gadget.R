@@ -167,7 +167,7 @@ check_version <- function(
 #'
 #' @keywords internal
 get_regex_library <- function() {
-  if (!requireNamespace("jsonlite")) {
+  if (!requireNamespace("jsonlite", quietly = TRUE)) {
     warning("Please install the `jsonlite` package to use template features")
     return(NULL)
   }
