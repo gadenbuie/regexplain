@@ -27,16 +27,11 @@ Inspired by [RegExr.com][regexr] and `stringr::str_view()`.
 
 ## Installation
 
-Installation is easy with `devtools`
+Installation is easy with `remotes`
 
 ```r
-devtools::install_github("gadenbuie/regexplain")
-```
-
-or for hands-free installation
-
-```
-source("https://install-github.me/gadenbuie/regexplain")
+# install.packages("remotes")
+remotes::install_github("gadenbuie/regexplain")
 ```
 
 ## RegExplain in Action
@@ -59,6 +54,13 @@ The main feature of this package is the RStudio Addin **RegExplain Selection**.
 Just select the text or object containing text (such as the variable name of a vector or a data.frame column) and run **RegExplain Selection** from the RStudio Addins dropdown.
 
 <img src="docs/rstudio-addin-list.png" width = "250px;" alt="regexplain in the Rstudio Addins dropdown">
+
+You can also open the addin with `regexplain_gadget()`. 
+This allows you to pass text or a regular expression to the gadget, which is useful when you want to work with a regular expression in your code or environment.
+
+```r
+regexplain_gadget(text_vector, "\\b(red|blue|green): \\d{3}")
+```
 
 The addin will open an interface with 4 panes where you can
 
