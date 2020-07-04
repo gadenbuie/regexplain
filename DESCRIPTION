@@ -36,7 +36,6 @@ Imports:
     miniUI,
     purrr,
     rlang,
-    rmarkdown,
     rstudioapi,
     shiny (>= 0.13),
     stringi,

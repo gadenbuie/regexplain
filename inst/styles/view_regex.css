@@ -7,7 +7,11 @@ p,
 ul,
 ol,
 form {
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem;
+  font-size: 20px;
+}
 
 body {
-  line-height: 18px;}
+  line-height: 18px;
+  font-size: 20px;
+}
