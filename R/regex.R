@@ -39,6 +39,7 @@ regex <- function(
 expand_matches <- function(m) {
   if (m[1] == -1) return(NULL)
   m_length <- attr(m, "match.length")
+  if (identical(as.vector(m[[1]]), 1L) && m_length == 0) return(NULL)
   x <- purrr::map2(m, m_length, ~ c(.x, .x + .y))
   x <- as.data.frame(do.call(rbind, x))
   names(x) <- c("start", "end")
