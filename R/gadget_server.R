@@ -70,7 +70,7 @@ regexplain_gadget_server <- function(update_available = NULL) {
       delay <- getOption('regexplain.input_delay_ms', NULL)
       if (!is.null(delay)) invalidateLater(delay, session)
       if (pattern() == "") {
-        return(toHTML(paste('<p class="results">', escape_html(rtext()), "</p>", collapse = "")))
+        return(toHTML(paste('<p class="regexplain">', escape_html(rtext()), "</p>", collapse = "")))
       }
       res <- NULL
       error_message <- NULL
