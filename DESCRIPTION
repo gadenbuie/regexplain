@@ -39,7 +39,6 @@ Imports:
     rstudioapi,
     shiny (>= 0.13),
     stringi,
-    tidyr,
     utils
 Suggests: 
     jsonlite,

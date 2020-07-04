@@ -83,8 +83,10 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
       .data$start <= !!inserts$start[j] & .data$end >= !!inserts$end[j])
     inserts[j, 'pad'] <- inserts$pad[j] + nrow(overlap)
   }
-  inserts <- inserts %>%
-    tidyr::gather(type, loc, start:end) %>%
+  inserts <- dplyr::bind_rows(
+    inserts %>% select(-.data$end, dplyr::everything(), loc = .data$start) %>% mutate(type = "start"),
+    inserts %>% select(-.data$start, dplyr::everything(), loc = .data$end) %>% mutate(type = "end")
+  ) %>%
     filter(!is.na(.data$loc)) %>%
     dplyr::arrange(loc, class, dplyr::desc(type)) %>%
     mutate(
@@ -95,10 +97,9 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
   inserts <- if (max(inserts$pass) == 1) {
     collapse_span_inserts(inserts)
   } else {
-    inserts %>%
-      tidyr::nest(spans = -.data$pass) %>%
-      mutate(spans = purrr::map(.data$spans, collapse_span_inserts)) %>%
-      tidyr::unnest(.data$spans) %>%
+    split(inserts, inserts$pass) %>%
+      purrr::map(collapse_span_inserts) %>%
+      dplyr::bind_rows() %>%
       group_by(.data$loc, .data$type) %>%
       summarize(insert = paste(.data$insert, collapse = "")) %>%
       dplyr::ungroup()
