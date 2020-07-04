@@ -20,6 +20,13 @@ test_that("start/end indices are integers", {
   expect_is(m[[1]]$idx$group, "integer")
 })
 
+test_that("length-zero match is NULL", {
+  m <- regex(c("other", "thing"), "thing|")
+  expect_null(m[[1]]$idx)
+  expect_equal(m[[2]]$idx$start, 1L)
+  expect_equal(m[[2]]$idx$end, 6L)
+})
+
 test_that("max_match_index works", {
   m <- regex(c("abcaba", "aba", "z"), c("(a)(b)(d)?c?"), global = FALSE)
   expect_equal(max_match_index(m), c(4, 3, NA_integer_))
