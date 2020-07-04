@@ -13,5 +13,4 @@ escape_backslash <- function(x) {
   gsub("\\\\", "\\\\\\\\", x)
 }
 
-# avoid CRAN note for tidyr::gather in wrap_results
-utils::globalVariables(c("end", "loc", "start", "type"))
+utils::globalVariables(c("loc", "type"))
