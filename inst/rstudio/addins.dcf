@@ -1,10 +1,10 @@
-Name: RegExplain Selection
-Description: Build a regexp for use on selected text
+Name: RegExplain
+Description: Open RegExplain app optionally using text current selection
 Binding: regexplain_addin
 Interactive: true
 
 Name: RegExplain File
-Description: Choose a file for which to build a regexp
+Description: Open RegExplain app using text from a file
 Binding: regexplain_file
 Interactive: true
 
