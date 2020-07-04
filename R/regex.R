@@ -36,7 +36,7 @@ regex <- function(
 }
 
 expand_matches <- function(m) {
-  if (m[1] == -1) return(list(NULL))
+  if (m[1] == -1) return(NULL)
   m_length <- attr(m, "match.length")
   x <- purrr::map2(m, m_length, ~ c(.x, .x + .y))
   x <- as.data.frame(do.call(rbind, x))
@@ -49,12 +49,12 @@ expand_matches <- function(m) {
 }
 
 max_match_index <- function(m) {
-  max_na <- function(x) if (is.null(x)) NA else max(x, na.rm = TRUE)
-  max_int <- function(x) as.integer(max(x))
-
   purrr::map(m, "idx") %>%
-    purrr::modify_depth(1, ~c(start = max_na(.x$start), end = max_na(.x$end))) %>%
-    purrr::map_int(max_int)
+    purrr::map_int(function(idx) {
+      if (!is.null(idx)) {
+        max(idx$start, idx$end, na.rm = TRUE)
+      } else NA
+    })
 }
 
 
