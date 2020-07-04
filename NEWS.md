@@ -5,6 +5,9 @@
 * Rewrote regexp-matching internals, the RStudio addin can now display global
   regexp matches.
   
+* All app-related functions are now prefixed with `regexplain_`. In particular,
+  `regex_gadget()` was renamed in favor of `regexplain_gadget()`.
+  
 * `regexplain_gadget()` accepts both `text` and `pattern` arguments, so you can
   easily load text or regular expressions from your R session into the gadget.
   If you're working with designing a regular expression, this lets you move
