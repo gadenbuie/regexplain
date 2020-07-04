@@ -23,13 +23,14 @@ regex <- function(
   mmi <- max_match_index(m)
   if (any(!is.na(mmi))) {
     subtext <-  purrr::map_chr(m, "text") %>% purrr::map2_chr(mmi, substring)
-    subtext[is.na(subtext)] <- ""
-    m2 <- regex(subtext, pattern, ignore.case, perl, fixed, useBytes)
+    sub_idx <- which(!is.na(subtext))
+    m2 <- regex(subtext[sub_idx], pattern, ignore.case, perl, fixed, useBytes)
     for (i in seq_along(m2)) {
       if (is.null(m2[[i]]$idx[[1]])) next
-      m2[[i]]$idx[, c(1, 2)] <- m2[[i]]$idx[, c(1, 2)] + mmi[i] - 1L
+      m_idx <- sub_idx[i]
+      m2[[i]]$idx[, c(1, 2)] <- m2[[i]]$idx[, c(1, 2)] + mmi[m_idx] - 1L
       m2[[i]]$idx$pass <- m2[[i]]$idx$pass + 1L
-      m[[i]]$idx <- rbind(m[[i]]$idx, m2[[i]]$idx)
+      m[[m_idx]]$idx <- rbind(m[[m_idx]]$idx, m2[[i]]$idx)
     }
   }
   m
