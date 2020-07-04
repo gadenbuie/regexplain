@@ -64,7 +64,9 @@ max_match_index <- function(m) {
 #' @inheritParams view_regex
 #' @keywords internal
 wrap_result <- function(x, escape = FALSE, exact = FALSE) {
-  if (is.null(x$idx[[1]])) return(if (escape) escape_html(x$text) else x$text)
+  if (is.null(x$idx[[1]])) {
+    return(if (escape) escape_html(x$text) else x$text)
+  }
   text <- x$text
 
   inserts <- x$idx
@@ -213,7 +215,7 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
 #'
 #' @param text Text to search
 #' @param pattern Regex pattern to look for
-#' @param render Render results to an HTML doc and open in RStudio viewer?
+#' @param render Render results as HTML?
 #' @param escape Escape HTML-related characters in `text`?
 #' @param exact Should the regex pattern be displayed as entered by the user
 #'   into R console or source (default)? When `TRUE`, regex is displayed with
@@ -252,41 +254,21 @@ view_regex <- function(
         result_pad <- sprintf("pad%02d", max_pad_level - 3)
       }
     }
-    paste('<p class="results', result_pad, '">', resi, "</p>")
+    paste('<p class="regexplain', result_pad, '">', resi, "</p>")
   })
   res <- paste(res, collapse = "")
-  if (!nchar(pattern)) res <- paste("<p class='results'>", text, "</p>")
+  if (!nchar(pattern)) res <- paste("<p class='regexplain'>", text, "</p>")
   if (knitr) {
-    # embed css
-    group_css <- htmltools::htmlDependency(
-      name = "regexplain-groups", version = packageVersion("regexplain"),
-      src = system.file("styles", package = "regexplain"),
-      stylesheet = "groups.css")
-    res <- htmltools::attachDependencies(htmltools::HTML(res), group_css)
-    return(res)
+    return(
+      htmltools::tagList(
+        htmltools::HTML(res),
+        regexplain_dependencies(full = FALSE)
+      )
+    )
   }
   if (!render) return(res)
-  head <- if (!result_only) c(
-    "---", "pagetitle: View Regex", "---",
-    "<h5>Pattern</h5>",
-    "<p><pre>", wrap_regex(pattern, escape, exact), "</pre></p>",
-    "<h5>Matches</h5>"
-  )
-  res <- c(head, res)
-  tmp <- tempfile(fileext = ".Rmd")
-  cat(res, file = tmp, sep = "\n")
-  tmp_html <- suppressWarnings(
-    rmarkdown::render(
-      tmp,
-      output_format = rmarkdown::html_document(
-        css = c(system.file("styles", 'skeleton.css', package='regexplain'),
-                system.file("styles", 'view_regex.css', package='regexplain'),
-                system.file("styles", 'groups.css', package='regexplain')),
-        theme = NULL,
-        md_extensions = "-autolink_bare_uris"),
-      quiet = TRUE
-  ))
-  rstudioapi::viewer(tmp_html)
+  page <- result_page(wrap_regex(pattern, escape, exact), res, "View Regex")
+  htmltools::browsable(page)
 }
 
 deprecate_knitr_option <- function(...) {
@@ -295,4 +277,35 @@ deprecate_knitr_option <- function(...) {
     warning("The `knitr` parameter of `view_regex()` has been removed. Running `view_regex()` in R Markdown is automatically detected.")
   }
   regex_opts[setdiff(names(regex_opts), "knitr")]
+}
+
+result_page <- function(pattern, result, title = NULL) {
+  pattern <- htmltools::HTML(pattern)
+  result <- htmltools::HTML(result)
+  page_title <- title
+  htmltools::tagList(
+    htmltools::div(
+      class = "regexplain__result",
+      if (!is.null(title)) htmltools::tags$head(htmltools::tags$title(page_title)),
+      htmltools::h2("Pattern"),
+      htmltools::pre(class = "regexplain__pattern", pattern),
+      htmltools::h2("Matches"),
+      result,
+      regexplain_dependencies(full = TRUE)
+    )
+  )
+}
+
+regexplain_dependencies <- function(full = TRUE) {
+  htmltools::htmlDependency(
+    name = "regexplain",
+    version = packageVersion("regexplain"),
+    package = "regexplain",
+    src = "styles",
+    stylesheet = c(
+      "groups.css",
+      if (full) c("skeleton.css", "view_regex.css")
+    ),
+    all_files = FALSE
+  )
 }

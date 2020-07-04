@@ -32,7 +32,7 @@ view_regex(
     \sQuote{Details}.}
   }}
 
-\item{render}{Render results to an HTML doc and open in RStudio viewer?}
+\item{render}{Render results as HTML?}
 
 \item{escape}{Escape HTML-related characters in \code{text}?}
 

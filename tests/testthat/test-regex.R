@@ -32,7 +32,7 @@ test_that("results group (pass) is calculated correctly", {
   expect_equal(unique(m[[1]]$idx$pass), c(1L, 2L))
 })
 
-test_that("view_regex generall works", {
-  result <- "<p class=\"results  \"> <span class=\"group g00\"><span class=\"group g01\">t</span>e</span><span class=\"group g00\"><span class=\"group g01\">s</span>t</span> </p>"
+test_that("view_regex generally works", {
+  result <- "<p class=\"regexplain  \"> <span class=\"group g00\"><span class=\"group g01\">t</span>e</span><span class=\"group g00\"><span class=\"group g01\">s</span>t</span> </p>"
   expect_equal(view_regex("test", "(\\w)\\w", render = FALSE), result)
 })

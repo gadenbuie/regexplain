@@ -1,13 +1,13 @@
-.results {
+.regexplain {
   font-family: monospace;
   color: #888888;
 }
-.group {
+.regexplain .group {
   border-bottom: 2px solid;
   color: black;
   padding: 0px;
 }
-.g00 {
+.regexplain .group.g00, .regexplain__pattern .g00 {
   padding: 1px;
   background-color: #f0f0f0;
   border: 1px solid #b0b0b0;
@@ -15,74 +15,74 @@
   border-right: 1px solid #b0b0b0;
   border-top: 1px solid #b0b0b0;
 }
-.g01 {
+.regexplain .group.g01, .regexplain__pattern .g01 {
   border-color: green;
   color: green;
 }
-.g02 {
+.regexplain .group.g02, .regexplain__pattern .g02 {
   border-color: blue;
   color: blue;
 }
-.g03 {
+.regexplain .group.g03, .regexplain__pattern .g03 {
   border-color: red;
   color: red;
 }
-.g04 {
+.regexplain .group.g04, .regexplain__pattern .g04 {
   border-color: orange;
   color: orange;
 }
-.g05 {
+.regexplain .group.g05, .regexplain__pattern .g05 {
   border-color: purple;
   color: purple;
 }
-.g06 {
+.regexplain .group.g06, .regexplain__pattern .g06 {
   border-color: DeepPink;
   color: DeepPink;
 }
-.g07 {
+.regexplain .group.g07, .regexplain__pattern .g07 {
   border-color: Tomato;
   color: Tomato;
 }
-.g08 {
+.regexplain .group.g08, .regexplain__pattern .g08 {
   border-color: DarkSeaGreen;
   color: DarkSeaGreen;
 }
-.g09 {
+.regexplain .group.g09, .regexplain__pattern .g09 {
   border-color: DeepSkyBlue;
   color: DeepSkyBlue;
 }
-.g10 {
+.regexplain .group.g10, .regexplain__pattern .g10 {
   border-color: Sienna;
   color: Sienna;
 }
-.pad01 {
+.regexplain .group.pad01 {
   padding-bottom: 3px;
 }
-.pad02 {
+.regexplain .group.pad02 {
   padding-bottom: 6px;
 }
-.pad03 {
+.regexplain .group.pad03 {
   padding-bottom: 9px;
 }
-.pad04 {
+.regexplain .group.pad04 {
   padding-bottom: 12px;
 }
-.pad05 {
+.regexplain .group.pad05 {
   padding-bottom: 15px;
 }
-.pad06 {
+.regexplain .group.pad06 {
   padding-bottom: 18px;
   margin-bottom: 18px;
 }
-.pad07 {
+.regexplain .group.pad07 {
   padding-bottom: 21px;
   margin-bottom: 21px;
 }
-.pad08 {
+.regexplain .group.pad08 {
   padding-bottom: 23px;
   margin-bottom: 23px;
 }
-.pad09 {
+.regexplain .group.pad09 {
   padding-bottom: 25px;
   margin-bottom: 25px;
 }
