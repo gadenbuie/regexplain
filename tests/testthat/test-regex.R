@@ -15,9 +15,9 @@ test_that("start/end indices are integers", {
   text <- "ab ab"
   pattern <- "(a)(b)"
   m <- regex(text, pattern, global = TRUE)
-  expect_is(m[[1]]$idx$start, "integer")
-  expect_is(m[[1]]$idx$end,   "integer")
-  expect_is(m[[1]]$idx$group, "integer")
+  expect_type(m[[1]]$idx$start, "integer")
+  expect_type(m[[1]]$idx$end,   "integer")
+  expect_type(m[[1]]$idx$group, "integer")
 })
 
 test_that("length-zero match is NULL", {
