@@ -28,6 +28,6 @@ test_that("doesn't escape normal letters", {
   expect_equal(sanitize_text_input("\a"), "\a")
   expect_equal(sanitize_text_input("\\a"), "\\a")
   expect_equal(sanitize_text_input("x"), "x")
-  #expect_error(sanitize_text_input("\x"))
+  # expect_error(sanitize_text_input("\x"))
   expect_equal(sanitize_text_input("\\x"), "\\x")
 })
