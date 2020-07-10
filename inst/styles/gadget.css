@@ -71,9 +71,10 @@ dd {
 #regexInput {
   padding: 0 15px 15px 10px;
 }
-#library_show {
-  margin-top: 25px;
-  padding-left: 10px;
+#library_show_container {
+  position: absolute;
+  bottom: 0;
+  right: 60px;
 }
 .gadget-result {
   border: 1px solid #ccc;
