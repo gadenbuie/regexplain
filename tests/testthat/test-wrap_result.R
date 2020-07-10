@@ -30,7 +30,7 @@ test_that("wrap_results generally works", {
 test_that("wrap_results works when groups start and end at same index", {
   text <- "7282298386"
   pattern <- "\\(?(\\d{3})[-). ]?(\\d{3})[- .]?(\\d{4})"
-  res <-  wrap_result(regex(text, pattern, perl = TRUE, global = FALSE)[[1]])
+  res <- wrap_result(regex(text, pattern, perl = TRUE, global = FALSE)[[1]])
   expect_equal(res, "<span class=\"group g00\"><span class=\"group g01\">728</span><span class=\"group g02\">229</span><span class=\"group g03\">8386</span></span>")
 })
 
@@ -48,7 +48,7 @@ test_that("wrap_result starts/ends correctly with touching groups", {
     '<span class=\"group g00\"><span class=\"group g01\">The</span> <span class=\"group g02\">big</span> </span>',
     '<span class=\"group g00\"><span class=\"group g01\">red</span> <span class=\"group g02\">apple</span> </span>',
     '<span class=\"group g00\"><span class=\"group g01\">fell</span> <span class=\"group g02\">to</span> </span>',
-    'the ground.'
+    "the ground."
   )
   expect_equal(wrap_result(regex(text, pattern, global = TRUE)[[1]]), result)
 })

@@ -18,11 +18,13 @@ regex <- function(
   m <- purrr::map2(text, m, ~ list(text = .x, idx = expand_matches(.y)))
 
   attr(m, "global") <- global
-  if (!global) return(m)
+  if (!global) {
+    return(m)
+  }
 
   mmi <- max_match_index(m)
   if (any(!is.na(mmi))) {
-    subtext <-  purrr::map_chr(m, "text") %>% purrr::map2_chr(mmi, substring)
+    subtext <- purrr::map_chr(m, "text") %>% purrr::map2_chr(mmi, substring)
     sub_idx <- which(!is.na(subtext))
     m2 <- regex(subtext[sub_idx], pattern, ignore.case, perl, fixed, useBytes)
     for (i in seq_along(m2)) {
@@ -37,16 +39,20 @@ regex <- function(
 }
 
 expand_matches <- function(m) {
-  if (m[1] == -1) return(NULL)
+  if (m[1] == -1) {
+    return(NULL)
+  }
   m_length <- attr(m, "match.length")
-  if (identical(as.vector(m[[1]]), 1L) && m_length == 0) return(NULL)
+  if (identical(as.vector(m[[1]]), 1L) && m_length == 0) {
+    return(NULL)
+  }
   x <- purrr::map2(m, m_length, ~ c(.x, .x + .y))
   x <- as.data.frame(do.call(rbind, x))
   names(x) <- c("start", "end")
   x$start <- ifelse(x$start == 0L, NA_integer_, x$start)
-  x$end   <- ifelse(x$end == 0L, NA_integer_, x$end)
+  x$end <- ifelse(x$end == 0L, NA_integer_, x$end)
   x$group <- 1:nrow(x) - 1L
-  x$pass  <- 1L
+  x$pass <- 1L
   x
 }
 
@@ -55,7 +61,9 @@ max_match_index <- function(m) {
     purrr::map_int(function(idx) {
       if (!is.null(idx)) {
         max(idx$start, idx$end, na.rm = TRUE)
-      } else NA
+      } else {
+        NA
+      }
     })
 }
 
@@ -80,10 +88,11 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
     if (inserts$i[j] == 0) next
     if (is.na(inserts$start[j]) || is.na(inserts$end[j])) next
     overlap <- filter(
-      inserts[1:(j-1), ],
+      inserts[1:(j - 1), ],
       .data$i != 0,
-      .data$start <= !!inserts$start[j] & .data$end >= !!inserts$end[j])
-    inserts[j, 'pad'] <- inserts$pad[j] + nrow(overlap)
+      .data$start <= !!inserts$start[j] & .data$end >= !!inserts$end[j]
+    )
+    inserts[j, "pad"] <- inserts$pad[j] + nrow(overlap)
   }
   inserts <- dplyr::bind_rows(
     inserts %>% select(-.data$end, dplyr::everything(), loc = .data$start) %>% mutate(type = "start"),
@@ -93,7 +102,7 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
     dplyr::arrange(loc, class, dplyr::desc(type)) %>%
     mutate(
       class = ifelse(.data$pad > 0, sprintf("%s pad%02d", .data$class, .data$pad), .data$class),
-      insert = ifelse(.data$type == 'start', sprintf('<span class="%s">', .data$class), "</span>")
+      insert = ifelse(.data$type == "start", sprintf('<span class="%s">', .data$class), "</span>")
     )
 
   inserts <- if (max(inserts$pass) == 1) {
@@ -113,11 +122,12 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
   # start at 0, unless there's a hit on first character
   # end at nchar(text) + 1 because window is idx[k] to idx[k+1]-1
   idx_split <- c(0 - (inserts$loc[1] == 0), inserts$loc)
-  if (!(nchar(text) + 1) %in% idx_split)
+  if (!(nchar(text) + 1) %in% idx_split) {
     idx_split <- c(idx_split, nchar(text) + 1)
+  }
   text_split <- c()
   for (k in seq_along(idx_split[-1])) {
-    text_split <- c(text_split, substr(text, idx_split[k], idx_split[k+1] - 1))
+    text_split <- c(text_split, substr(text, idx_split[k], idx_split[k + 1] - 1))
   }
   out <- c()
   for (j in seq_along(text_split)) {
@@ -128,7 +138,7 @@ wrap_result <- function(x, escape = FALSE, exact = FALSE) {
     )
   }
   if (exact) out <- escape_backslash(out)
-  paste(out, collapse = '')
+  paste(out, collapse = "")
 }
 
 collapse_span_inserts <- function(inserts) {
@@ -141,7 +151,7 @@ collapse_span_inserts <- function(inserts) {
   ) %>%
     mutate(type = sprintf("%05d%s", dplyr::row_number(), type)) %>%
     group_by(.data$loc, .data$type) %>%
-    summarize(insert = paste(.data$insert, collapse = '')) %>%
+    summarize(insert = paste(.data$insert, collapse = "")) %>%
     dplyr::ungroup() %>%
     mutate(type = sub("^\\d{5}", "", type))
 }
@@ -171,7 +181,7 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
     if (pattern_chars[i] == "(") {
       backslash_count <- 0
       if (i != 1) {
-        j <- i-1
+        j <- i - 1
         while (pattern_chars[j] == "\\" && j > 0) {
           backslash_count <- backslash_count + 1
           j <- j - 1
@@ -184,15 +194,15 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
       }
       if (is_capture_group) {
         group <- group + 1
-        paren_stack <- c(TRUE, paren_stack) #push
+        paren_stack <- c(TRUE, paren_stack) # push
         out <- c(out, paste0('<span class="g', sprintf("%02d", group), '">('))
       } else {
-        paren_stack <- c(FALSE, paren_stack) #push
+        paren_stack <- c(FALSE, paren_stack) # push
         out <- c(out, "(")
       }
     } else if (pattern_chars[i] == ")") {
       closes_capture_group <- paren_stack[1]
-      paren_stack <- paren_stack[-1] #pop
+      paren_stack <- paren_stack[-1] # pop
       if (closes_capture_group) {
         out <- c(out, ")</span>")
       } else {
@@ -214,8 +224,7 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
 #' If the output is destined for a [knitr] document, set `knitr` to `TRUE`.
 #'
 #' @examples
-#' view_regex("example", "amp", render=FALSE)
-#'
+#' view_regex("example", "amp", render = FALSE)
 #' @param text Text to search
 #' @param pattern Regex pattern to look for
 #' @param render Render results as HTML?
@@ -238,7 +247,7 @@ view_regex <- function(
   exact = escape,
   result_only = FALSE
 ) {
-  knitr <- isTRUE(getOption('knitr.in.progress'))
+  knitr <- isTRUE(getOption("knitr.in.progress"))
   if (knitr) {
     render <- FALSE
     escape <- TRUE
@@ -269,7 +278,9 @@ view_regex <- function(
       )
     )
   }
-  if (!render) return(res)
+  if (!render) {
+    return(res)
+  }
   page <- result_page(wrap_regex(pattern, escape, exact), res, "View Regex")
   htmltools::browsable(page)
 }

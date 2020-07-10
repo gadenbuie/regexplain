@@ -12,9 +12,18 @@
 #' @inheritParams shiny::textAreaInput
 #' @param is_code Should the text input be considered verbatim code input?
 #' @family modified shiny inputs
-textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = NULL,
-                             cols = NULL, rows = NULL, placeholder = NULL, resize = NULL,
-                             is_code = TRUE) {
+textAreaInputAlt <- function(
+  inputId,
+  label,
+  value = "",
+  width = NULL,
+  height = NULL,
+  cols = NULL,
+  rows = NULL,
+  placeholder = NULL,
+  resize = NULL,
+  is_code = TRUE
+) {
   `%AND%` <- getFromNamespace("%AND%", "shiny")
 
   value <- shiny::restoreInput(id = inputId, default = value)
@@ -24,7 +33,7 @@ textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = 
   }
 
   style <- paste(
-    if (!is.null(width))  paste0("width: ",  shiny::validateCssUnit(width),  ";"),
+    if (!is.null(width)) paste0("width: ", shiny::validateCssUnit(width), ";"),
     if (!is.null(height)) paste0("height: ", shiny::validateCssUnit(height), ";"),
     if (!is.null(resize)) paste0("resize: ", resize, ";"),
     if (is_code) 'font-family: "Monaco", "Inconsolata", monospace;'
@@ -39,22 +48,23 @@ textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = 
   #   https://github.com/rstudio/htmltools/issues/65
   if (length(style) == 0) style <- NULL
 
-  shiny::div(class = "form-group shiny-input-container",
-             label %AND% shiny::tags$label(label, `for` = inputId),
-             style = if (!parent_style %in% c(" ", "", "  ")) parent_style,
-             shiny::tags$textarea(
-               id = inputId,
-               class = "form-control",
-               placeholder = placeholder,
-               style = style,
-               rows = rows,
-               cols = cols,
-               autocomplete = "off",
-               autocorrect = "off",
-               autocapitalize = "off",
-               spellcheck = "false",
-               value
-             )
+  shiny::div(
+    class = "form-group shiny-input-container",
+    label %AND% shiny::tags$label(label, `for` = inputId),
+    style = if (!parent_style %in% c(" ", "", "  ")) parent_style,
+    shiny::tags$textarea(
+      id = inputId,
+      class = "form-control",
+      placeholder = placeholder,
+      style = style,
+      rows = rows,
+      cols = cols,
+      autocomplete = "off",
+      autocorrect = "off",
+      autocapitalize = "off",
+      spellcheck = "false",
+      value
+    )
   )
 }
 
@@ -68,19 +78,33 @@ textAreaInputAlt <- function(inputId, label, value = "", width = NULL, height = 
 #' @param width Width of `shiny-input-container` div.
 #' @param ... Extra elements to be included in the `input-group` div.
 #' @family modified shiny inputs
-textInputCode <- function(inputId, label, value = "", width = NULL,
-                          placeholder = NULL, ...) {
+textInputCode <- function(
+  inputId,
+  label,
+  value = "",
+  width = NULL,
+  placeholder = NULL,
+  ...
+) {
   `%AND%` <- getFromNamespace("%AND%", "shiny")
   value <- shiny::restoreInput(id = inputId, default = value)
 
-  shiny::div(class = "input-group shiny-input-container",
-             style = if (!is.null(width)) paste0("width: ", shiny::validateCssUnit(width), ";"),
-             label %AND% shiny::tags$label(label, `for` = inputId),
-             shiny::tags$input(id = inputId, type="text", class="form-control", value=value,
-                               style = 'font-family: "Monaco", "Inconsolata", monospace;',
-                               autocomplete = "off", autocorrect = "off",
-                               autocapitalize = "off", spellcheck = "false",
-                               placeholder = placeholder),
-             ...
+  shiny::div(
+    class = "input-group shiny-input-container",
+    style = if (!is.null(width)) paste0("width: ", shiny::validateCssUnit(width), ";"),
+    label %AND% shiny::tags$label(label, `for` = inputId),
+    shiny::tags$input(
+      id = inputId,
+      type = "text",
+      class = "form-control",
+      value = value,
+      style = 'font-family: "Monaco", "Inconsolata", monospace;',
+      autocomplete = "off",
+      autocorrect = "off",
+      autocapitalize = "off",
+      spellcheck = "false",
+      placeholder = placeholder
+    ),
+    ...
   )
 }

@@ -20,30 +20,42 @@ regexplain_addin <- function() {
 
   # If it is one line and evaluates to something, use that
   # Otherwise treat as text
-  obj <- tryCatch({
-    if (grepl("\n", ctx_text)) {
-      ctx_text[1:min(length(ctx_text), max_lines)]
-    } else {
-      x <- eval(parse(text = ctx_text))
-      if (inherits(x, "list")) x <- unlist(x)
-      x <- as.character(x)
-      if (length(x) == 1 && grepl("\n", x))
-        x <- strsplit(x, "\n")[[1]]
-      x <- unique(x)
-      if (length(x) > max_lines) {
-        message(ctx_text, " gave ", length(x), " lines, limiting to first ",
-                max_lines, " unique lines. Set ",
-                "options('regexplain.addin.max_lines') to a higher value to ",
-                "increase the number of lines.")
+  obj <- tryCatch(
+    {
+      if (grepl("\n", ctx_text)) {
+        ctx_text[1:min(length(ctx_text), max_lines)]
+      } else {
+        x <- eval(parse(text = ctx_text))
+        if (inherits(x, "list")) x <- unlist(x)
+        x <- as.character(x)
+        if (length(x) == 1 && grepl("\n", x)) {
+          x <- strsplit(x, "\n")[[1]]
+        }
         x <- unique(x)
-        x[1:min(length(x), max_lines)]
-      } else x
+        if (length(x) > max_lines) {
+          message(
+            ctx_text,
+            " gave ",
+            length(x),
+            " lines, limiting to first ",
+            max_lines,
+            " unique lines. Set ",
+            "options('regexplain.addin.max_lines') to a higher value to ",
+            "increase the number of lines."
+          )
+          x <- unique(x)
+          x[1:min(length(x), max_lines)]
+        } else {
+          x
+        }
+      }
+    },
+    error = function(e) {
+      as.character(ctx_text[1:min(length(ctx_text), max_lines)])
     }
-  },
-  error = function(e) {as.character(ctx_text[1:min(length(ctx_text), max_lines)])})
+  )
 
   regexplain_gadget(if (length(obj) && obj != "") obj)
-
 }
 
 #' @describeIn regexplain_gadget Opens file chooser to pick file, reads lines,

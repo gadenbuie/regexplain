@@ -29,7 +29,8 @@ regexplain_gadget <- function(
   runGadget(
     regexplain_gadget_ui(text, pattern, start_page),
     regexplain_gadget_server(check_version()),
-    viewer = viewer)
+    viewer = viewer
+  )
 }
 
 #' @describeIn regexplain_gadget Launches the RegExplain gadget in a browser or an
@@ -41,21 +42,28 @@ regexplain_web <- function(text = NULL, pattern = NULL, start_page = "Text", ...
 
   shinyApp(
     regexplain_gadget_ui(text, pattern, start_page),
-    regexplain_gadget_server(check_version()), ...)
+    regexplain_gadget_server(check_version()),
+    ...
+  )
 }
 
 # ---- Gadget Helper Functions and Variables ----
 
 sanitize_text_input <- function(x) {
-  if (is.null(x) || !nchar(x)) return(x)
+  if (is.null(x) || !nchar(x)) {
+    return(x)
+  }
   rx_unicode <- "\\\\u[0-9a-f]{4,8}"
   rx_hex <- "\\\\x[0-9a-f]{2}|\\\\x\\{[0-9a-f]{1,6}\\}"
   rx_octal <- "\\\\[0][0-7]{1,3}"
   rx_escape <- paste(rx_unicode, rx_hex, rx_octal, sep = "|")
   if (grepl(rx_escape, x, ignore.case = TRUE)) {
-    try({
-      y <- stringi::stri_unescape_unicode(x)
-    }, silent = TRUE)
+    try(
+      {
+        y <- stringi::stri_unescape_unicode(x)
+      },
+      silent = TRUE
+    )
     if (!is.na(y)) x <- y
   }
   # x <- gsub("\u201C|\u201D", '"', x)
@@ -129,11 +137,15 @@ get_pkg_namespace <- function(fn) {
 check_version <- function(
   gh_user = "gadenbuie",
   gh_repo = "regexplain",
-  this_version = packageVersion('regexplain')
+  this_version = packageVersion("regexplain")
 ) {
   ok_to_check <- getOption("regexplain.no.check.version", TRUE)
-  if (!isTRUE(ok_to_check)) return(NULL)
-  if (!requireNamespace('jsonlite', quietly = TRUE)) return(NULL)
+  if (!isTRUE(ok_to_check)) {
+    return(NULL)
+  }
+  if (!requireNamespace("jsonlite", quietly = TRUE)) {
+    return(NULL)
+  }
   get_json <- purrr::possibly(jsonlite::fromJSON, NULL)
   gh_tags <- get_json(
     paste0("https://api.github.com/repos/", gh_user, "/", gh_repo, "/git/refs/tags"),
@@ -153,7 +165,9 @@ check_version <- function(
         link = paste("https://github.com", gh_user, gh_repo, "releases/tag", max_tag, sep = "/")
       )
     )
-  } else return(NULL)
+  } else {
+    return(NULL)
+  }
 }
 
 #' Loads Regex Pattern Library
@@ -172,7 +186,9 @@ get_regex_library <- function() {
     return(NULL)
   }
   f_patterns <- system.file("extdata", "patterns.json", package = "regexplain")
-  if (!file.exists(f_patterns)) return(NULL)
+  if (!file.exists(f_patterns)) {
+    return(NULL)
+  }
   patterns <- jsonlite::fromJSON(
     f_patterns,
     simplifyVector = FALSE,
@@ -180,5 +196,5 @@ get_regex_library <- function() {
     simplifyMatrix = FALSE
   )
   patterns <- purrr::keep(patterns, ~ .$name != "")
-  patterns[order(purrr::map_chr(patterns, 'name'))]
+  patterns[order(purrr::map_chr(patterns, "name"))]
 }

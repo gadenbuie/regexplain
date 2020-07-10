@@ -4,9 +4,9 @@ test_that("expand_matches gives data frame of indices with groups", {
   m <- regexec("(a)(b)(d)?", "abcaba")
   idx <- data.frame(
     start = c(1L, 1L, 2L, NA_integer_),
-    end   = c(3L, 2L, 3L, NA_integer_),
+    end = c(3L, 2L, 3L, NA_integer_),
     group = c(0L, 1L, 2L, 3L),
-    pass  = rep(1L, 4)
+    pass = rep(1L, 4)
   )
   expect_equal(expand_matches(m[[1]]), idx)
 })
@@ -16,7 +16,7 @@ test_that("start/end indices are integers", {
   pattern <- "(a)(b)"
   m <- regex(text, pattern, global = TRUE)
   expect_type(m[[1]]$idx$start, "integer")
-  expect_type(m[[1]]$idx$end,   "integer")
+  expect_type(m[[1]]$idx$end, "integer")
   expect_type(m[[1]]$idx$group, "integer")
 })
 
