@@ -110,6 +110,12 @@ regexFn_choices <- list(
   )
 )
 
+available_regex_functions <- function() {
+  pkgs <- c("stringr", "rematch2")
+  has_pkg <- vapply(pkgs, requireNamespace, quietly = TRUE, logical(1))
+  regexFn_choices[c("base", pkgs[has_pkg])]
+}
+
 regexFn_substitute <- c(
   paste0(c("", "g"), "sub"),
   paste0("str_replace", c("", "_all"))

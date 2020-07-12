@@ -137,7 +137,7 @@ regexplain_gadget_ui <- function(text = NULL, pattern = NULL, start_page = "Text
                 selectInput(
                   "regexFn",
                   label = "Apply Function",
-                  choices = regexFn_choices
+                  choices = available_regex_functions()
                 ),
                 tags$span(
                   class = "help-block",
