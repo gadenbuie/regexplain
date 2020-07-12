@@ -52,6 +52,10 @@ respect the setting from any previous calls to \code{enableBookmarking()}.
 See \code{\link[shiny:enableBookmarking]{enableBookmarking()}} for more information.}
   }}
 }
+\value{
+The regular expression built in the app is returned as a character
+string.
+}
 \description{
 The function behind the RegExplain Selection and RegExplain File
 addins. Opens the RegExplain gadget interface in an RStudio viewer

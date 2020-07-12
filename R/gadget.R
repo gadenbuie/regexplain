@@ -17,6 +17,9 @@
 #' @param pattern Regular Expression to edit or visualize using RegExplain
 #' @param start_page Open gadget to this tab, one of `"Text"`, `"RegEx"`,
 #'   `"Output"`, or `"Help"`
+#'
+#' @return The regular expression built in the app is returned as a character
+#'   string.
 #' @export
 regexplain_gadget <- function(
   text = NULL,
