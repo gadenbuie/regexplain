@@ -20,7 +20,7 @@ view_regex(
 \item{pattern}{Regex pattern to look for}
 
 \item{...}{
-  Arguments passed on to \code{\link[base:regexec]{base::regexec}}
+  Arguments passed on to \code{\link[base:grep]{base::regexec}}
   \describe{
     \item{\code{ignore.case}}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
@@ -52,6 +52,5 @@ the RStudio viewer pane. If \code{render} is \code{FALSE}, the HTML itself is re
 If the output is destined for a \link{knitr} document, set \code{knitr} to \code{TRUE}.
 }
 \examples{
-view_regex("example", "amp", render=FALSE)
-
+view_regex("example", "amp", render = FALSE)
 }

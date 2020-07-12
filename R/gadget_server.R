@@ -726,7 +726,8 @@ regexplain_gadget_server <- function(update_available = NULL) {
     # ---- Server - Tab - Exit ----
     observeEvent(input$done, {
       if (pattern() != "") {
-        pattern <- paste0('pattern <- "', escape_backslash(pattern()), '"')
+        regexp <- escape_backslash(pattern())
+        pattern <- paste0('pattern <- "', regexp, '"')
         if (any(c("perl", "fixed", "ignore.case", "useBytes") %in% input$regex_options)) {
           options <- input$regex_options[!input$regex_options %in% c("text_break_lines", "global")]
           options <- paste0(options, "=TRUE", collapse = ", ")
@@ -743,7 +744,7 @@ regexplain_gadget_server <- function(update_available = NULL) {
         }
         rstudioapi::sendToConsole(pattern, FALSE)
       }
-      stopApp()
+      stopApp(regexp)
     })
 
     observeEvent(input$cancel, {
