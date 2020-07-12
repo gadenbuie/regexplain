@@ -20,6 +20,14 @@
 
 * Moved `stringr` and `rematch2` to Suggests.
 
+* `view_regex()` now returns the HTML and dependencies directly, making it 
+  easier to include the regex visualization in R Markdown documents. The CSS
+  selectors used in the `view_regex()` HTML are now more specific to avoid
+  potential selector collisions.
+  
+* `regexplain_gadget()` now also returns the built regexp directly, enabling
+  usage like `pattern <- regexplain_gadget()`.
+
 ### 0.2.2
 
 * Fix issues with coloring of groups in regexplain gadget when matched groups
