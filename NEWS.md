@@ -27,6 +27,8 @@
   
 * `regexplain_gadget()` now also returns the built regexp directly, enabling
   usage like `pattern <- regexplain_gadget()`.
+  
+* Fixed an issue with `shiny` version 1.6 (thanks @jthomasmock, #22)
 
 ### 0.2.2
 

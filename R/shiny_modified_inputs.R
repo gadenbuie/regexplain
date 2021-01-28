@@ -24,8 +24,6 @@ textAreaInputAlt <- function(
   resize = NULL,
   is_code = TRUE
 ) {
-  `%AND%` <- getFromNamespace("%AND%", "shiny")
-
   value <- shiny::restoreInput(id = inputId, default = value)
 
   if (!is.null(resize)) {
@@ -50,7 +48,7 @@ textAreaInputAlt <- function(
 
   shiny::div(
     class = "form-group shiny-input-container",
-    label %AND% shiny::tags$label(label, `for` = inputId),
+    tags$label(label, `for` = inputId),
     style = if (!parent_style %in% c(" ", "", "  ")) parent_style,
     shiny::tags$textarea(
       id = inputId,
@@ -86,13 +84,12 @@ textInputCode <- function(
   placeholder = NULL,
   ...
 ) {
-  `%AND%` <- getFromNamespace("%AND%", "shiny")
   value <- shiny::restoreInput(id = inputId, default = value)
 
   shiny::div(
     class = "input-group shiny-input-container",
     style = if (!is.null(width)) paste0("width: ", shiny::validateCssUnit(width), ";"),
-    label %AND% shiny::tags$label(label, `for` = inputId),
+    tags$label(label, `for` = inputId),
     shiny::tags$input(
       id = inputId,
       type = "text",
