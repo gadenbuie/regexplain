@@ -300,7 +300,7 @@ regexplain_gadget_server <- function(update_available = NULL) {
       }
       do.call(
         eval(parse(text = "stringr::regex")),
-        list(pattern = pattern, ignore_case, ignore_case, literal = literal)
+        list(pattern = pattern, ignore_case = ignore_case, literal = literal)
       )
     }
 

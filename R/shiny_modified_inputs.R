@@ -49,7 +49,7 @@ textAreaInputAlt <- function(
   shiny::div(
     class = "form-group shiny-input-container",
     tags$label(label, `for` = inputId),
-    style = if (!parent_style %in% c(" ", "", "  ")) parent_style,
+    style = if (length(parent_style) && !all(parent_style %in% c(" ", "", "  "))) parent_style,
     shiny::tags$textarea(
       id = inputId,
       class = "form-control",

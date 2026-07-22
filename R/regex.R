@@ -203,7 +203,7 @@ wrap_regex <- function(pattern, escape = TRUE, exact = TRUE) {
     } else if (pattern_chars[i] == ")") {
       closes_capture_group <- paren_stack[1]
       paren_stack <- paren_stack[-1] # pop
-      if (closes_capture_group) {
+      if (isTRUE(closes_capture_group)) {
         out <- c(out, ")</span>")
       } else {
         out <- c(out, ")")
