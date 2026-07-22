@@ -16,7 +16,7 @@ regexplain_addin <- function() {
   # Get context text
   ctx_text <- context$selection[[1]]$text
 
-  max_lines <- getOption("rexeplain.addin.max_lines", 100)
+  max_lines <- getOption("regexplain.addin.max_lines", 100)
 
   # If it is one line and evaluates to something, use that
   # Otherwise treat as text
@@ -55,7 +55,7 @@ regexplain_addin <- function() {
     }
   )
 
-  regexplain_gadget(if (length(obj) && obj != "") obj)
+  regexplain_gadget(if (length(obj) && all(nzchar(obj))) obj)
 }
 
 #' @describeIn regexplain_gadget Opens file chooser to pick file, reads lines,
@@ -65,7 +65,7 @@ regexplain_addin <- function() {
 regexplain_file <- function(pattern = NULL, start_page = "RegEx") {
   fname <- file.choose()
   x <- readLines(fname)
-  max_lines <- getOption("rexeplain.addin.max_lines", 100)
+  max_lines <- getOption("regexplain.addin.max_lines", 100)
   if (length(x) > max_lines) {
     message("There were ", format(length(x), big.mark = ","), " lines in ",
             fname, "\nUsing only first ", max_lines, ".\n",
